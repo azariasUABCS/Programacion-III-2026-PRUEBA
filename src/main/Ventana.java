@@ -17,7 +17,7 @@ public class Ventana extends JFrame{
 		
 		
 		setResizable(false);  // No se puede cambiar de tamaño con el mouse.
-		setTitle("Mi Aplicación (Progamación III)");  // Nombre de la Ventana.
+		setTitle("Mi Aplicación (Progamación III) por Azarias");  // Nombre de la Ventana.
 		
 		
 		setLocationRelativeTo(null);  // Pone la ventana en el centro
