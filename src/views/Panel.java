@@ -17,37 +17,36 @@ public class Panel extends JPanel{
 	public int x;
 	public int y;
 	
-	private Font fontTexto = new Font("Arial", Font.BOLD, 20);
+	private Font fontTexto = new Font("Times New Roman", Font.BOLD, 25);
+	private Font fontBoton = new Font("Times New Roman", Font.BOLD, 25);
+	private Font fontTitulo = new Font("Times New Roman", Font.BOLD, 75);
 
 	
 	public Panel()
 	{	
 		setLayout(null);
 		
-		JButton button = new JButton("Iniciar Session");
+		JButton button = new JButton("Iniciar Sesión");
 		
 		crearBoton(button, "..\\img\\icono.png");
 		
 		add(button);
 		
-		
-		
-		JLabel saludo = new JLabel("Bienvendio!");
-		saludo.setForeground(Color.blue);
-		saludo.setFont(fontTexto);
-		saludo.setBounds(25,25,200, 50);
+		JLabel saludo = new JLabel("Bienvenido!");
+		saludo.setForeground(Color.WHITE);
+		saludo.setFont(fontTitulo);
+		saludo.setBounds(450,200,500, 100);
 		add(saludo);
 		
-		
-		JTextField texto = new JTextField();
-		texto.setForeground(Color.blue);
-		texto.setFont(fontTexto);
-		texto.setBounds(525,325,220, 60);
-		add(texto);
+		JTextField usuario = new JTextField();
+		usuario.setForeground(Color.GRAY);
+		usuario.setFont(fontTexto);
+		usuario.setBounds(525,325,220, 60);
+		add(usuario);
 		
 		
 		JPasswordField contraseña = new JPasswordField();
-		contraseña.setForeground(Color.blue);
+		contraseña.setForeground(Color.GRAY);
 		contraseña.setFont(fontTexto);
 		contraseña.setBounds(525,390,220, 60);
 		add(contraseña);
@@ -55,14 +54,11 @@ public class Panel extends JPanel{
 	
 	private void crearBoton(JButton button, String ruta)
 	{
-		button.setBounds(525, 460, 220, 60);
-		
-		button.setBackground(Color.cyan);
+		button.setBounds(515, 460, 240, 60);
+		button.setBackground(Color.GRAY);
 		button.setForeground(Color.black);
-		
-		button.setToolTipText("Es un Boton!");
-		
-		button.setFont(fontTexto);
+		button.setToolTipText("Click para iniciar sesión!");
+		button.setFont(fontBoton);
 		
 		try 
 		{

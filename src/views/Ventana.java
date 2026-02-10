@@ -35,7 +35,7 @@ public class Ventana extends JFrame{
 		Panel miPanel = new Panel();
 		add(miPanel);		
 		
-		miPanel.setBackground(new Color(101, 67, 33));
+		miPanel.setBackground(Color.BLACK);
 		miPanel.setSize(15,15);
 		
 		
