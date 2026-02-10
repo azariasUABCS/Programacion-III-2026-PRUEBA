@@ -1,4 +1,4 @@
-package main;
+package views;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -32,11 +32,11 @@ public class Ventana extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra la penstaña, si no se queda abrierta.
 		
 		
-		Panel miPanel = new Panel(new Color(125, 221, 57), 15,15);
-		add(miPanel);
-
-		Panel otroPanel = new Panel(Color.red, 155, 155);
-		add(otroPanel);
+		Panel miPanel = new Panel();
+		add(miPanel);		
+		
+		miPanel.setBackground(new Color(101, 67, 33));
+		miPanel.setSize(15,15);
 		
 		
 		setVisible(true);  // Siempre agrega el set visible antes del final.

@@ -1,6 +1,8 @@
 package main;
 import javax.swing.JFrame;
 
+import views.Ventana;
+
 
 public class Main {
 	
