@@ -20,6 +20,9 @@ public class Panel extends JPanel{
 	private Font fontTexto = new Font("Times New Roman", Font.BOLD, 25);
 	private Font fontBoton = new Font("Times New Roman", Font.BOLD, 25);
 	private Font fontTitulo = new Font("Times New Roman", Font.BOLD, 75);
+	
+	
+	private Color textoColor = new Color(164, 186, 183);
 
 	
 	public Panel()
@@ -33,7 +36,7 @@ public class Panel extends JPanel{
 		add(button);
 		
 		JLabel saludo = new JLabel("Bienvenido!");
-		saludo.setForeground(Color.WHITE);
+		saludo.setForeground(textoColor);
 		saludo.setFont(fontTitulo);
 		saludo.setBounds(450,200,500, 100);
 		add(saludo);

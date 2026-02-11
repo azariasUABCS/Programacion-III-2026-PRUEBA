@@ -7,6 +7,9 @@ import javax.swing.JFrame;
 
 public class Ventana extends JFrame{
 	
+	private Color colorBG1 = new Color(190,165,125);
+	private Color colorBG2 = new Color(165, 36, 34);
+	
 	public Ventana()
 	{
 		//setSize(500,500);  // Tamaño por pixeles
@@ -35,7 +38,7 @@ public class Ventana extends JFrame{
 		Panel miPanel = new Panel();
 		add(miPanel);		
 		
-		miPanel.setBackground(Color.BLACK);
+		miPanel.setBackground(colorBG2);
 		miPanel.setSize(15,15);
 		
 		
