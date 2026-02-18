@@ -1,9 +1,13 @@
 package views;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Image;
 
 import javax.imageio.ImageIO;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -27,34 +31,35 @@ public class Panel extends JPanel{
 	
 	public Panel()
 	{	
-		setLayout(null);
 		
-		
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		JLabel saludo = new JLabel("Bienvenido!");
 		saludo.setForeground(Color.BLACK);
 		saludo.setFont(fontTitulo);
-		saludo.setBounds(440,220,500, 100);
+		//saludo.setBounds(440,220,500, 100);
 		add(saludo);
 		
 		JLabel credenciales = new JLabel("Credenciales erroneas");
 		credenciales.setForeground(Color.RED);
 		credenciales.setFont(fontTexto);
-		credenciales.setBounds(460,290,300, 50);
+		//credenciales.setBounds(460,290,300, 50);
 		credenciales.setVisible(false);
 		add(credenciales);
 		
-		JTextField usuario = new JTextField();
+		JTextField usuario = new JTextField(30);
 		usuario.setForeground(Color.GRAY);
 		usuario.setFont(fontTexto);
-		usuario.setBounds(525,325,220, 60);
+		usuario.setMaximumSize(new Dimension(670,50));
+		//usuario.setBounds(525,325,220, 60);
 		add(usuario);
 		
 		
-		JPasswordField contraseña = new JPasswordField();
+		JPasswordField contraseña = new JPasswordField(30);
 		contraseña.setForeground(Color.GRAY);
 		contraseña.setFont(fontTexto);
-		contraseña.setBounds(525,390,220, 60);
+		contraseña.setMaximumSize(new Dimension(670,50));
+		//contraseña.setBounds(525,390,220, 60);
 		add(contraseña);
 		
 		JButton button = new JButton("Iniciar Sesión");
@@ -64,11 +69,14 @@ public class Panel extends JPanel{
 		});
 		add(button);
 		
+		
+		
+		
 	}
 	
 	private void crearBoton(JButton button, String ruta)
 	{
-		button.setBounds(515, 460, 240, 60);
+		//button.setBounds(515, 460, 240, 60);
 		button.setBackground(Color.GRAY);
 		button.setForeground(Color.black);
 		button.setToolTipText("Click para iniciar sesión!");

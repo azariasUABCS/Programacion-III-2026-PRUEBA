@@ -1,14 +1,34 @@
 package views;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
+
+import javax.imageio.ImageIO;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 
 public class Ventana extends JFrame{
 	
 	private Color colorBG1 = new Color(190,165,125);
 	private Color colorBG2 = new Color(165, 36, 34);
+	private Font fontTexto = new Font("Times New Roman", Font.BOLD, 25);
+	private Font fontBoton = new Font("Times New Roman", Font.BOLD, 25);
+	private Font fontTitulo = new Font("Times New Roman", Font.BOLD, 75);
+	
+	
+	private Color textoColor = new Color(164, 186, 183);
+
 	
 	public Ventana()
 	{
@@ -36,7 +56,10 @@ public class Ventana extends JFrame{
 		
 		
 		Panel miPanel = new Panel();
-		add(miPanel);		
+		//miPanel.setLayout(new BoxLayout(miPanel, BoxLayout.Y_AXIS));
+		//miPanel.setBorder(new Border());
+		
+		add(miPanel, BorderLayout.CENTER);
 		
 		miPanel.setBackground(colorBG2);
 		miPanel.setSize(15,15);
@@ -44,4 +67,5 @@ public class Ventana extends JFrame{
 		
 		setVisible(true);  // Siempre agrega el set visible antes del final.
 	}
+	
 }
