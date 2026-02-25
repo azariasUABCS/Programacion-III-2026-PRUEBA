@@ -13,6 +13,6 @@ public class Main {
 	{
 		Ventana ventanita = new Ventana();
 		
-		//FormularioRegistro formulario = new FormularioRegistro();
+		
 	}
 }

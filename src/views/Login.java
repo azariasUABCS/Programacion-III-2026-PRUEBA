@@ -61,6 +61,8 @@ public class Login extends JPanel{
 		contraseña.setForeground(Color.GRAY);
 		contraseña.setFont(fontTexto);
 		contraseña.setMaximumSize(new Dimension(670,50));
+		
+
 		add(contraseña);
 		add(Box.createRigidArea(new Dimension(0,40)));
 		
