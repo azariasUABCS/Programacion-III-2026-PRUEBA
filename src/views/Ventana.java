@@ -1,9 +1,12 @@
 package views;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Panel;
+import java.awt.Point;
 import java.awt.Toolkit;
 
 
@@ -19,18 +22,11 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 
+import utils.Colores;
+
 
 public class Ventana extends JFrame{
 	
-	private Color colorBG1 = new Color(190,165,125);
-	private Color colorBG2 = new Color(165, 36, 34);
-	private Font fontTexto = new Font("Times New Roman", Font.BOLD, 25);
-	private Font fontBoton = new Font("Times New Roman", Font.BOLD, 25);
-	private Font fontTitulo = new Font("Times New Roman", Font.BOLD, 75);
-	
-	
-	private Color textoColor = new Color(164, 186, 183);
-
 	
 	public Ventana()
 	{
@@ -43,32 +39,25 @@ public class Ventana extends JFrame{
 		Image icono = tk.getImage("src\\img\\icono.png");
 		setIconImage(icono);	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra la penstaña, si no se queda abrierta.
-		getContentPane().setBackground(new Color(189,189,189));
+		getContentPane().setBackground(Colores.BLACKBERRY_CREAM);
 		
+		ImageIcon cursorImage = new ImageIcon("src\\img\\pointer_b.png");
+		Cursor myCursor = tk.createCustomCursor(cursorImage.getImage(), new Point(0,0), "Cursor");
+		this.setCursor(myCursor);
 		
+		// Login Panel
 		Login login = new Login();
 		login.setBounds(480,140,300,400);
-		login.setBackground(Color.GRAY);
+		login.setBackground(Colores.MIDNIGHT_VIOLET);
 		add(login);
 		
 		
-		
+		// Shadow of Login Panel
 		FondoPersonalizable fondo=new FondoPersonalizable();
 		fondo.setBounds(490, 150, 300, 400);
-		fondo.setBackground(Color.DARK_GRAY);
+		fondo.setBackground(new Color(44, 0, 47));
 		add(fondo);
 		
-		/*
-		Panel miPanel = new Panel();
-		
-		//miPanel.setLayout(new BoxLayout(miPanel, BoxLayout.Y_AXIS));
-		//miPanel.setBorder(new Border());
-		
-		add(miPanel, BorderLayout.CENTER);
-		
-		miPanel.setBackground(colorBG2);
-		miPanel.setSize(15,15);
-		*/
 		
 		setVisible(true);  // Siempre agrega el set visible antes del final.
 	}
