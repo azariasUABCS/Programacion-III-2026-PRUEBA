@@ -38,7 +38,7 @@ public class Login extends JPanel{
 		setBorder(new EmptyBorder(50,50,50,50));
 		
 		
-		JLabel saludo = new JLabel("   Bienvenido!");
+		JLabel saludo = new JLabel("  Bienvenido!");
 		saludo.setForeground(Colores.WHITE);
 		saludo.setFont(fontTitulo);
 		add(saludo);
