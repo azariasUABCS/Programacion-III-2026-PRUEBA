@@ -30,8 +30,10 @@ public class Login extends JPanel{
 	private Font fontTexto = new Font("Times New Roman", Font.BOLD, 17);
 	private Font fontBoton = new Font("Times New Roman", Font.BOLD, 17);
 	private Font fontTitulo = new Font("Times New Roman", Font.BOLD, 30);
-	
-	
+	JLabel mensajeCorreo = new JLabel("* Correo obligatorio *");
+	JLabel mensajeContraseña = new JLabel("* Contraseña obligatoria *");
+	JTextField usuario = new JTextField(30);
+	JPasswordField contraseña = new JPasswordField(30);
 	
 	public Login(){	
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -44,21 +46,27 @@ public class Login extends JPanel{
 		add(saludo);
 		
 		
-		JLabel credenciales = new JLabel("* Credenciales erroneas *");
-		credenciales.setForeground(Color.RED);
-		credenciales.setFont(fontTexto);
-		credenciales.setVisible(false);
-		add(credenciales);
-		add(Box.createRigidArea(new Dimension(0,20)));
 		
-		JTextField usuario = new JTextField(30);
+		mensajeCorreo.setForeground(Color.RED);
+		mensajeCorreo.setFont(fontTexto);
+		mensajeCorreo.setVisible(false);
+		add(mensajeCorreo);
+		
+		
+		
+		
+		
 		usuario.setForeground(Color.BLACK);
 		usuario.setFont(fontTexto);
 		usuario.setMaximumSize(new Dimension(670,50));
 		add(usuario);
 		add(Box.createRigidArea(new Dimension(0,20)));
 		
-		JPasswordField contraseña = new JPasswordField(30);
+		mensajeContraseña.setForeground(Color.RED);
+		mensajeContraseña.setFont(fontTexto);
+		mensajeContraseña.setVisible(false);
+		add(mensajeContraseña);
+		
 		contraseña.setForeground(Color.BLACK);
 		contraseña.setFont(fontTexto);
 		contraseña.setMaximumSize(new Dimension(670,50));
@@ -77,7 +85,8 @@ public class Login extends JPanel{
 		JButton buttonIniciar = new JButton("Iniciar Sesión");
 		crearBoton(buttonIniciar, "..\\img\\login.png", "Clic para Iniciar Sesión!");
 		buttonIniciar.addActionListener(e -> {
-			credenciales.setVisible(true);
+			evaluarCredenciales();
+			
 		});
 		botones.add(buttonIniciar);
 		
@@ -92,6 +101,19 @@ public class Login extends JPanel{
 		add(botones);
 		botones.add(Box.createRigidArea(new Dimension(0, 12))); // Espacio de 12 píxeles
 		botones.add(Registrarse);
+	}
+	private void resetearCredenciales() {
+		mensajeCorreo.setVisible(false);
+		mensajeContraseña.setVisible(false);
+	}
+	private void evaluarCredenciales() {
+		resetearCredenciales();
+		if(usuario.getText().equals("")) {
+			mensajeCorreo.setVisible(true);
+		}
+		if(contraseña.getPassword().length==0) {
+			mensajeContraseña.setVisible(true);
+		}
 	}
 	
 	private void crearBoton(JButton button, String ruta, String descripcion)
