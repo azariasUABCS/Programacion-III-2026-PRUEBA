@@ -36,6 +36,7 @@ public class Login extends JPanel{
 	JPasswordField contraseña = new JPasswordField(30);
 	
 	public Login(){	
+		
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setBorder(new EmptyBorder(50,50,50,50));
 		
@@ -45,15 +46,10 @@ public class Login extends JPanel{
 		saludo.setFont(fontTitulo);
 		add(saludo);
 		
-		
-		
 		mensajeCorreo.setForeground(Color.RED);
 		mensajeCorreo.setFont(fontTexto);
 		mensajeCorreo.setVisible(false);
 		add(mensajeCorreo);
-		
-		
-		
 		
 		
 		usuario.setForeground(Color.BLACK);
@@ -63,7 +59,7 @@ public class Login extends JPanel{
 		add(Box.createRigidArea(new Dimension(0,20)));
 		
 		mensajeContraseña.setForeground(Color.RED);
-		mensajeContraseña.setFont(fontTexto);
+		mensajeContraseña.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		mensajeContraseña.setVisible(false);
 		add(mensajeContraseña);
 		
@@ -102,10 +98,13 @@ public class Login extends JPanel{
 		botones.add(Box.createRigidArea(new Dimension(0, 12))); // Espacio de 12 píxeles
 		botones.add(Registrarse);
 	}
+	
+	
 	private void resetearCredenciales() {
 		mensajeCorreo.setVisible(false);
 		mensajeContraseña.setVisible(false);
 	}
+	
 	private void evaluarCredenciales() {
 		resetearCredenciales();
 		if(usuario.getText().equals("")) {
@@ -118,7 +117,6 @@ public class Login extends JPanel{
 	
 	private void crearBoton(JButton button, String ruta, String descripcion)
 	{
-		//button.setBounds(515, 460, 240, 60);
 		button.setBackground(Colores.WHITE);
 		button.setForeground(Color.black);
 		button.setToolTipText(descripcion);

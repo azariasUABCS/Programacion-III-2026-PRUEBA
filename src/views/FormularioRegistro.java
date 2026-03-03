@@ -104,16 +104,18 @@ public class FormularioRegistro extends JFrame{
 		correo.setForeground(Color.WHITE);
 		correo.setFont(fontTextoCampo);
 		correo.setMaximumSize(new Dimension(600,70));
+		
+		
 		JTextField contraseña = new JTextField(70);
 		contraseña.setBackground(Colores.BLACKBERRY_CREAM);
 		contraseña.setForeground(Color.WHITE);
 		contraseña.setFont(fontTextoCampo);
 		contraseña.setMaximumSize(new Dimension(600,70));
+		
+		
 		JPanel panelDatos=new JPanel();
 		panelDatos.setLayout(new BoxLayout(panelDatos, BoxLayout.Y_AXIS));
-		//panelDatos.setPreferredSize(new Dimension(300,10));
 		panelDatos.setOpaque(false);
-		//panelDatos.setBorder(new EmptyBorder(20,0,80,0));
 		
 		JPanel panelBoton= new JPanel();
 		panelBoton.setLayout(new BoxLayout(panelBoton, BoxLayout.Y_AXIS));
@@ -124,6 +126,8 @@ public class FormularioRegistro extends JFrame{
 		button.addActionListener(e -> {
 			dispose();
 		});
+		
+		
 		panelBoton.add(button);
 		panelBoton.setOpaque(false);
 		panelBoton.setBorder(new EmptyBorder(0,30,0,20));
@@ -148,9 +152,9 @@ public class FormularioRegistro extends JFrame{
 		
 		setVisible(true);
 	}
+	
 	private void crearBoton(JButton button, String ruta)
 	{
-		//button.setBounds(515, 460, 240, 60);
 		button.setBackground(Colores.WHITE);
 		button.setForeground(Color.black);
 		button.setToolTipText("Registrarse");
