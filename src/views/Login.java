@@ -1,11 +1,12 @@
 package views;
-import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Window;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -17,7 +18,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
+
+
 
 import utils.Colores;
 
@@ -26,7 +30,7 @@ public class Login extends JPanel{
 
 	public int x;
 	public int y;
-	
+	public boolean logrado;
 	private Font fontTexto = new Font("Times New Roman", Font.BOLD, 17);
 	private Font fontBoton = new Font("Times New Roman", Font.BOLD, 17);
 	private Font fontTitulo = new Font("Times New Roman", Font.BOLD, 30);
@@ -71,7 +75,7 @@ public class Login extends JPanel{
 		add(contraseña);
 		add(Box.createRigidArea(new Dimension(0,40)));
 		
-		FondoPersonalizable botones=new FondoPersonalizable();
+		FondoPersonalizable botones = new FondoPersonalizable();
 		botones.setLayout(new BoxLayout(botones, BoxLayout.Y_AXIS));
 		botones.setBackground(Colores.MIDNIGHT_VIOLET);
 		botones.setBorder(new EmptyBorder(0,15,0,0));
@@ -80,19 +84,15 @@ public class Login extends JPanel{
 		
 		JButton buttonIniciar = new JButton("Iniciar Sesión");
 		crearBoton(buttonIniciar, "..\\img\\login.png", "Clic para Iniciar Sesión!");
-		buttonIniciar.addActionListener(e -> {
-			evaluarCredenciales();
-			
-		});
+		buttonIniciar.addActionListener(e -> evaluarCredenciales());
+		
 		botones.add(buttonIniciar);
 		
 		
 		
 		JButton Registrarse = new JButton(" Registrarse   ");
 		crearBoton(Registrarse, "..\\img\\enter.png", "Clic para Registrarse!");
-		Registrarse.addActionListener(e -> {
-			FormularioRegistro formulario = new FormularioRegistro();
-		});
+		Registrarse.addActionListener(e -> new FormularioRegistro());
 		
 		add(botones);
 		botones.add(Box.createRigidArea(new Dimension(0, 12))); // Espacio de 12 píxeles
@@ -107,12 +107,22 @@ public class Login extends JPanel{
 	
 	private void evaluarCredenciales() {
 		resetearCredenciales();
+		boolean error=false;
+		Window window=SwingUtilities.getWindowAncestor(this);
 		if(usuario.getText().equals("")) {
 			mensajeCorreo.setVisible(true);
+			error=true;
+			
 		}
 		if(contraseña.getPassword().length==0) {
 			mensajeContraseña.setVisible(true);
+			error=true;
 		}
+		if(error==false) {
+			new VentanaPrincipal();
+			window.dispose();
+		}
+		
 	}
 	
 	private void crearBoton(JButton button, String ruta, String descripcion)
@@ -136,6 +146,7 @@ public class Login extends JPanel{
 		{
 			System.out.println("No se pudo poner el icono");
 		}
+		
 	}
 	
 	

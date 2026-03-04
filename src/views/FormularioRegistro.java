@@ -104,7 +104,7 @@ public class FormularioRegistro extends JFrame{
         // Panel para los campos de nombres y apellidos
         JPanel panelNombres = new JPanel();
         panelNombres.setLayout(new BoxLayout(panelNombres, BoxLayout.X_AXIS));
-        panelNombres.setBackground(Colores.MIDNIGHT_VIOLET);
+        panelNombres.setOpaque(false);
         panelNombres.setAlignmentX(Component.CENTER_ALIGNMENT); 
         panelNombres.setMaximumSize(new Dimension(260, 60));
         panelNombres.setPreferredSize(new Dimension(260, 60));
