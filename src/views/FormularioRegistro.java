@@ -1,10 +1,9 @@
 package views;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.Image;
 
 import javax.imageio.ImageIO;
@@ -14,166 +13,331 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import utils.Colores;
 
 public class FormularioRegistro extends JFrame{
-	
-	public Font fuente;
-	private Font fontTexto = new Font("Times New Roman", Font.BOLD, 15);
-	private Font fontTextoCampo = new Font("Times New Roman", Font.BOLD, 15);
-	private Font fontBoton = new Font("Times New Roman", Font.BOLD, 15);
-	private Font fontTitulo = new Font("Times New Roman", Font.BOLD, 40);
-	
-	
-	private Color textoColor = new Color(164, 186, 183);
-	
-	public FormularioRegistro()
-	{
-		setSize(320, 500); // Hace lo mismo de setSize y setLocation.
-		
-		setLayout(null);
-		setResizable(false);  // No se puede cambiar de tamaño con el mouse.
-		setTitle("Registro");  // Nombre de la Ventana.
-		setLocationRelativeTo(null);  // Pone la ventana en el centro
-		
-		
-		getContentPane().setBackground(Colores.BLACKBERRY_CREAM);
-		FondoPersonalizable fondo = new FondoPersonalizable();
-		fondo.setBounds(25, 50, 250, 350);
-		fondo.setBackground(Colores.MIDNIGHT_VIOLET);
-		
-		FondoPersonalizable fondo2 = new FondoPersonalizable();
-		fondo2.setBounds(30, 55, 250, 350);
-		fondo2.setBackground(new Color(44, 0, 47));
-		
-		
-		JPanel panelComponentes = new JPanel();
-		panelComponentes.setLayout(new BoxLayout(panelComponentes, BoxLayout.Y_AXIS));
-		//panelComponentes.setSize(new Dimension(300,350));
-		panelComponentes.setBounds(0, 50, 300, 375);
-		panelComponentes.setOpaque(false);
-		
-		JLabel indicaciones = new JLabel("   Nombre          Apellidos");
-		indicaciones.setForeground(Colores.WHITE);
-		indicaciones.setFont(fontTexto);
-		
-		JLabel indicacionCorreo = new JLabel("Correo");
-		indicacionCorreo.setFont(fontTexto);
-		indicacionCorreo.setForeground(Colores.WHITE);
-		indicacionCorreo.setOpaque(false);
-		
-		JLabel indicacionContraseña = new JLabel("Contraseña");
-		indicacionContraseña.setOpaque(false);
-		indicacionContraseña.setFont(fontTexto);
-		indicacionContraseña.setForeground(Colores.WHITE);
-		
-		JLabel saludo = new JLabel(" Registrate");
-		saludo.setOpaque(false);
-		saludo.setFont(fontTitulo);
-		saludo.setForeground(Color.WHITE);
-		panelComponentes.add(saludo);
-		
-		JPanel panelNombres=new JPanel();
-		panelNombres.setLayout(new BoxLayout(panelNombres, BoxLayout.X_AXIS));
-		
-		panelNombres.setBackground(Color.GRAY);
-		JTextField nombres = new JTextField(35);
-		nombres.setMaximumSize(new Dimension(600,60));
-		nombres.setBackground(Colores.BLACKBERRY_CREAM);
-		nombres.setForeground(Color.WHITE);
-		nombres.setFont(fontTextoCampo);
-		JTextField apellidos = new JTextField(35);
-		apellidos.setMaximumSize(new Dimension(600,60));
-		
-		apellidos.setBackground(Colores.BLACKBERRY_CREAM);
-		apellidos.setForeground(Color.WHITE);
-		apellidos.setFont(fontTextoCampo);
-		panelNombres.add(nombres);
-		panelNombres.add(apellidos);
-		
-		
-		
-		
-		JTextField correo = new JTextField(70);
-		correo.setBackground(Colores.BLACKBERRY_CREAM);
-		correo.setForeground(Color.WHITE);
-		correo.setFont(fontTextoCampo);
-		correo.setMaximumSize(new Dimension(600,70));
-		
-		
-		JTextField contraseña = new JTextField(70);
-		contraseña.setBackground(Colores.BLACKBERRY_CREAM);
-		contraseña.setForeground(Color.WHITE);
-		contraseña.setFont(fontTextoCampo);
-		contraseña.setMaximumSize(new Dimension(600,70));
-		
-		
-		JPanel panelDatos=new JPanel();
-		panelDatos.setLayout(new BoxLayout(panelDatos, BoxLayout.Y_AXIS));
-		panelDatos.setOpaque(false);
-		
-		JPanel panelBoton= new JPanel();
-		panelBoton.setLayout(new BoxLayout(panelBoton, BoxLayout.Y_AXIS));
-		
-		JButton button = new JButton("Registrarse");
-		button.setBorder(new EmptyBorder(0,0,0,20));
-		crearBoton(button, "..\\img\\icono.png");
-		button.addActionListener(e -> {
-			dispose();
-		});
-		
-		
-		panelBoton.add(button);
-		panelBoton.setOpaque(false);
-		panelBoton.setBorder(new EmptyBorder(0,30,0,20));
-		
-		
-		panelComponentes.add(indicaciones);
-		panelComponentes.add(panelNombres);
-		panelComponentes.setBorder(new EmptyBorder(20,40,40,40));
-		panelDatos.add(indicacionCorreo);
-		panelDatos.add(correo);
-		
-		panelDatos.add(indicacionContraseña);
-		panelDatos.add(contraseña);
-		panelComponentes.add(panelDatos);
-		panelComponentes.add(Box.createRigidArea(new Dimension(0,75)));
-		panelComponentes.add(panelBoton);
-		add(panelComponentes);
-		add(fondo);
-		add(fondo2);
+    
+	// Puro Fonts, ya depues hare otra clase de Fonts
+    public Font fuente;
+    private Font fontError = new Font("Times New Roman", Font.ITALIC, 11);
+    private Font fontTexto = new Font("Times New Roman", Font.BOLD, 15);
+    private Font fontTextoCampo = new Font("Times New Roman", Font.BOLD, 15);
+    private Font fontBoton = new Font("Times New Roman", Font.BOLD, 15);
+    private Font fontTitulo = new Font("Times New Roman", Font.BOLD, 35);
+    
+    
+    // Fields de Texto para Usuario
+    JTextField nombres;
+    JTextField apellidos;
+    JTextField correo;
+    JTextField contraseña;
+    
+    
+    // Labels de Error
+    private JLabel lblErrorNombre;
+    private JLabel lblErrorApellido;
+    private JLabel lblErrorCorreo;
+    private JLabel lblErrorContrasena;
+    
+    
+    
+    public FormularioRegistro()
+    {
+        setSize(350, 550);
+        setLayout(null);
+        setResizable(false);
+        setTitle("Registro");
+        setLocationRelativeTo(null);
+        
+        getContentPane().setBackground(Colores.BLACKBERRY_CREAM);
+        
+        
+        FondoPersonalizable fondo = new FondoPersonalizable();
+        fondo.setBounds(30, 50, 280, 420);
+        fondo.setBackground(Colores.MIDNIGHT_VIOLET);
+        
+        FondoPersonalizable fondo2 = new FondoPersonalizable();
+        fondo2.setBounds(35, 55, 280, 420);
+        fondo2.setBackground(new Color(44, 0, 47));
+        
 
+        JPanel panelComponentes = new JPanel();
+        panelComponentes.setLayout(new BoxLayout(panelComponentes, BoxLayout.Y_AXIS));
+        panelComponentes.setBounds(0, 50, 340, 440);
+        panelComponentes.setOpaque(false);
+        panelComponentes.setBorder(new EmptyBorder(20, 40, 20, 40));
+        
+        // Para centrar todos los componentes
+        panelComponentes.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+
+        JLabel saludo = new JLabel("Registrate");
+        saludo.setOpaque(false);
+        saludo.setFont(fontTitulo);
+        saludo.setForeground(Color.WHITE);
+        saludo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+        panelComponentes.add(saludo);
+        panelComponentes.add(Box.createRigidArea(new Dimension(0,20)));
+        
+
+        lblErrorNombre = crearErrorLabel();
+        lblErrorApellido = crearErrorLabel();
+        lblErrorCorreo = crearErrorLabel();
+        lblErrorContrasena = crearErrorLabel();
+        
+        
+        // Panel para las indicaciones de nombres
+        JLabel indicaciones = new JLabel("Nombre          Apellidos");
+        indicaciones.setForeground(Colores.WHITE);
+        indicaciones.setFont(fontTexto);
+        indicaciones.setAlignmentX(Component.CENTER_ALIGNMENT); // Otra vez centrar
+        panelComponentes.add(indicaciones);
+
+        
+        // Panel para los campos de nombres y apellidos
+        JPanel panelNombres = new JPanel();
+        panelNombres.setLayout(new BoxLayout(panelNombres, BoxLayout.X_AXIS));
+        panelNombres.setBackground(Colores.MIDNIGHT_VIOLET);
+        panelNombres.setAlignmentX(Component.CENTER_ALIGNMENT); 
+        panelNombres.setMaximumSize(new Dimension(260, 60));
+        panelNombres.setPreferredSize(new Dimension(260, 60));
+        
+        nombres = crearTextField();
+        apellidos = crearTextField();
+        
+        panelNombres.add(nombres);
+        panelNombres.add(Box.createRigidArea(new Dimension(5, 0)));
+        panelNombres.add(apellidos);
+        panelComponentes.add(panelNombres);
+        
+        
+        
+        // Panel de errores de nombres
+        JPanel panelErroresNombres = new JPanel();
+        panelErroresNombres.setLayout(new BoxLayout(panelErroresNombres, BoxLayout.X_AXIS));
+        panelErroresNombres.setOpaque(false);
+        panelErroresNombres.setAlignmentX(Component.CENTER_ALIGNMENT); 
+        panelErroresNombres.setMaximumSize(new Dimension(260, 20));
+        
+        configurarErrorLabel(lblErrorNombre, 125, 20);
+        configurarErrorLabel(lblErrorApellido, 125, 20);
+        
+        panelErroresNombres.add(lblErrorNombre);
+        panelErroresNombres.add(Box.createRigidArea(new Dimension(10, 0)));
+        panelErroresNombres.add(lblErrorApellido);
+        
+        panelComponentes.add(panelErroresNombres);
+        panelComponentes.add(Box.createRigidArea(new Dimension(0,10)));
+
+        
+        // Campo de Correo
+        JLabel indicacionCorreo = new JLabel("Correo");
+        indicacionCorreo.setFont(fontTexto);
+        indicacionCorreo.setForeground(Colores.WHITE);
+        indicacionCorreo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelComponentes.add(indicacionCorreo);
+        
+        correo = crearTextField();
+        panelComponentes.add(correo);
+        
+        configurarErrorLabel(lblErrorCorreo, 260, 20);
+        lblErrorCorreo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelComponentes.add(lblErrorCorreo);
+        
+        panelComponentes.add(Box.createRigidArea(new Dimension(0,10)));
+
+        
+        // Campo de Contraseña
+        JLabel indicacionContraseña = new JLabel("Contraseña");
+        indicacionContraseña.setFont(fontTexto);
+        indicacionContraseña.setForeground(Colores.WHITE);
+        indicacionContraseña.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelComponentes.add(indicacionContraseña);
+        
+        contraseña = crearTextField();
+        panelComponentes.add(contraseña);
+        
+        configurarErrorLabel(lblErrorContrasena, 260, 20);
+        lblErrorContrasena.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelComponentes.add(lblErrorContrasena);
+        
+        panelComponentes.add(Box.createRigidArea(new Dimension(0,15)));
+        
+        
+        // Button Registrar
+        JPanel panelBoton = new JPanel();
+        panelBoton.setLayout(new BoxLayout(panelBoton, BoxLayout.Y_AXIS));
+        panelBoton.setOpaque(false);
+        panelBoton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        
+        JButton button = new JButton("Registrarse");
+        crearBoton(button, "..\\img\\icono.png");
+        
+        button.addActionListener(e -> validacionDeRegistro());
+        
+        panelBoton.add(button);
+        panelComponentes.add(panelBoton);
+        
+        add(panelComponentes);
+        add(fondo);
+        add(fondo2);
+
+        setVisible(true);
+    }
+    
+    private void configurarErrorLabel(JLabel label, int ancho, int alto) 
+    {
+        label.setPreferredSize(new Dimension(ancho, alto));
+        label.setMaximumSize(new Dimension(ancho, alto));
+        label.setMinimumSize(new Dimension(ancho, alto));
+        label.setHorizontalAlignment(SwingConstants.LEFT);
+    }
+    
+    private JTextField crearTextField() 
+    {
+        JTextField textField = new JTextField();
+        textField.setMaximumSize(new Dimension(260, 40));
+        textField.setPreferredSize(new Dimension(260, 40));
+        textField.setBackground(Colores.BLACKBERRY_CREAM);
+        textField.setForeground(Color.WHITE);
+        textField.setFont(fontTextoCampo);
+        textField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+        return textField;
+    }
+    
+    private void crearBoton(JButton button, String ruta)
+    {
+        button.setBackground(Colores.WHITE);
+        button.setForeground(Color.black);
+        button.setToolTipText("Registrarse");
+        button.setFont(fontBoton);
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button.setMaximumSize(new Dimension(200, 40));
+        button.setPreferredSize(new Dimension(200, 40));
+        
+        try 
+        {
+            Image icono = ImageIO.read(getClass().getResource(ruta));
+            icono = icono.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+            button.setIcon(new ImageIcon(icono));
+        }
+        catch (Exception ex)
+        {
+            System.out.println("No se pudo poner el icono");
+        }
+    }
+    
+    private JLabel crearErrorLabel() 
+    {
+        JLabel label = new JLabel("");
+        label.setFont(fontError);
+        label.setForeground(Color.RED);
+        return label;
+    }
+    
+    
+    
+    // Validaciones de Formulario Registro
+    
+    private void validacionDeRegistro()
+    {
+    	resetearErrorLabels();
+
+		boolean valid = true;
+
+		if (!validarNombre())  valid = false;
+
+		if (!validarApellido())  valid = false;
+		
+		if (!validarCorreo())  valid = false;
+		
+		if (!validarConstasena())  valid = false;
 		
 		
-		setVisible(true);
-	}
-	
-	private void crearBoton(JButton button, String ruta)
-	{
-		button.setBackground(Colores.WHITE);
-		button.setForeground(Color.black);
-		button.setToolTipText("Registrarse");
-		button.setFont(fontBoton);
-		
-		try 
-		{
-			Image icono = ImageIO.read(getClass().getResource(ruta));
-					
-			icono = icono.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+		if (valid) {
+			JOptionPane.showMessageDialog(this, "Registro exitoso");
 			
-			button.setIcon(new ImageIcon(icono));
+			dispose(); // Use el dispose que habias puesto en addActionListener
 		}
-		catch (Exception ex)
-		{
-			System.out.println("No se pudo poner el icono");
-		}
+    }
+    
+    private void resetearErrorLabels() 
+    {
+		lblErrorNombre.setText("");
+		lblErrorApellido.setText("");
+		lblErrorCorreo.setText("");
+		lblErrorContrasena.setText("");
 	}
-	
-}
+    
+    
+    private boolean validarNombre()
+    {
+    	if (nombres.getText().trim().isEmpty()) 
+    	{
+    		lblErrorNombre.setText("El nombre es obligatorio");
+			return false;
+		}
 
-	
+		return true;
+    }
+    
+    private boolean validarApellido()
+    {
+    	if (apellidos.getText().trim().isEmpty()) 
+    	{
+    		lblErrorApellido.setText("El apellido es obligatorio");
+			return false;
+		}
+
+		return true;
+    }
+    
+    private boolean validarCorreo()
+    {
+    	if (correo.getText().trim().isEmpty()) 
+    	{
+			lblErrorCorreo.setText("El email es obligatorio");
+			return false;
+		}
+
+		if (!correo.getText().contains("@")) 
+		{
+			lblErrorCorreo.setText("Email inválido");
+			return false;
+		}
+
+		return true;
+    }
+    
+    private boolean validarConstasena()
+    {
+    	if (contraseña.getText().trim().isEmpty()) 
+    	{
+    		lblErrorContrasena.setText("La contraseña es obligatorio");
+			return false;
+		}
+    	
+    	if (!contraseña.getText().matches(".*[!$?_*].*")) // Regex que checa que por lo menos hay uno de estos char
+    	{
+    	    lblErrorContrasena.setText("Necesita un caracter especial (! $ ? _ *)");
+    	    return false;
+    	}
+    	
+    	if (contraseña.getText().trim().matches(".*\\s.*")) // Regex que checa si hay espacios entre texto
+    	{
+    		lblErrorContrasena.setText("La contraseña no puede tener espacios");
+    	    return false;
+    	}
+
+		return true;
+    }
+}
