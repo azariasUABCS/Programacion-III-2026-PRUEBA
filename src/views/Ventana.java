@@ -18,15 +18,16 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 
 import utils.Colores;
 
 
 public class Ventana extends JFrame{
-	
 	
 	public Ventana()
 	{
@@ -47,16 +48,59 @@ public class Ventana extends JFrame{
 		
 		// Login Panel
 		Login login = new Login();
-		login.setBounds(480,140,300,400);
+		login.setBounds(750,140,300,400);
 		login.setBackground(Colores.MIDNIGHT_VIOLET);
+		login.setOpaque(false);
 		add(login);
 		
+		//Agregar a los usuarios
+		Usuarios usuarios= new Usuarios();
+		JScrollPane scrollUsuarios= new JScrollPane(usuarios);
+		scrollUsuarios.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollUsuarios.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollUsuarios.setBounds(140, 140, 600, 400);
+		scrollUsuarios.setOpaque(false);
+		scrollUsuarios.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+		    @Override
+		    protected void configureScrollBarColors() {
+		        this.thumbColor = Colores.BLACKBERRY_CREAM;       // color del "pulgar" (la parte que arrastras)
+		        this.trackColor = Colores.MIDNIGHT_VIOLET; // color del fondo
+		    }
+		    @Override
+            protected JButton createDecreaseButton(int orientation) {
+                return createZeroButton();
+            }
+
+            @Override
+            protected JButton createIncreaseButton(int orientation) {
+                return createZeroButton();
+            }
+
+            private JButton createZeroButton() {
+                JButton button = new JButton();
+                button.setPreferredSize(new Dimension(0, 0));
+                return button;
+            }
+
+
+		    
+		});
+		scrollUsuarios.getVerticalScrollBar().setUnitIncrement(100);
+		scrollUsuarios.getVerticalScrollBar().setOpaque(false);
+		scrollUsuarios.setBorder(null);
+		add(scrollUsuarios);
 		
 		// Shadow of Login Panel
-		FondoPersonalizable fondo=new FondoPersonalizable();
-		fondo.setBounds(490, 150, 300, 400);
-		fondo.setBackground(new Color(44, 0, 47));
-		add(fondo);
+		PanelPersonalizable fondo1=new PanelPersonalizable();
+		fondo1.setBounds(130, 120, 950, 450);
+		fondo1.setBackground(Colores.MIDNIGHT_VIOLET);
+		add(fondo1);
+		
+		// Shadow of Login Panel
+		PanelPersonalizable fondo2=new PanelPersonalizable();
+		fondo2.setBounds(140, 130, 950, 450);
+		fondo2.setBackground(new Color(44, 0, 47));
+		add(fondo2);
 		
 		
 		setVisible(true);  // Siempre agrega el set visible antes del final.

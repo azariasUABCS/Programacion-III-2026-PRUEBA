@@ -75,7 +75,7 @@ public class Login extends JPanel{
 		add(contraseña);
 		add(Box.createRigidArea(new Dimension(0,40)));
 		
-		FondoPersonalizable botones = new FondoPersonalizable();
+		PanelPersonalizable botones = new PanelPersonalizable();
 		botones.setLayout(new BoxLayout(botones, BoxLayout.Y_AXIS));
 		botones.setBackground(Colores.MIDNIGHT_VIOLET);
 		botones.setBorder(new EmptyBorder(0,15,0,0));

@@ -5,8 +5,8 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 
-public class FondoPersonalizable extends JPanel {
-	public FondoPersonalizable(){	
+public class PanelPersonalizable extends JPanel {
+	public PanelPersonalizable(){	
 		
 		
 		

@@ -58,11 +58,11 @@ public class FormularioRegistro extends JFrame{
         getContentPane().setBackground(Colores.BLACKBERRY_CREAM);
         
         
-        FondoPersonalizable fondo = new FondoPersonalizable();
+        PanelPersonalizable fondo = new PanelPersonalizable();
         fondo.setBounds(30, 50, 280, 420);
         fondo.setBackground(Colores.MIDNIGHT_VIOLET);
         
-        FondoPersonalizable fondo2 = new FondoPersonalizable();
+        PanelPersonalizable fondo2 = new PanelPersonalizable();
         fondo2.setBounds(35, 55, 280, 420);
         fondo2.setBackground(new Color(44, 0, 47));
         
