@@ -59,6 +59,7 @@ public class Ventana extends JFrame{
 		scrollUsuarios.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollUsuarios.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollUsuarios.setBounds(140, 140, 600, 400);
+		
 		scrollUsuarios.setOpaque(false);
 		scrollUsuarios.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
 		    @Override

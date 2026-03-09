@@ -14,24 +14,21 @@ public class Usuarios extends JPanel {
 	public Usuarios() {
 		ArrayList<UsuarioPanel> usuarios = new ArrayList<UsuarioPanel>();
 		
-		int alto;
-		int ancho;
+		int alto=0;
 		//Añade usuarios simullados"
-		for(int i=0;i<13;i++) {
+		for(int i=0;i<1;i++) {
 			usuarios.add(new UsuarioPanel());
 		}
 		
-		
-		
 		//define alto
-		if(usuarios.size()/2<=1) {
-			alto=1;
+		if(usuarios.size()%2==0) {
+			alto=(usuarios.size()/2)*300;
 		}else {
-			alto=usuarios.size()/2+1;
+			alto=((usuarios.size()/2)+1)*300;
 		}
-		setPreferredSize(new Dimension(600,alto*300));
-		setOpaque(false);
 		
+		setPreferredSize(new Dimension(600,alto));
+		setOpaque(false);
 		setLayout(new GridLayout(0,2));
 		
 		
@@ -45,7 +42,6 @@ public class Usuarios extends JPanel {
 			add(relleno);
 		}
 		setVisible(true);
-		
 		
 	}
 }
