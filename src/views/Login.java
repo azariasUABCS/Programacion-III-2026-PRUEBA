@@ -20,8 +20,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
-
-
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import utils.Colores;
 
@@ -34,8 +34,8 @@ public class Login extends JPanel{
 	private Font fontTexto = new Font("Times New Roman", Font.BOLD, 17);
 	private Font fontBoton = new Font("Times New Roman", Font.BOLD, 17);
 	private Font fontTitulo = new Font("Times New Roman", Font.BOLD, 30);
-	JLabel mensajeCorreo = new JLabel("* Correo obligatorio *");
-	JLabel mensajeContraseña = new JLabel("* Contraseña obligatoria *");
+	JLabel mensajeCorreo = new JLabel(" ");
+	JLabel mensajeContraseña = new JLabel(" ");
 	JTextField usuario = new JTextField(30);
 	JPasswordField contraseña = new JPasswordField(30);
 	
@@ -44,34 +44,21 @@ public class Login extends JPanel{
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setBorder(new EmptyBorder(50,50,50,50));
 		
+		configurarMensajes();
+		configurarTextos();
 		
 		JLabel saludo = new JLabel("  Bienvenido!");
 		saludo.setForeground(Colores.WHITE);
 		saludo.setFont(fontTitulo);
 		add(saludo);
 		
-		mensajeCorreo.setForeground(Color.RED);
-		mensajeCorreo.setFont(fontTexto);
-		mensajeCorreo.setVisible(false);
 		add(mensajeCorreo);
 		
 		
-		usuario.setForeground(Color.BLACK);
-		usuario.setFont(fontTexto);
-		usuario.setMaximumSize(new Dimension(670,50));
 		add(usuario);
 		add(Box.createRigidArea(new Dimension(0,20)));
-		
-		mensajeContraseña.setForeground(Color.RED);
-		mensajeContraseña.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		mensajeContraseña.setVisible(false);
 		add(mensajeContraseña);
 		
-		contraseña.setForeground(Color.BLACK);
-		contraseña.setFont(fontTexto);
-		contraseña.setMaximumSize(new Dimension(670,50));
-		
-
 		add(contraseña);
 		add(Box.createRigidArea(new Dimension(0,40)));
 		
@@ -79,8 +66,6 @@ public class Login extends JPanel{
 		botones.setLayout(new BoxLayout(botones, BoxLayout.Y_AXIS));
 		botones.setBackground(Colores.MIDNIGHT_VIOLET);
 		botones.setBorder(new EmptyBorder(0,15,0,0));
-		
-		
 		
 		JButton buttonIniciar = new JButton("Iniciar Sesión");
 		crearBoton(buttonIniciar, "..\\img\\login.png", "Clic para Iniciar Sesión!");
@@ -101,8 +86,8 @@ public class Login extends JPanel{
 	
 	
 	private void resetearCredenciales() {
-		mensajeCorreo.setVisible(false);
-		mensajeContraseña.setVisible(false);
+		mensajeCorreo.setText(" ");
+		mensajeContraseña.setText(" ");
 	}
 	
 	private void evaluarCredenciales() {
@@ -110,12 +95,12 @@ public class Login extends JPanel{
 		boolean error=false;
 		Window window=SwingUtilities.getWindowAncestor(this);
 		if(usuario.getText().equals("")) {
-			mensajeCorreo.setVisible(true);
+			mensajeCorreo.setText("* Correo obligatorio *");
 			error=true;
 			
 		}
 		if(contraseña.getPassword().length==0) {
-			mensajeContraseña.setVisible(true);
+			mensajeContraseña.setText("* Contraseña obligatoria *");
 			error=true;
 		}
 		if(error==false) {
@@ -124,7 +109,80 @@ public class Login extends JPanel{
 		}
 		
 	}
-	
+	private void evaluarCorreo() {
+		if(usuario.getText().equals("")) {
+			mensajeCorreo.setText("* Correo obligatorio *");
+		}else {
+			mensajeCorreo.setText(" ");
+		}
+	}
+	private void evaluarContrasena() {
+		if(contraseña.getPassword().length==0) {
+			mensajeContraseña.setText("* Contraseña obligatorio *");
+		}else {
+			mensajeContraseña.setText(" ");
+		}
+	}
+	private void configurarMensajes() {
+		
+		mensajeCorreo.setForeground(Color.RED);
+		mensajeCorreo.setFont(fontTexto);
+		mensajeCorreo.setVisible(true);
+		
+		mensajeContraseña.setForeground(Color.RED);
+		mensajeContraseña.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		mensajeContraseña.setVisible(true);
+	}
+	private void configurarTextos() {
+		
+		usuario.setForeground(Color.BLACK);
+		usuario.setFont(fontTexto);
+		usuario.setMaximumSize(new Dimension(670,50));
+		usuario.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				evaluarCorreo();
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				
+				evaluarCorreo();
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				evaluarCorreo();
+			}
+		});
+		
+		contraseña.setForeground(Color.BLACK);
+		contraseña.setFont(fontTexto);
+		contraseña.setMaximumSize(new Dimension(670,50));
+		contraseña.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				evaluarContrasena();
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				evaluarContrasena();
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				evaluarContrasena();
+			}
+		});
+	}
 	private void crearBoton(JButton button, String ruta, String descripcion)
 	{
 		button.setBackground(Colores.WHITE);

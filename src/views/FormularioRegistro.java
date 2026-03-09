@@ -18,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import utils.Colores;
 
@@ -85,7 +87,6 @@ public class FormularioRegistro extends JFrame{
         
         panelComponentes.add(saludo);
         panelComponentes.add(Box.createRigidArea(new Dimension(0,20)));
-        
 
         lblErrorNombre = crearErrorLabel();
         lblErrorApellido = crearErrorLabel();
@@ -110,8 +111,47 @@ public class FormularioRegistro extends JFrame{
         panelNombres.setPreferredSize(new Dimension(260, 60));
         
         nombres = crearTextField();
+        nombres.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				validarNombre();
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				validarNombre();
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				validarNombre();
+			}
+		});
         apellidos = crearTextField();
-        
+        apellidos.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				validarApellido();
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				validarApellido();
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				validarApellido();
+			}
+		});
         panelNombres.add(nombres);
         panelNombres.add(Box.createRigidArea(new Dimension(5, 0)));
         panelNombres.add(apellidos);
@@ -145,6 +185,26 @@ public class FormularioRegistro extends JFrame{
         panelComponentes.add(indicacionCorreo);
         
         correo = crearTextField();
+        correo.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				validarCorreo();
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				validarCorreo();
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				validarCorreo();
+			}
+		});
         panelComponentes.add(correo);
         
         configurarErrorLabel(lblErrorCorreo, 260, 20);
@@ -162,6 +222,26 @@ public class FormularioRegistro extends JFrame{
         panelComponentes.add(indicacionContraseña);
         
         contraseña = crearTextField();
+        contraseña.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				validarConstasena();
+				
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				validarConstasena();
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				validarConstasena();
+			}
+		});
         panelComponentes.add(contraseña);
         
         configurarErrorLabel(lblErrorContrasena, 260, 20);
@@ -285,6 +365,8 @@ public class FormularioRegistro extends JFrame{
     	{
     		lblErrorNombre.setText("El nombre es obligatorio");
 			return false;
+		}else {
+			lblErrorNombre.setText(" ");
 		}
 
 		return true;
@@ -296,6 +378,8 @@ public class FormularioRegistro extends JFrame{
     	{
     		lblErrorApellido.setText("El apellido es obligatorio");
 			return false;
+		}else {
+			lblErrorApellido.setText(" ");
 		}
 
 		return true;
@@ -307,12 +391,16 @@ public class FormularioRegistro extends JFrame{
     	{
 			lblErrorCorreo.setText("El email es obligatorio");
 			return false;
+		}else {
+			lblErrorCorreo.setText(" ");
 		}
 
 		if (!correo.getText().contains("@")) 
 		{
 			lblErrorCorreo.setText("Email inválido");
 			return false;
+		}else {
+			lblErrorCorreo.setText(" ");
 		}
 
 		return true;
@@ -324,19 +412,25 @@ public class FormularioRegistro extends JFrame{
     	{
     		lblErrorContrasena.setText("La contraseña es obligatorio");
 			return false;
+		}else {
+			lblErrorContrasena.setText(" ");
 		}
     	
     	if (!contraseña.getText().matches(".*[!$?_*].*")) // Regex que checa que por lo menos hay uno de estos char
     	{
     	    lblErrorContrasena.setText("Necesita un caracter especial (! $ ? _ *)");
     	    return false;
-    	}
+    	}else {
+			lblErrorContrasena.setText(" ");
+		}
     	
     	if (contraseña.getText().trim().matches(".*\\s.*")) // Regex que checa si hay espacios entre texto
     	{
     		lblErrorContrasena.setText("La contraseña no puede tener espacios");
     	    return false;
-    	}
+    	}else {
+			lblErrorContrasena.setText(" ");
+		}
 
 		return true;
     }
