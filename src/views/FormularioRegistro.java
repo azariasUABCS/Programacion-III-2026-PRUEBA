@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.TextField;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
@@ -110,48 +111,15 @@ public class FormularioRegistro extends JFrame{
         panelNombres.setMaximumSize(new Dimension(260, 60));
         panelNombres.setPreferredSize(new Dimension(260, 60));
         
-        nombres = crearTextField();
-        nombres.getDocument().addDocumentListener(new DocumentListener() {
-			
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				validarNombre();
-			}
-			
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				validarNombre();
-			}
-			
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				validarNombre();
-			}
-		});
-        apellidos = crearTextField();
-        apellidos.getDocument().addDocumentListener(new DocumentListener() {
-			
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				validarApellido();
-			}
-			
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				validarApellido();
-			}
-			
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				validarApellido();
-			}
-		});
+        nombres = crearTextField("nombres");
+        asignarValidacion(nombres); // Es la nueva funcion que agregue.
+        
+        
+        
+        apellidos = crearTextField("apellidos");
+        asignarValidacion(apellidos);
+        
+        
         panelNombres.add(nombres);
         panelNombres.add(Box.createRigidArea(new Dimension(5, 0)));
         panelNombres.add(apellidos);
@@ -184,27 +152,10 @@ public class FormularioRegistro extends JFrame{
         indicacionCorreo.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelComponentes.add(indicacionCorreo);
         
-        correo = crearTextField();
-        correo.getDocument().addDocumentListener(new DocumentListener() {
-			
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				validarCorreo();
-			}
-			
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				validarCorreo();
-			}
-			
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				validarCorreo();
-			}
-		});
+        correo = crearTextField("correo");
+        asignarValidacion(correo);
+
+        
         panelComponentes.add(correo);
         
         configurarErrorLabel(lblErrorCorreo, 260, 20);
@@ -221,27 +172,10 @@ public class FormularioRegistro extends JFrame{
         indicacionContraseña.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelComponentes.add(indicacionContraseña);
         
-        contraseña = crearTextField();
-        contraseña.getDocument().addDocumentListener(new DocumentListener() {
-			
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				validarConstasena();
-				
-			}
-			
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				validarConstasena();
-			}
-			
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				validarConstasena();
-			}
-		});
+        contraseña = crearTextField("contraseña");
+        asignarValidacion(contraseña);
+        
+        
         panelComponentes.add(contraseña);
         
         configurarErrorLabel(lblErrorContrasena, 260, 20);
@@ -281,7 +215,7 @@ public class FormularioRegistro extends JFrame{
         label.setHorizontalAlignment(SwingConstants.LEFT);
     }
     
-    private JTextField crearTextField() 
+    private JTextField crearTextField(String JTextFieldName) 
     {
         JTextField textField = new JTextField();
         textField.setMaximumSize(new Dimension(260, 40));
@@ -290,6 +224,8 @@ public class FormularioRegistro extends JFrame{
         textField.setForeground(Color.WHITE);
         textField.setFont(fontTextoCampo);
         textField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+        textField.setName(JTextFieldName);
         
         return textField;
     }
@@ -433,5 +369,105 @@ public class FormularioRegistro extends JFrame{
 		}
 
 		return true;
+    }
+    
+    private void asignarValidacion(JTextField JtextField)
+    {
+    	System.out.println(JtextField.getName());
+    	
+    	switch(JtextField.getName().toString())
+    	{
+    		case "nombres":
+    			JtextField.getDocument().addDocumentListener(new DocumentListener() {
+    				
+    				@Override
+    				public void removeUpdate(DocumentEvent e) {
+    					// TODO Auto-generated method stub
+    					validarNombre();
+    				}
+    				
+    				@Override
+    				public void insertUpdate(DocumentEvent e) {
+    					// TODO Auto-generated method stub
+    					validarNombre();
+    				}
+    				
+    				@Override
+    				public void changedUpdate(DocumentEvent e) {
+    					// TODO Auto-generated method stub
+    					validarNombre();
+    				}
+    			});
+    			break;
+    			
+    		case "apellidos":
+    			JtextField.getDocument().addDocumentListener(new DocumentListener() {
+    					
+    					@Override
+    					public void removeUpdate(DocumentEvent e) {
+    						// TODO Auto-generated method stub
+    						validarApellido();
+    					}
+    					
+    					@Override
+    					public void insertUpdate(DocumentEvent e) {
+    						// TODO Auto-generated method stub
+    						validarApellido();
+    					}
+    					
+    					@Override
+    					public void changedUpdate(DocumentEvent e) {
+    						// TODO Auto-generated method stub
+    						validarApellido();
+    					}
+    				});
+    			break;
+    			
+    		case "correo":
+    			 JtextField.getDocument().addDocumentListener(new DocumentListener() {
+    					
+    					@Override
+    					public void removeUpdate(DocumentEvent e) {
+    						// TODO Auto-generated method stub
+    						validarCorreo();
+    					}
+    					
+    					@Override
+    					public void insertUpdate(DocumentEvent e) {
+    						// TODO Auto-generated method stub
+    						validarCorreo();
+    					}
+    					
+    					@Override
+    					public void changedUpdate(DocumentEvent e) {
+    						// TODO Auto-generated method stub
+    						validarCorreo();
+    					}
+    				});
+    			break;
+    			
+    		case "contraseña":
+    			contraseña.getDocument().addDocumentListener(new DocumentListener() {
+    				
+    				@Override
+    				public void removeUpdate(DocumentEvent e) {
+    					validarConstasena();
+    					
+    				}
+    				
+    				@Override
+    				public void insertUpdate(DocumentEvent e) {
+    					// TODO Auto-generated method stub
+    					validarConstasena();
+    				}
+    				
+    				@Override
+    				public void changedUpdate(DocumentEvent e) {
+    					// TODO Auto-generated method stub
+    					validarConstasena();
+    				}
+    			});
+    			break;
+    	}
     }
 }
