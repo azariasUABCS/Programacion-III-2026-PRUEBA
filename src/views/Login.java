@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Window;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -14,6 +16,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -73,11 +76,35 @@ public class Login extends JPanel{
 		
 		botones.add(buttonIniciar);
 		
+		buttonIniciar.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent e) 
+			{
+				changeBackground(buttonIniciar);
+			}
+			
+			public void mouseExited(MouseEvent e) 
+			{
+				resetBackground(buttonIniciar);
+			}
+		});
+		
 		
 		
 		JButton Registrarse = new JButton(" Registrarse   ");
 		crearBoton(Registrarse, "..\\img\\enter.png", "Clic para Registrarse!");
 		Registrarse.addActionListener(e -> new FormularioRegistro());
+		
+		Registrarse.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent e) 
+			{
+				changeBackground(Registrarse);
+			}
+			
+			public void mouseExited(MouseEvent e) 
+			{
+				resetBackground(Registrarse);
+			}
+		});
 		
 		add(botones);
 		botones.add(Box.createRigidArea(new Dimension(0, 12))); // Espacio de 12 píxeles
@@ -208,4 +235,20 @@ public class Login extends JPanel{
 	}
 	
 	
+	Color defaultColor = null;
+	Color clickedColor = Color.GRAY;
+	
+	private void changeBackground(JComponent c)
+	{
+		defaultColor = c.getBackground();
+		
+		c.setBackground(clickedColor);
+		c.setForeground(Color.WHITE);
+	}
+	
+	private void resetBackground(JComponent c)
+	{
+		c.setBackground(defaultColor);
+		c.setForeground(Color.BLACK);
+	}
 }

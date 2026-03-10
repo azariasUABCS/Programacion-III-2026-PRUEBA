@@ -6,12 +6,15 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.TextField;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -192,12 +195,25 @@ public class FormularioRegistro extends JFrame{
         panelBoton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         
-        JButton button = new JButton("Registrarse");
-        crearBoton(button, "..\\img\\icono.png");
+        JButton registrar = new JButton("Registrarse");
+        crearBoton(registrar, "..\\img\\icono.png");
         
-        button.addActionListener(e -> validacionDeRegistro());
+        registrar.addActionListener(e -> validacionDeRegistro());
         
-        panelBoton.add(button);
+        registrar.addMouseListener(new MouseAdapter() 
+        {
+			public void mouseEntered(MouseEvent e) 
+			{
+				changeBackground(registrar);
+			}
+			
+			public void mouseExited(MouseEvent e) 
+			{
+				resetBackground(registrar);
+			}
+		});
+        
+        panelBoton.add(registrar);
         panelComponentes.add(panelBoton);
         
         add(panelComponentes);
@@ -470,4 +486,21 @@ public class FormularioRegistro extends JFrame{
     			break;
     	}
     }
+    
+    Color defaultColor = null;
+	Color clickedColor = Color.GRAY;
+	
+	private void changeBackground(JComponent c)
+	{
+		defaultColor = c.getBackground();
+		
+		c.setBackground(clickedColor);
+		c.setForeground(Color.WHITE);
+	}
+	
+	private void resetBackground(JComponent c)
+	{
+		c.setBackground(defaultColor);
+		c.setForeground(Color.BLACK);
+	}
 }
