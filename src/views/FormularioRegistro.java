@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.TextField;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -115,12 +117,13 @@ public class FormularioRegistro extends JFrame{
         panelNombres.setPreferredSize(new Dimension(260, 60));
         
         nombres = crearTextField("nombres");
-        asignarValidacion(nombres); // Es la nueva funcion que agregue.
-        
+        asignarValidacion(nombres); 
+        asignarKeyListener(nombres); // Es la nueva funcion que agregue.
         
         
         apellidos = crearTextField("apellidos");
         asignarValidacion(apellidos);
+        asignarKeyListener(apellidos); 
         
         
         panelNombres.add(nombres);
@@ -486,6 +489,31 @@ public class FormularioRegistro extends JFrame{
     			break;
     	}
     }
+    
+    private void asignarKeyListener(JTextField JtextField)
+    {
+    	JtextField.addKeyListener(new KeyAdapter() 
+         {
+         	public void keyTyped(KeyEvent e)
+         	{
+         		System.out.println(Character.isSpaceChar(e.getKeyChar()));
+         		
+         		if(!Character.isSpaceChar(e.getKeyChar()))
+         		{
+         			if(Character.isDigit(e.getKeyChar()) || !Character.isAlphabetic(e.getKeyChar()))
+         			{
+         				e.consume();
+         			}
+         		}
+         		
+         		if(JtextField.getText().length() >= 20)
+         		{
+         			e.consume();
+         		}
+         	}
+ 		});
+    }
+    
     
     Color defaultColor = null;
 	Color clickedColor = Color.GRAY;
