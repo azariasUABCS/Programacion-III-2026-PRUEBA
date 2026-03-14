@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Window;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -162,9 +164,12 @@ public class Login extends JPanel{
 	}
 	private void configurarTextos() {
 		
-		usuario.setForeground(Color.BLACK);
+		
 		usuario.setFont(fontTexto);
+		usuario.setBackground(Colores.BLACKBERRY_CREAM);
+        usuario.setForeground(Color.WHITE);
 		usuario.setMaximumSize(new Dimension(670,50));
+		
 		usuario.getDocument().addDocumentListener(new DocumentListener() {
 			
 			@Override
@@ -185,9 +190,28 @@ public class Login extends JPanel{
 				evaluarCorreo();
 			}
 		});
+		usuario.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				usuario.setBackground(Colores.BLACKBERRY_CREAM);
+		        usuario.setForeground(Color.WHITE);
+				
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				usuario.setBackground(Color.WHITE);
+		        usuario.setForeground(Color.BLACK);
+			}
+		});
 		
-		contraseña.setForeground(Color.BLACK);
+		
 		contraseña.setFont(fontTexto);
+		contraseña.setBackground(Colores.BLACKBERRY_CREAM);
+        contraseña.setForeground(Color.WHITE);
 		contraseña.setMaximumSize(new Dimension(670,50));
 		contraseña.getDocument().addDocumentListener(new DocumentListener() {
 			
@@ -207,6 +231,23 @@ public class Login extends JPanel{
 			public void changedUpdate(DocumentEvent e) {
 				// TODO Auto-generated method stub
 				evaluarContrasena();
+			}
+		});
+		contraseña.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				contraseña.setBackground(Colores.BLACKBERRY_CREAM);
+		        contraseña.setForeground(Color.WHITE);
+				
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				contraseña.setBackground(Color.WHITE);
+		        contraseña.setForeground(Color.BLACK);
 			}
 		});
 	}

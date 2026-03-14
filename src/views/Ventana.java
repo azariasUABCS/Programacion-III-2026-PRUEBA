@@ -8,7 +8,8 @@ import java.awt.Image;
 import java.awt.Panel;
 import java.awt.Point;
 import java.awt.Toolkit;
-
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
@@ -31,16 +32,65 @@ public class Ventana extends JFrame{
 	
 	public Ventana()
 	{
+		Toolkit tk = Toolkit.getDefaultToolkit();
+		
 		setLayout(null);
 		setBounds(25, 25, 1300, 700); // Hace lo mismo de setSize y setLocation.
 		setResizable(false);  // No se puede cambiar de tamaño con el mouse.
 		setTitle("Mi Aplicación (Progamación III) por Azarias");  // Nombre de la Ventana
 		setLocationRelativeTo(null);  // Pone la ventana en el centro
-		Toolkit tk = Toolkit.getDefaultToolkit();
+		
 		Image icono = tk.getImage("src\\img\\icono.png");
 		setIconImage(icono);	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra la penstaña, si no se queda abrierta.
 		getContentPane().setBackground(Colores.BLACKBERRY_CREAM);
+		
+		addWindowListener(new WindowListener() {
+			
+			@Override
+			public void windowOpened(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowIconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowActivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				getContentPane().setBackground(Colores.BLACKBERRY_CREAM);
+			}
+			
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+				getContentPane().setBackground(Color.GRAY);
+				
+			}
+			
+			@Override
+			public void windowClosing(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowClosed(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			
+		});
 		
 		ImageIcon cursorImage = new ImageIcon("src\\img\\pointer_b.png");
 		Cursor myCursor = tk.createCustomCursor(cursorImage.getImage(), new Point(0,0), "Cursor");

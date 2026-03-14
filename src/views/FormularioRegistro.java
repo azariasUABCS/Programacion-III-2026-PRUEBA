@@ -6,10 +6,14 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.TextField;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
@@ -62,9 +66,53 @@ public class FormularioRegistro extends JFrame{
         setResizable(false);
         setTitle("Registro");
         setLocationRelativeTo(null);
-        
         getContentPane().setBackground(Colores.BLACKBERRY_CREAM);
-        
+        addWindowListener(new WindowListener() {
+			
+			@Override
+			public void windowOpened(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowIconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				getContentPane().setBackground(Color.GRAY);
+				
+			}
+
+			@Override
+			public void windowActivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				getContentPane().setBackground(Colores.BLACKBERRY_CREAM);
+			}
+			
+			@Override
+			public void windowClosing(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowClosed(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
         
         PanelPersonalizable fondo = new PanelPersonalizable();
         fondo.setBounds(30, 50, 280, 420);
@@ -119,11 +167,13 @@ public class FormularioRegistro extends JFrame{
         nombres = crearTextField("nombres");
         asignarValidacion(nombres); 
         asignarKeyListener(nombres); // Es la nueva funcion que agregue.
+        asignarFocusListener(nombres);
         
         
         apellidos = crearTextField("apellidos");
         asignarValidacion(apellidos);
         asignarKeyListener(apellidos); 
+        asignarFocusListener(apellidos);
         
         
         panelNombres.add(nombres);
@@ -160,6 +210,7 @@ public class FormularioRegistro extends JFrame{
         
         correo = crearTextField("correo");
         asignarValidacion(correo);
+        asignarFocusListener(correo);
 
         
         panelComponentes.add(correo);
@@ -180,7 +231,7 @@ public class FormularioRegistro extends JFrame{
         
         contraseña = crearTextField("contraseña");
         asignarValidacion(contraseña);
-        
+        asignarFocusListener(contraseña);
         
         panelComponentes.add(contraseña);
         
@@ -388,6 +439,25 @@ public class FormularioRegistro extends JFrame{
 		}
 
 		return true;
+    }
+    
+    private void asignarFocusListener(JTextField textField) {
+    	textField.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				textField.setBackground(Colores.BLACKBERRY_CREAM);
+		        textField.setForeground(Color.WHITE);
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				textField.setBackground(Color.WHITE);
+		        textField.setForeground(Color.BLACK);
+			}
+		});
     }
     
     private void asignarValidacion(JTextField JtextField)
