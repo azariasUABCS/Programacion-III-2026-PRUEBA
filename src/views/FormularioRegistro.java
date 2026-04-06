@@ -400,10 +400,18 @@ public class FormularioRegistro extends JFrame{
 		}else {
 			lblErrorCorreo.setText(" ");
 		}
+    	
+    	if (correo.getText().trim().length() < 3) 
+    	{
+    		lblErrorContrasena.setText("Email inválido! Es muy corta.");
+    	    return false;
+    	}else {
+			lblErrorContrasena.setText(" ");
+		}
 
 		if (!correo.getText().contains("@")) 
 		{
-			lblErrorCorreo.setText("Email inválido");
+			lblErrorCorreo.setText("Email inválido! Le falta @");
 			return false;
 		}else {
 			lblErrorCorreo.setText(" ");
@@ -419,6 +427,14 @@ public class FormularioRegistro extends JFrame{
     		lblErrorContrasena.setText("La contraseña es obligatorio");
 			return false;
 		}else {
+			lblErrorContrasena.setText(" ");
+		}
+    	
+    	if (contraseña.getText().trim().length() < 5) 
+    	{
+    		lblErrorContrasena.setText("La contraseña es muy corta, minimo 5 characteres");
+    	    return false;
+    	}else {
 			lblErrorContrasena.setText(" ");
 		}
     	
