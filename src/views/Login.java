@@ -28,6 +28,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import exceptions.InvalidUserException;
 import utils.Colores;
 
 
@@ -123,13 +124,16 @@ public class Login extends JPanel{
 		resetearCredenciales();
 		boolean error=false;
 		Window window=SwingUtilities.getWindowAncestor(this);
-		if(usuario.getText().equals("")) {
-			mensajeCorreo.setText("* Correo obligatorio *");
+		try {
+			evaluarCorreo();
+		}catch(InvalidUserException ex){
+			mensajeCorreo.setText(ex.getMessage());
 			error=true;
-			
 		}
-		if(contraseña.getPassword().length==0) {
-			mensajeContraseña.setText("* Contraseña obligatoria *");
+		try {
+			evaluarContrasena();
+		}catch(InvalidUserException ex){
+			mensajeContraseña.setText(ex.getMessage());
 			error=true;
 		}
 		if(error==false) {
@@ -138,18 +142,18 @@ public class Login extends JPanel{
 		}
 		
 	}
-	private void evaluarCorreo() {
+	private void evaluarCorreo() throws InvalidUserException {
 		if(usuario.getText().equals("")) {
-			mensajeCorreo.setText("* Correo obligatorio *");
-		}else {
-			mensajeCorreo.setText(" ");
+			throw new InvalidUserException("* Correo obligatorio *");
 		}
+		if(!usuario.getText().equals("")&&!usuario.getText().equals("papita@gmail.com")) {
+			throw new InvalidUserException("* Correo erroneo *");
+		}
+		
 	}
-	private void evaluarContrasena() {
-		if(contraseña.getPassword().length==0) {
-			mensajeContraseña.setText("* Contraseña obligatorio *");
-		}else {
-			mensajeContraseña.setText(" ");
+	private void evaluarContrasena() throws InvalidUserException {
+		if(String.valueOf(contraseña.getPassword()).equals("") ){
+			throw new InvalidUserException("* Contraseña obligatorio *");
 		}
 	}
 	private void configurarMensajes() {
@@ -170,26 +174,6 @@ public class Login extends JPanel{
         usuario.setForeground(Color.WHITE);
 		usuario.setMaximumSize(new Dimension(670,50));
 		
-		usuario.getDocument().addDocumentListener(new DocumentListener() {
-			
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				evaluarCorreo();
-			}
-			
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				
-				evaluarCorreo();
-			}
-			
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				evaluarCorreo();
-			}
-		});
 		usuario.addFocusListener(new FocusListener() {
 			
 			@Override
@@ -213,26 +197,7 @@ public class Login extends JPanel{
 		contraseña.setBackground(Colores.BLACKBERRY_CREAM);
         contraseña.setForeground(Color.WHITE);
 		contraseña.setMaximumSize(new Dimension(670,50));
-		contraseña.getDocument().addDocumentListener(new DocumentListener() {
-			
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				evaluarContrasena();
-			}
-			
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				evaluarContrasena();
-			}
-			
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				evaluarContrasena();
-			}
-		});
+		
 		contraseña.addFocusListener(new FocusListener() {
 			
 			@Override
