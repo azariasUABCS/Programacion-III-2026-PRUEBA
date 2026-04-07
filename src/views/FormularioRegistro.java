@@ -348,12 +348,15 @@ public class FormularioRegistro extends JFrame{
 		
 		if (!validarConstasena())  valid = false;
 		
+	
 		
-		if (valid) {
+		if (valid) 
+		{
 			JOptionPane.showMessageDialog(this, "Registro exitoso");
 			
 			dispose(); // Use el dispose que habias puesto en addActionListener
 		}
+		
     }
     
     private void resetearErrorLabels() 
