@@ -340,15 +340,11 @@ public class FormularioRegistro extends JFrame{
 
 		boolean valid = true;
 
-		if (!validarNombre())  valid = false;
+		if (!validarNombre() || !validarApellido() || !validarCorreo() || !validarConstasena())  
+		{	
+			valid = false;
+		}
 
-		if (!validarApellido())  valid = false;
-		
-		if (!validarCorreo())  valid = false;
-		
-		if (!validarConstasena())  valid = false;
-		
-	
 		
 		if (valid) 
 		{
