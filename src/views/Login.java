@@ -44,6 +44,8 @@ public class Login extends JPanel{
 	JLabel mensajeContraseña = new JLabel(" ");
 	JTextField usuario = new JTextField(30);
 	JPasswordField contraseña = new JPasswordField(30);
+	JButton buttonIniciar= new JButton("Iniciar Sesión");
+	JButton Registrarse = new JButton(" Registrarse   ");
 	
 	public Login(){	
 		
@@ -73,7 +75,7 @@ public class Login extends JPanel{
 		botones.setBackground(Colores.MIDNIGHT_VIOLET);
 		botones.setBorder(new EmptyBorder(0,15,0,0));
 		
-		JButton buttonIniciar = new JButton("Iniciar Sesión");
+		
 		crearBoton(buttonIniciar, "..\\img\\login.png", "Clic para Iniciar Sesión!");
 		buttonIniciar.addActionListener(e -> evaluarCredenciales());
 		
@@ -93,7 +95,7 @@ public class Login extends JPanel{
 		
 		
 		
-		JButton Registrarse = new JButton(" Registrarse   ");
+		
 		crearBoton(Registrarse, "..\\img\\enter.png", "Clic para Registrarse!");
 		Registrarse.addActionListener(e -> new FormularioRegistro());
 		
@@ -257,4 +259,146 @@ public class Login extends JPanel{
 		c.setBackground(defaultColor);
 		c.setForeground(Color.BLACK);
 	}
+
+
+	public int getX() {
+		return x;
+	}
+
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+
+	public int getY() {
+		return y;
+	}
+
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+
+	public boolean isLogrado() {
+		return logrado;
+	}
+
+
+	public void setLogrado(boolean logrado) {
+		this.logrado = logrado;
+	}
+
+
+	public Font getFontTexto() {
+		return fontTexto;
+	}
+
+
+	public void setFontTexto(Font fontTexto) {
+		this.fontTexto = fontTexto;
+	}
+
+
+	public Font getFontBoton() {
+		return fontBoton;
+	}
+
+
+	public void setFontBoton(Font fontBoton) {
+		this.fontBoton = fontBoton;
+	}
+
+
+	public Font getFontTitulo() {
+		return fontTitulo;
+	}
+
+
+	public void setFontTitulo(Font fontTitulo) {
+		this.fontTitulo = fontTitulo;
+	}
+
+
+	public JLabel getMensajeCorreo() {
+		return mensajeCorreo;
+	}
+
+
+	public void setMensajeCorreo(JLabel mensajeCorreo) {
+		this.mensajeCorreo = mensajeCorreo;
+	}
+
+
+	public JLabel getMensajeContraseña() {
+		return mensajeContraseña;
+	}
+
+
+	public void setMensajeContraseña(JLabel mensajeContraseña) {
+		this.mensajeContraseña = mensajeContraseña;
+	}
+
+
+	public JTextField getUsuario() {
+		return usuario;
+	}
+
+
+	public void setUsuario(JTextField usuario) {
+		this.usuario = usuario;
+	}
+
+
+	public JPasswordField getContraseña() {
+		return contraseña;
+	}
+
+
+	public void setContraseña(JPasswordField contraseña) {
+		this.contraseña = contraseña;
+	}
+
+
+	public JButton getButtonIniciar() {
+		return buttonIniciar;
+	}
+
+
+	public void setButtonIniciar(JButton buttonIniciar) {
+		this.buttonIniciar = buttonIniciar;
+	}
+
+
+	public JButton getRegistrarse() {
+		return Registrarse;
+	}
+
+
+	public void setRegistrarse(JButton registrarse) {
+		Registrarse = registrarse;
+	}
+
+
+	public Color getDefaultColor() {
+		return defaultColor;
+	}
+
+
+	public void setDefaultColor(Color defaultColor) {
+		this.defaultColor = defaultColor;
+	}
+
+
+	public Color getClickedColor() {
+		return clickedColor;
+	}
+
+
+	public void setClickedColor(Color clickedColor) {
+		this.clickedColor = clickedColor;
+	}
+	
+	
 }
