@@ -25,6 +25,7 @@ import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
+import controllers.LoginController;
 import utils.Colores;
 
 
@@ -101,6 +102,7 @@ public class Ventana extends JFrame{
 		login.setBounds(750,140,300,400);
 		login.setBackground(Colores.MIDNIGHT_VIOLET);
 		login.setOpaque(false);
+		new LoginController(login);
 		add(login);
 		
 		//Agregar a los usuarios

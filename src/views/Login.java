@@ -70,6 +70,10 @@ public class Login extends JPanel{
 		add(contraseña);
 		add(Box.createRigidArea(new Dimension(0,40)));
 		
+		configurarBotones();
+		
+	}
+	private void configurarBotones() {
 		PanelPersonalizable botones = new PanelPersonalizable();
 		botones.setLayout(new BoxLayout(botones, BoxLayout.Y_AXIS));
 		botones.setBackground(Colores.MIDNIGHT_VIOLET);
@@ -77,7 +81,7 @@ public class Login extends JPanel{
 		
 		
 		crearBoton(buttonIniciar, "..\\img\\login.png", "Clic para Iniciar Sesión!");
-		buttonIniciar.addActionListener(e -> evaluarCredenciales());
+		
 		
 		botones.add(buttonIniciar);
 		
@@ -97,7 +101,7 @@ public class Login extends JPanel{
 		
 		
 		crearBoton(Registrarse, "..\\img\\enter.png", "Clic para Registrarse!");
-		Registrarse.addActionListener(e -> new FormularioRegistro());
+		
 		
 		Registrarse.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent e) 
@@ -114,49 +118,6 @@ public class Login extends JPanel{
 		add(botones);
 		botones.add(Box.createRigidArea(new Dimension(0, 12))); // Espacio de 12 píxeles
 		botones.add(Registrarse);
-	}
-	
-	
-	private void resetearCredenciales() {
-		mensajeCorreo.setText(" ");
-		mensajeContraseña.setText(" ");
-	}
-	
-	private void evaluarCredenciales() {
-		resetearCredenciales();
-		boolean error=false;
-		Window window=SwingUtilities.getWindowAncestor(this);
-		try {
-			evaluarCorreo();
-		}catch(InvalidUserException ex){
-			mensajeCorreo.setText(ex.getMessage());
-			error=true;
-		}
-		try {
-			evaluarContrasena();
-		}catch(InvalidUserException ex){
-			mensajeContraseña.setText(ex.getMessage());
-			error=true;
-		}
-		if(error==false) {
-			new VentanaPrincipal();
-			window.dispose();
-		}
-		
-	}
-	private void evaluarCorreo() throws InvalidUserException {
-		if(usuario.getText().equals("")) {
-			throw new InvalidUserException("* Correo obligatorio *");
-		}
-		if(!usuario.getText().equals("")&&!usuario.getText().equals("papita@gmail.com")) {
-			throw new InvalidUserException("* Correo erroneo *");
-		}
-		
-	}
-	private void evaluarContrasena() throws InvalidUserException {
-		if(String.valueOf(contraseña.getPassword()).equals("") ){
-			throw new InvalidUserException("* Contraseña obligatorio *");
-		}
 	}
 	private void configurarMensajes() {
 		
@@ -260,26 +221,9 @@ public class Login extends JPanel{
 		c.setForeground(Color.BLACK);
 	}
 
-
-	public int getX() {
-		return x;
+	public Window getWindow() {
+		return SwingUtilities.getWindowAncestor(this);
 	}
-
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-
-	public int getY() {
-		return y;
-	}
-
-
-	public void setY(int y) {
-		this.y = y;
-	}
-
 
 	public boolean isLogrado() {
 		return logrado;
@@ -399,6 +343,9 @@ public class Login extends JPanel{
 	public void setClickedColor(Color clickedColor) {
 		this.clickedColor = clickedColor;
 	}
+
+
+	
 	
 	
 }
