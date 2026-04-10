@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.TextField;
+import java.awt.Window;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
@@ -27,6 +28,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -35,6 +37,7 @@ import utils.Colores;
 
 public class FormularioRegistro extends JFrame{
     
+	
 	// Puro Fonts, ya depues hare otra clase de Fonts
     public Font fuente;
     private Font fontError = new Font("Times New Roman", Font.ITALIC, 11);
@@ -45,18 +48,20 @@ public class FormularioRegistro extends JFrame{
     
     
     // Fields de Texto para Usuario
-    JTextField nombres;
-    JTextField apellidos;
-    JTextField correo;
-    JTextField contraseña;
+    public JTextField nombres;
+    public JTextField apellidos;
+    public JTextField correo;
+    public JTextField contraseña;
+    
+    // JBotones para Regsitro Controller
+    public JButton registrar = new JButton("Registrarse");
     
     
     // Labels de Error
-    private JLabel lblErrorNombre;
-    private JLabel lblErrorApellido;
-    private JLabel lblErrorCorreo;
-    private JLabel lblErrorContrasena;
-    
+    public JLabel lblErrorNombre;
+    public JLabel lblErrorApellido;
+    public JLabel lblErrorCorreo;
+    public JLabel lblErrorContrasena;
     
     
     public FormularioRegistro()
@@ -67,52 +72,6 @@ public class FormularioRegistro extends JFrame{
         setTitle("Registro");
         setLocationRelativeTo(null);
         getContentPane().setBackground(Colores.BLACKBERRY_CREAM);
-        addWindowListener(new WindowListener() {
-			
-			@Override
-			public void windowOpened(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowIconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowDeiconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowDeactivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-				getContentPane().setBackground(Color.GRAY);
-				
-			}
-
-			@Override
-			public void windowActivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-				getContentPane().setBackground(Colores.BLACKBERRY_CREAM);
-			}
-			
-			@Override
-			public void windowClosing(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowClosed(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
         
         PanelPersonalizable fondo = new PanelPersonalizable();
         fondo.setBounds(30, 50, 280, 420);
@@ -165,14 +124,10 @@ public class FormularioRegistro extends JFrame{
         panelNombres.setPreferredSize(new Dimension(260, 60));
         
         nombres = crearTextField("nombres");
-        asignarValidacion(nombres); 
-        asignarKeyListener(nombres); // Es la nueva funcion que agregue.
         asignarFocusListener(nombres);
         
         
         apellidos = crearTextField("apellidos");
-        asignarValidacion(apellidos);
-        asignarKeyListener(apellidos); 
         asignarFocusListener(apellidos);
         
         
@@ -180,7 +135,6 @@ public class FormularioRegistro extends JFrame{
         panelNombres.add(Box.createRigidArea(new Dimension(5, 0)));
         panelNombres.add(apellidos);
         panelComponentes.add(panelNombres);
-        
         
         
         // Panel de errores de nombres
@@ -209,7 +163,6 @@ public class FormularioRegistro extends JFrame{
         panelComponentes.add(indicacionCorreo);
         
         correo = crearTextField("correo");
-        asignarValidacion(correo);
         asignarFocusListener(correo);
 
         
@@ -230,7 +183,6 @@ public class FormularioRegistro extends JFrame{
         panelComponentes.add(indicacionContraseña);
         
         contraseña = crearTextField("contraseña");
-        asignarValidacion(contraseña);
         asignarFocusListener(contraseña);
         
         panelComponentes.add(contraseña);
@@ -249,10 +201,9 @@ public class FormularioRegistro extends JFrame{
         panelBoton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         
-        JButton registrar = new JButton("Registrarse");
         crearBoton(registrar, "..\\img\\icono.png");
         
-        registrar.addActionListener(e -> validacionDeRegistro());
+        
         
         registrar.addMouseListener(new MouseAdapter() 
         {
@@ -277,6 +228,8 @@ public class FormularioRegistro extends JFrame{
         setVisible(true);
     }
     
+ 
+    // Configuracion de Labels
     private void configurarErrorLabel(JLabel label, int ancho, int alto) 
     {
         label.setPreferredSize(new Dimension(ancho, alto));
@@ -331,31 +284,7 @@ public class FormularioRegistro extends JFrame{
     }
     
     
-    
-    // Validaciones de Formulario Registro
-    
-    private void validacionDeRegistro()
-    {
-    	resetearErrorLabels();
-
-		boolean valid = true;
-
-		if (!validarNombre() || !validarApellido() || !validarCorreo() || !validarConstasena())  
-		{	
-			valid = false;
-		}
-
-		
-		if (valid) 
-		{
-			JOptionPane.showMessageDialog(this, "Registro exitoso");
-			
-			dispose(); // Use el dispose que habias puesto en addActionListener
-		}
-		
-    }
-    
-    private void resetearErrorLabels() 
+    public void resetearErrorLabels() 
     {
 		lblErrorNombre.setText("");
 		lblErrorApellido.setText("");
@@ -363,98 +292,6 @@ public class FormularioRegistro extends JFrame{
 		lblErrorContrasena.setText("");
 	}
     
-    
-    private boolean validarNombre()
-    {
-    	if (nombres.getText().trim().isEmpty()) 
-    	{
-    		lblErrorNombre.setText("El nombre es obligatorio");
-			return false;
-		}else {
-			lblErrorNombre.setText(" ");
-		}
-
-		return true;
-    }
-    
-    private boolean validarApellido()
-    {
-    	if (apellidos.getText().trim().isEmpty()) 
-    	{
-    		lblErrorApellido.setText("El apellido es obligatorio");
-			return false;
-		}else {
-			lblErrorApellido.setText(" ");
-		}
-
-		return true;
-    }
-    
-    private boolean validarCorreo()
-    {
-    	if (correo.getText().trim().isEmpty()) 
-    	{
-			lblErrorCorreo.setText("El email es obligatorio");
-			return false;
-		}else {
-			lblErrorCorreo.setText(" ");
-		}
-    	
-    	if (correo.getText().trim().length() < 3) 
-    	{
-    		lblErrorContrasena.setText("Email inválido! Es muy corta.");
-    	    return false;
-    	}else {
-			lblErrorContrasena.setText(" ");
-		}
-
-		if (!correo.getText().contains("@")) 
-		{
-			lblErrorCorreo.setText("Email inválido! Le falta @");
-			return false;
-		}else {
-			lblErrorCorreo.setText(" ");
-		}
-
-		return true;
-    }
-    
-    private boolean validarConstasena()
-    {
-    	if (contraseña.getText().trim().isEmpty()) 
-    	{
-    		lblErrorContrasena.setText("La contraseña es obligatorio");
-			return false;
-		}else {
-			lblErrorContrasena.setText(" ");
-		}
-    	
-    	if (contraseña.getText().trim().length() < 5) 
-    	{
-    		lblErrorContrasena.setText("La contraseña es muy corta, minimo 5 characteres");
-    	    return false;
-    	}else {
-			lblErrorContrasena.setText(" ");
-		}
-    	
-    	if (!contraseña.getText().matches(".*[!$?_*].*")) // Regex que checa que por lo menos hay uno de estos char
-    	{
-    	    lblErrorContrasena.setText("Necesita un caracter especial (! $ ? _ *)");
-    	    return false;
-    	}else {
-			lblErrorContrasena.setText(" ");
-		}
-    	
-    	if (contraseña.getText().trim().matches(".*\\s.*")) // Regex que checa si hay espacios entre texto
-    	{
-    		lblErrorContrasena.setText("La contraseña no puede tener espacios");
-    	    return false;
-    	}else {
-			lblErrorContrasena.setText(" ");
-		}
-
-		return true;
-    }
     
     private void asignarFocusListener(JTextField textField) {
     	textField.addFocusListener(new FocusListener() {
@@ -475,129 +312,6 @@ public class FormularioRegistro extends JFrame{
 		});
     }
     
-    private void asignarValidacion(JTextField JtextField)
-    {
-    	System.out.println(JtextField.getName());
-    	
-    	switch(JtextField.getName().toString())
-    	{
-    		case "nombres":
-    			JtextField.getDocument().addDocumentListener(new DocumentListener() {
-    				
-    				@Override
-    				public void removeUpdate(DocumentEvent e) {
-    					// TODO Auto-generated method stub
-    					validarNombre();
-    				}
-    				
-    				@Override
-    				public void insertUpdate(DocumentEvent e) {
-    					// TODO Auto-generated method stub
-    					validarNombre();
-    				}
-    				
-    				@Override
-    				public void changedUpdate(DocumentEvent e) {
-    					// TODO Auto-generated method stub
-    					validarNombre();
-    				}
-    			});
-    			break;
-    			
-    		case "apellidos":
-    			JtextField.getDocument().addDocumentListener(new DocumentListener() {
-    					
-    					@Override
-    					public void removeUpdate(DocumentEvent e) {
-    						// TODO Auto-generated method stub
-    						validarApellido();
-    					}
-    					
-    					@Override
-    					public void insertUpdate(DocumentEvent e) {
-    						// TODO Auto-generated method stub
-    						validarApellido();
-    					}
-    					
-    					@Override
-    					public void changedUpdate(DocumentEvent e) {
-    						// TODO Auto-generated method stub
-    						validarApellido();
-    					}
-    				});
-    			break;
-    			
-    		case "correo":
-    			 JtextField.getDocument().addDocumentListener(new DocumentListener() {
-    					
-    					@Override
-    					public void removeUpdate(DocumentEvent e) {
-    						// TODO Auto-generated method stub
-    						validarCorreo();
-    					}
-    					
-    					@Override
-    					public void insertUpdate(DocumentEvent e) {
-    						// TODO Auto-generated method stub
-    						validarCorreo();
-    					}
-    					
-    					@Override
-    					public void changedUpdate(DocumentEvent e) {
-    						// TODO Auto-generated method stub
-    						validarCorreo();
-    					}
-    				});
-    			break;
-    			
-    		case "contraseña":
-    			contraseña.getDocument().addDocumentListener(new DocumentListener() {
-    				
-    				@Override
-    				public void removeUpdate(DocumentEvent e) {
-    					validarConstasena();
-    					
-    				}
-    				
-    				@Override
-    				public void insertUpdate(DocumentEvent e) {
-    					// TODO Auto-generated method stub
-    					validarConstasena();
-    				}
-    				
-    				@Override
-    				public void changedUpdate(DocumentEvent e) {
-    					// TODO Auto-generated method stub
-    					validarConstasena();
-    				}
-    			});
-    			break;
-    	}
-    }
-    
-    private void asignarKeyListener(JTextField JtextField)
-    {
-    	JtextField.addKeyListener(new KeyAdapter() 
-         {
-         	public void keyTyped(KeyEvent e)
-         	{
-         		System.out.println(Character.isSpaceChar(e.getKeyChar()));
-         		
-         		if(!Character.isSpaceChar(e.getKeyChar()))
-         		{
-         			if(Character.isDigit(e.getKeyChar()) || !Character.isAlphabetic(e.getKeyChar()))
-         			{
-         				e.consume();
-         			}
-         		}
-         		
-         		if(JtextField.getText().length() >= 20)
-         		{
-         			e.consume();
-         		}
-         	}
- 		});
-    }
     
     
     Color defaultColor = null;
@@ -615,5 +329,18 @@ public class FormularioRegistro extends JFrame{
 	{
 		c.setBackground(defaultColor);
 		c.setForeground(Color.BLACK);
+	}
+	
+	
+	// Controller Methods
+	
+	public Window getWindow()
+	{
+		return this;
+	}
+	
+	public void callJOptionPane()
+	{
+		JOptionPane.showMessageDialog(this, "Registro exitoso");
 	}
 }

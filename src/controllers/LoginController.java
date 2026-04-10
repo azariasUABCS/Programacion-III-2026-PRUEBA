@@ -15,7 +15,10 @@ public class LoginController {
 	public LoginController(Login login) {
 		this.login=login;
 		login.getButtonIniciar().addActionListener(e -> evaluarCredenciales());
-		login.getRegistrarse().addActionListener(e -> new FormularioRegistro());
+		login.getRegistrarse().addActionListener(e -> {	
+			
+			new RegistroController();			
+		});
 	}
 	private void resetearCredenciales() {
 		login.getMensajeCorreo().setText(" ");

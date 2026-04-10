@@ -97,6 +97,7 @@ public class Ventana extends JFrame{
 		Cursor myCursor = tk.createCustomCursor(cursorImage.getImage(), new Point(0,0), "Cursor");
 		this.setCursor(myCursor);
 		
+		
 		// Login Panel
 		Login login = new Login();
 		login.setBounds(750,140,300,400);
