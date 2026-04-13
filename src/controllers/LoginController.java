@@ -3,6 +3,8 @@ package controllers;
 import java.awt.Window;
 
 import javax.swing.SwingUtilities;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import exceptions.InvalidUserException;
 import views.FormularioRegistro;
@@ -19,6 +21,7 @@ public class LoginController {
 			
 			new RegistroController();			
 		});
+		addDocumentListeners();
 	}
 	private void resetearCredenciales() {
 		login.getMensajeCorreo().setText(" ");
@@ -47,6 +50,77 @@ public class LoginController {
 		}
 		
 	}
+	public void addDocumentListeners() {
+		login.getUsuario().getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				try {
+					evaluarCorreoRT();
+				}catch(InvalidUserException ex){
+					login.getMensajeCorreo().setText(ex.getMessage());
+					
+				}
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				try {
+					evaluarCorreoRT();
+				}catch(InvalidUserException ex){
+					login.getMensajeCorreo().setText(ex.getMessage());
+					
+				}
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				try {
+					evaluarCorreoRT();
+				}catch(InvalidUserException ex){
+					login.getMensajeCorreo().setText(ex.getMessage());
+					
+				}
+			}
+		});
+		
+		login.getContraseña().getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				try {
+					evaluarContrasena();
+				}catch(InvalidUserException ex){
+					login.getMensajeContraseña().setText(ex.getMessage());
+				}
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				try {
+					evaluarContrasena();
+				}catch(InvalidUserException ex){
+					login.getMensajeContraseña().setText(ex.getMessage());
+				}
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				try {
+					evaluarContrasena();
+				}catch(InvalidUserException ex){
+					login.getMensajeContraseña().setText(ex.getMessage());
+				}
+			}
+		});
+		
+	}
 	private void evaluarCorreo() throws InvalidUserException {
 		if(login.getUsuario().getText().equals("")) {
 			throw new InvalidUserException("* Correo obligatorio *");
@@ -56,9 +130,20 @@ public class LoginController {
 		}
 		
 	}
+	private void evaluarCorreoRT() throws InvalidUserException {
+		resetearCredenciales();
+		if(login.getUsuario().getText().equals("")) {
+			throw new InvalidUserException("* Correo obligatorio *");
+		}
+		if(!login.getUsuario().getText().equals("")&&!login.getUsuario().getText().contains("@")) {
+			throw new InvalidUserException("\"Debe tener domimio\"");
+		}
+		
+	}
 	private void evaluarContrasena() throws InvalidUserException {
+		resetearCredenciales();
 		if(String.valueOf(login.getContraseña().getPassword()).equals("") ){
-			throw new InvalidUserException("* Contraseña obligatorio *");
+			throw new InvalidUserException("* Contraseña obligatoria *");
 		}
 	}
 }
