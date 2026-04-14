@@ -1,12 +1,17 @@
 package controllers;
 
 import java.awt.Window;
+import java.io.IOException;
+import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import exceptions.InvalidUserException;
+import modelos.User;
+import respository.UserRepository;
 import views.FormularioRegistro;
 import views.Login;
 import views.VentanaPrincipal;
@@ -122,10 +127,11 @@ public class LoginController {
 		
 	}
 	private void evaluarCorreo() throws InvalidUserException {
-		if(login.getUsuario().getText().equals("")) {
+		if(login.getUsuario().getText().trim().equals("")) {
 			throw new InvalidUserException("* Correo obligatorio *");
 		}
-		if(!login.getUsuario().getText().equals("")&&!login.getUsuario().getText().equals("papita@gmail.com")) {
+		else if(!existeCuenta(login.getUsuario().getText().trim(), login.getContraseña().getText().trim())) // PAPITA CAMBIE ESTO PARA VERIFICAR. Codigo original: !login.getUsuario().getText().trim().equals("")&&!login.getUsuario().getText().equals("papita@gmail.com")
+		{
 			throw new InvalidUserException("* Correo erroneo *");
 		}
 		
@@ -145,6 +151,38 @@ public class LoginController {
 		if(String.valueOf(login.getContraseña().getPassword()).equals("") ){
 			throw new InvalidUserException("* Contraseña obligatoria *");
 		}
+		
+		if(!existeCuenta(login.getUsuario().getText().trim(), login.getContraseña().getText().trim())) // PAPITA CAMBIE ESTO PARA VERIFICAR. Codigo original: !login.getUsuario().getText().trim().equals("")&&!login.getUsuario().getText().equals("papita@gmail.com")
+		{
+			throw new InvalidUserException("* Contraseña erroneo *");  // Se que no deberiamos poner esto pero pues solo para que sepamos que la contraseña esta mal.
+		}
+	}
+	
+	
+	// Regresa true si el correo y contrasena que ingreso el usuario se encuentra el usuario en el archivo scr/files/users.csv
+	private boolean existeCuenta(String correo, String contrasena)
+	{
+		UserRepository repository = new UserRepository();
+		try 
+		{
+			List<User> users = repository.getUsers(); 
+			
+			for(User user : users) 
+			{
+				if(user.getCorreo().equals(correo) && user.getContrasena().equals(contrasena))
+				{
+					System.out.println("Ingresado por Usuario: " + correo + " / " + contrasena);
+					System.out.println("Usuario Registrado en Sistem: " + user.getCorreo() + " / " + user.getContrasena() + "\n");
+					return true; 
+				}
+			}
+		} 
+		catch (IOException ex) 
+		{
+			
+		}
+		
+		return false;
 	}
 }
 

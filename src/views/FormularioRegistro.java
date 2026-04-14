@@ -33,6 +33,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import modelos.User;
+import respository.UserRepository;
 import utils.Colores;
 
 public class FormularioRegistro extends JFrame{
@@ -55,7 +57,8 @@ public class FormularioRegistro extends JFrame{
     
     // JBotones para Regsitro Controller
     public JButton registrar = new JButton("Registrarse");
-    
+   
+    private UserRepository userRepository;
     
     // Labels de Error
     public JLabel lblErrorNombre;
@@ -66,6 +69,9 @@ public class FormularioRegistro extends JFrame{
     
     public FormularioRegistro()
     {
+
+    	userRepository = new UserRepository();
+    	
         setSize(350, 550);
         setLayout(null);
         setResizable(false);
@@ -339,8 +345,19 @@ public class FormularioRegistro extends JFrame{
 		return this;
 	}
 	
-	public void callJOptionPane()
+	public void registerUser(User user)
 	{
-		JOptionPane.showMessageDialog(this, "Registro exitoso");
+		try
+		{
+			userRepository.save(user);
+
+			System.out.println("Se Registro Usuario!");
+			JOptionPane.showMessageDialog(this, "Usuario registrado");
+		}
+		catch (Exception e) 
+		{
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
 	}
+	
 }

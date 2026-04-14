@@ -7,10 +7,13 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import modelos.User;
+import respository.UserRepository;
 import utils.Colores;
 import views.FormularioRegistro;
 
@@ -102,9 +105,12 @@ public class RegistroController {
 		
 		if (valid) 
 		{
-			formularioRegsitro.callJOptionPane();
+			String nombre = formularioRegsitro.nombres.getText().trim();
+			String apellido = formularioRegsitro.apellidos.getText().trim();
+			String correo = formularioRegsitro.correo.getText().trim();
+			String contrasena = formularioRegsitro.contraseña.getText().trim();
 			
-			// Use el dispose que habias puesto en addActionListener
+			formularioRegsitro.registerUser(new User(nombre, apellido, correo, contrasena));
 			formularioRegsitro.getWindow().dispose();
 		}
 		
@@ -158,7 +164,17 @@ public class RegistroController {
 		{
 			formularioRegsitro.lblErrorCorreo.setText("Email inválido! Le falta @");
 			return false;
-		}else {
+		}else 
+		{
+			formularioRegsitro.lblErrorCorreo.setText(" ");
+		}
+		
+		if (!formularioRegsitro.correo.getText().contains(".com")) 
+		{
+			formularioRegsitro.lblErrorCorreo.setText("Email inválido! Le falta .com");
+			return false;
+		}else 
+		{
 			formularioRegsitro.lblErrorCorreo.setText(" ");
 		}
 
@@ -323,4 +339,5 @@ public class RegistroController {
          	}
  		});
     }
+    
 }
