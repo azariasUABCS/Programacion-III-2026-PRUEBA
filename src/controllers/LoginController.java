@@ -50,7 +50,7 @@ public class LoginController {
 			error=true;
 		}
 		if(error==false) {
-			new VentanaPrincipal();
+			new VentanaPrincipalController(new VentanaPrincipal());
 			window.dispose();
 		}
 		

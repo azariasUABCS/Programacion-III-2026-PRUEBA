@@ -5,6 +5,7 @@ import javax.swing.border.EmptyBorder;
 
 import modelos.User;
 import respository.UserRepository;
+import tablemodels.UserTableModel;
 import utils.Colores;
 
 import java.awt.Dimension;

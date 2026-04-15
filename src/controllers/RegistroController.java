@@ -116,7 +116,7 @@ public class RegistroController {
 		
     }
 	
-	public boolean validarNombre()
+	public boolean validarNombre() 
     {
     	if (formularioRegsitro.nombres.getText().trim().isEmpty()) 
     	{
