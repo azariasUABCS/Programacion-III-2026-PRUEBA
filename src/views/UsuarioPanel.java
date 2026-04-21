@@ -21,5 +21,6 @@ public class UsuarioPanel extends JPanel {
 		add(usrNombre);
 		add(usrApellido);
 		
+		
 	}
 }

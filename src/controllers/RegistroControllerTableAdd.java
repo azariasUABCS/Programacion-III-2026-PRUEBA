@@ -17,13 +17,14 @@ import respository.UserRepository;
 import utils.Colores;
 import views.FormularioRegistro;
 import views.Ventana;
+import views.VentanaPrincipal;
 
 
-public class RegistroController {
+public class RegistroControllerTableAdd {
 
 	private FormularioRegistro formularioRegsitro;
 	
-	public RegistroController()
+	public RegistroControllerTableAdd()
 	{
 		formularioRegsitro = new FormularioRegistro();
 		formularioRegsitro.registrar.addActionListener(e -> validacionDeRegistro());
@@ -112,8 +113,9 @@ public class RegistroController {
 			String contrasena = formularioRegsitro.contraseña.getText().trim();
 			
 			formularioRegsitro.registerUser(new User(nombre, apellido, correo, contrasena));
-			new Ventana();
+			
 			formularioRegsitro.getWindow().dispose();
+			
 		}
 		
     }

@@ -24,6 +24,11 @@ public class VentanaPrincipal extends JFrame
 	public JButton btnUsers;
 
 	public JButton btnHome;
+	
+	public JButton btnAdd;
+	public JButton btnMod;
+	public JButton btnDel;
+	
 	public UsersView usersPanel;
 	
 	private CardLayout cardLayout;
@@ -52,9 +57,15 @@ public class VentanaPrincipal extends JFrame
 		btnHome = new JButton("Inicio");
 		btnUsers = new JButton("Usuarios");
 		
+		btnAdd = new JButton("Añadir");
+		btnMod = new JButton("Modificar");
+		btnDel = new JButton("Eliminar");
+		
 		navbar.add(btnHome);
 		navbar.add(btnUsers);
-		
+		navbar.add(btnAdd);
+		navbar.add(btnMod);
+		navbar.add(btnDel);
 		add(navbar, BorderLayout.NORTH);
 	}
 	

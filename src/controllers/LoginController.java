@@ -21,16 +21,23 @@ public class LoginController {
 	private Login login = new Login();
 	public LoginController(Login login) {
 		this.login=login;
-		login.getButtonIniciar().addActionListener(e -> evaluarCredenciales());
-		login.getRegistrarse().addActionListener(e -> {	
-			
-			new RegistroController();			
-		});
+		
+		addActionListeners();
 		addDocumentListeners();
 	}
 	private void resetearCredenciales() {
 		login.getMensajeCorreo().setText(" ");
 		login.getMensajeContraseña().setText(" ");
+	}
+	
+	private void addActionListeners() {
+		
+		login.getButtonIniciar().addActionListener(e -> evaluarCredenciales());
+		login.getRegistrarse().addActionListener(e -> {	
+			Window window=login.getWindow();
+			window.dispose();
+			new RegistroController();			
+		});
 	}
 	
 	private void evaluarCredenciales() {
@@ -40,13 +47,13 @@ public class LoginController {
 		try {
 			evaluarCorreo();
 		}catch(InvalidUserException ex){
-			login.getMensajeCorreo().setText(ex.getMessage());
+			login.getMensajeCorreo().setText("* Credenciales erroneas *");
 			error=true;
 		}
 		try {
 			evaluarContrasena();
 		}catch(InvalidUserException ex){
-			login.getMensajeContraseña().setText(ex.getMessage());
+			login.getMensajeCorreo().setText("* Credenciales erroneas *");
 			error=true;
 		}
 		if(error==false) {
@@ -150,11 +157,6 @@ public class LoginController {
 		resetearCredenciales();
 		if(String.valueOf(login.getContraseña().getPassword()).equals("") ){
 			throw new InvalidUserException("* Contraseña obligatoria *");
-		}
-		
-		if(!existeCuenta(login.getUsuario().getText().trim(), login.getContraseña().getText().trim())) // PAPITA CAMBIE ESTO PARA VERIFICAR. Codigo original: !login.getUsuario().getText().trim().equals("")&&!login.getUsuario().getText().equals("papita@gmail.com")
-		{
-			throw new InvalidUserException("* Contraseña erroneo *");  // Se que no deberiamos poner esto pero pues solo para que sepamos que la contraseña esta mal.
 		}
 	}
 	

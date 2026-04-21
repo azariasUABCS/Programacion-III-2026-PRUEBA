@@ -44,7 +44,9 @@ public class VentanaPrincipalController {
 		});
 		
 		view.btnHome.addActionListener(e -> view.showView(VentanaPrincipal.HOME));
-		
+		view.btnAdd.addActionListener(e -> {
+			new RegistroControllerTableAdd();
+		});
 	}
 	
 	private void showUsers() 
@@ -79,5 +81,6 @@ public class VentanaPrincipalController {
 			view.dispose();
 		}
 	}
+	
 	
 }
