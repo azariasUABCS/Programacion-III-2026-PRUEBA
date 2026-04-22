@@ -7,6 +7,7 @@ import modelos.User;
 import respository.UserRepository;
 import tablemodels.UserTableModel;
 import utils.Colores;
+import utils.PanelPersonalizable;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -54,7 +55,7 @@ public class Usuarios extends JPanel {
 			}
 			if(usuarios.size()%2!=0) {
 				PanelPersonalizable relleno = new PanelPersonalizable();
-				relleno.setBackground(Colores.MIDNIGHT_VIOLET);
+				relleno.setBackground(Colores.LOGIN_PANEL);
 				add(relleno);
 			}
 			setVisible(true);

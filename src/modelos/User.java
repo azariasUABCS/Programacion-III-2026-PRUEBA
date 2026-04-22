@@ -8,20 +8,26 @@ public class User {
 	
 	private String nombre;
 	private String apellido;
-	private String email;
+	private String correo;
 	private String contrasena;
 	
 	
 	public User(String email, String contrasena) {
-		this.email = email;
+		this.correo = email;
 		this.contrasena = contrasena;
+	}
+	
+	public User(String nombre, String apellio, String email) {
+		this.nombre = nombre;
+		this.apellido = apellio;
+		this.correo = email;
 	}
 	
 	public User(String nombre, String apellido, String email, String contrasena) {
 		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
-		this.email = email;
+		this.correo = email;
 		this.contrasena = contrasena;
 	}
 
@@ -42,11 +48,11 @@ public class User {
 	}
 
 	public String getCorreo() {
-		return email;
+		return correo;
 	}
 
 	public void setCorreo(String email) {
-		this.email = email;
+		this.correo = email;
 	}
 
 
@@ -59,14 +65,14 @@ public class User {
 	public String toString() {
 		return "Nombre: " + nombre +
 					"\nApelldo: " + apellido +
-					"\nEmail: " + email +
+					"\nEmail: " + correo +
 					"\nContraseña: " + contrasena;
 	}
 	
 	public String toCsv() {
 		return nombre + "," +
 					apellido + "," +
-		           	email + "," +
+		           	correo + "," +
 		           	contrasena;
 	}
 	

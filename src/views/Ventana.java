@@ -27,6 +27,7 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 
 import controllers.LoginController;
 import utils.Colores;
+import utils.PanelPersonalizable;
 
 
 public class Ventana extends JFrame{
@@ -44,7 +45,7 @@ public class Ventana extends JFrame{
 		Image icono = tk.getImage("src\\img\\icono.png");
 		setIconImage(icono);	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra la penstaña, si no se queda abrierta.
-		getContentPane().setBackground(Colores.BLACKBERRY_CREAM);
+		getContentPane().setBackground(Colores.BACKGROUND);
 		
 		addWindowListener(new WindowListener() {
 			
@@ -69,7 +70,7 @@ public class Ventana extends JFrame{
 			@Override
 			public void windowActivated(WindowEvent e) {
 				// TODO Auto-generated method stub
-				getContentPane().setBackground(Colores.BLACKBERRY_CREAM);
+				getContentPane().setBackground(Colores.BACKGROUND);
 			}
 			
 			@Override
@@ -101,7 +102,7 @@ public class Ventana extends JFrame{
 		// Login Panel
 		Login login = new Login();
 		login.setBounds(750,140,300,400);
-		login.setBackground(Colores.MIDNIGHT_VIOLET);
+		login.setBackground(Colores.BACKGROUND);
 		login.setOpaque(false);
 		new LoginController(login);
 		add(login);
@@ -117,8 +118,8 @@ public class Ventana extends JFrame{
 		scrollUsuarios.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
 		    @Override
 		    protected void configureScrollBarColors() {
-		        this.thumbColor = Colores.BLACKBERRY_CREAM;       // color del "pulgar" (la parte que arrastras)
-		        this.trackColor = Colores.MIDNIGHT_VIOLET; // color del fondo
+		        this.thumbColor = Colores.BUTTON_COLOR1;       // color del "pulgar" (la parte que arrastras)
+		        this.trackColor = Color.LIGHT_GRAY; // color del fondo
 		    }
 		    @Override
             protected JButton createDecreaseButton(int orientation) {
@@ -144,16 +145,16 @@ public class Ventana extends JFrame{
 		scrollUsuarios.setBorder(null);
 		add(scrollUsuarios);
 		
-		// Shadow of Login Panel
+		
 		PanelPersonalizable fondo1=new PanelPersonalizable();
 		fondo1.setBounds(130, 120, 950, 450);
-		fondo1.setBackground(Colores.MIDNIGHT_VIOLET);
+		fondo1.setBackground(Colores.LOGIN_PANEL);
 		add(fondo1);
 		
 		// Shadow of Login Panel
 		PanelPersonalizable fondo2=new PanelPersonalizable();
-		fondo2.setBounds(140, 130, 950, 450);
-		fondo2.setBackground(new Color(44, 0, 47));
+		fondo2.setBounds(127, 117, 957, 457);
+		fondo2.setBackground(Colores.SHADOW_COLOR);
 		add(fondo2);
 		
 		

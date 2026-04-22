@@ -7,13 +7,11 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import modelos.User;
-import respository.UserRepository;
 import utils.Colores;
 import views.FormularioRegistro;
 import views.Ventana;
@@ -30,7 +28,7 @@ public class RegistroController {
 		
 		addWindowListener();
 		
-        asignarKeyListener(formularioRegsitro.nombres); // Es la nueva funcion que agregue.
+        asignarKeyListener(formularioRegsitro.nombres);
         asignarKeyListener(formularioRegsitro.apellidos); 
         
 		asignarValidacion(formularioRegsitro.nombres); 
@@ -71,7 +69,7 @@ public class RegistroController {
 				@Override
 				public void windowActivated(WindowEvent e) {
 					// TODO Auto-generated method stub
-					((JFrame) formularioRegsitro.getWindow()).getContentPane().setBackground(Colores.BLACKBERRY_CREAM);
+					((JFrame) formularioRegsitro.getWindow()).getContentPane().setBackground(Colores.BACKGROUND);
 				}
 				
 				@Override
@@ -90,7 +88,6 @@ public class RegistroController {
 	}
 			
 	
-	
 // Validaciones de Formulario Registro
     
 	private void validacionDeRegistro()
@@ -100,16 +97,16 @@ public class RegistroController {
 		boolean valid = true;
 
 		if (!validarNombre()) { valid = false; }
+		if (!validarApellido()) { valid = false; }
 		if (!validarCorreo()) { valid = false; }
-		if (!validarConstasena()) { valid = false; } 
-		if (!validarApellido())	{ valid = false; }
+		if (!validarConstasena()) { valid = false; }
 		
 		if (valid) 
 		{
-			String nombre = formularioRegsitro.nombres.getText().trim();
-			String apellido = formularioRegsitro.apellidos.getText().trim();
-			String correo = formularioRegsitro.correo.getText().trim();
-			String contrasena = formularioRegsitro.contraseña.getText().trim();
+			String nombre = formularioRegsitro.getNombre();
+			String apellido = formularioRegsitro.getApellido();
+			String correo = formularioRegsitro.getCorreo();
+			String contrasena = formularioRegsitro.getContraseña();
 			
 			formularioRegsitro.registerUser(new User(nombre, apellido, correo, contrasena));
 			new Ventana();
@@ -120,12 +117,14 @@ public class RegistroController {
 	
 	public boolean validarNombre() 
     {
-    	if (formularioRegsitro.nombres.getText().trim().isEmpty()) 
+    	String nombre = formularioRegsitro.nombres.getText().trim();
+    	
+    	if (nombre.isEmpty() || nombre.equals("Nombre")) 
     	{
     		formularioRegsitro.lblErrorNombre.setText("El nombre es obligatorio");
 			return false;
-		}else {
-			formularioRegsitro.lblErrorNombre.setText(" ");
+		} else {
+			formularioRegsitro.lblErrorNombre.setText("");
 		}
 
 		return true;
@@ -133,12 +132,14 @@ public class RegistroController {
 	
     public boolean validarApellido()
     {
-    	if (formularioRegsitro.apellidos.getText().trim().isEmpty()) 
+    	String apellido = formularioRegsitro.apellidos.getText().trim();
+    	
+    	if (apellido.isEmpty() || apellido.equals("Apellido")) 
     	{
     		formularioRegsitro.lblErrorApellido.setText("El apellido es obligatorio");
 			return false;
-		}else {
-			formularioRegsitro.lblErrorApellido.setText(" ");
+		} else {
+			formularioRegsitro.lblErrorApellido.setText("");
 		}
 
 		return true;
@@ -146,77 +147,72 @@ public class RegistroController {
     
     public boolean validarCorreo()
     {
-    	if (formularioRegsitro.correo.getText().trim().isEmpty()) 
+    	String correo = formularioRegsitro.correo.getText().trim();
+    	
+    	if (correo.isEmpty() || correo.equals("correo@ejemplo.com")) 
     	{
     		formularioRegsitro.lblErrorCorreo.setText("El email es obligatorio");
 			return false;
-		}else {
-			formularioRegsitro.lblErrorCorreo.setText(" ");
 		}
     	
-    	if (formularioRegsitro.correo.getText().trim().length() < 3) 
+    	if (correo.length() < 5) 
     	{
-    		formularioRegsitro.lblErrorContrasena.setText("Email inválido! Es muy corta.");
+    		formularioRegsitro.lblErrorCorreo.setText("Email inválido! Es muy corto.");
     	    return false;
-    	}else {
-    		formularioRegsitro.lblErrorContrasena.setText(" ");
-		}
+    	}
 
-		if (!formularioRegsitro.correo.getText().contains("@")) 
+		if (!correo.contains("@")) 
 		{
 			formularioRegsitro.lblErrorCorreo.setText("Email inválido! Le falta @");
 			return false;
-		}else 
-		{
-			formularioRegsitro.lblErrorCorreo.setText(" ");
 		}
 		
-		if (!formularioRegsitro.correo.getText().contains(".com")) 
+		if (!correo.contains(".com")) 
 		{
-			formularioRegsitro.lblErrorCorreo.setText("Email inválido! Le falta .com");
+			formularioRegsitro.lblErrorCorreo.setText("Email inválido! Le falta un '.com'");
 			return false;
-		}else 
-		{
-			formularioRegsitro.lblErrorCorreo.setText(" ");
 		}
-
+		
+		// Validación adicional para dominio
+		String[] parts = correo.split("@");
+		if (parts.length != 2 || !parts[1].contains(".")) {
+			formularioRegsitro.lblErrorCorreo.setText("Email inválido! Formato incorrecto");
+			return false;
+		}
+		
+		formularioRegsitro.lblErrorCorreo.setText("");
 		return true;
     }
     
     public boolean validarConstasena()
     {
-    	if (formularioRegsitro.contraseña.getText().trim().isEmpty()) 
+    	String contrasena = formularioRegsitro.contraseña.getText();
+    	
+    	if (contrasena.isEmpty() || contrasena.equals("Contraseña")) 
     	{
-    		formularioRegsitro.lblErrorContrasena.setText("La contraseña es obligatorio");
+    		formularioRegsitro.lblErrorContrasena.setText("La contraseña es obligatoria");
 			return false;
-		}else {
-			formularioRegsitro.lblErrorContrasena.setText(" ");
 		}
     	
-    	if (formularioRegsitro.contraseña.getText().trim().length() < 5) 
+    	if (contrasena.length() < 5) 
     	{
-    		formularioRegsitro.lblErrorContrasena.setText("La contraseña es muy corta, minimo 5 characteres");
+    		formularioRegsitro.lblErrorContrasena.setText("La contraseña es muy corta, mínimo 5 caracteres");
     	    return false;
-    	}else {
-    		formularioRegsitro.lblErrorContrasena.setText(" ");
-		}
+    	}
     	
-    	if (!formularioRegsitro.contraseña.getText().matches(".*[!$?_*].*")) // Regex que checa que por lo menos hay uno de estos char
+    	if (!contrasena.matches(".*[!$?_*].*")) // Regex que checa que por lo menos hay uno de estos char
     	{
     		formularioRegsitro.lblErrorContrasena.setText("Necesita un caracter especial (! $ ? _ *)");
     	    return false;
-    	}else {
-    		formularioRegsitro.lblErrorContrasena.setText(" ");
-		}
+    	}
     	
-    	if (formularioRegsitro.contraseña.getText().trim().matches(".*\\s.*")) // Regex que checa si hay espacios entre texto
+    	if (contrasena.matches(".*\\s.*")) // Regex que checa si hay espacios entre texto
     	{
     		formularioRegsitro.lblErrorContrasena.setText("La contraseña no puede tener espacios");
     	    return false;
-    	}else {
-    		formularioRegsitro.lblErrorContrasena.setText(" ");
-		}
+    	}
 
+    	formularioRegsitro.lblErrorContrasena.setText("");
 		return true;
     }
     
@@ -230,19 +226,16 @@ public class RegistroController {
     				
     				@Override
     				public void removeUpdate(DocumentEvent e) {
-    					// TODO Auto-generated method stub
     					validarNombre();
     				}
     				
     				@Override
     				public void insertUpdate(DocumentEvent e) {
-    					// TODO Auto-generated method stub
     					validarNombre();
     				}
     				
     				@Override
     				public void changedUpdate(DocumentEvent e) {
-    					// TODO Auto-generated method stub
     					validarNombre();
     				}
     			});
@@ -253,19 +246,16 @@ public class RegistroController {
     					
     					@Override
     					public void removeUpdate(DocumentEvent e) {
-    						// TODO Auto-generated method stub
     						validarApellido();
     					}
     					
     					@Override
     					public void insertUpdate(DocumentEvent e) {
-    						// TODO Auto-generated method stub
     						validarApellido();
     					}
     					
     					@Override
     					public void changedUpdate(DocumentEvent e) {
-    						// TODO Auto-generated method stub
     						validarApellido();
     					}
     				});
@@ -276,19 +266,16 @@ public class RegistroController {
     					
     					@Override
     					public void removeUpdate(DocumentEvent e) {
-    						// TODO Auto-generated method stub
     						validarCorreo();
     					}
     					
     					@Override
     					public void insertUpdate(DocumentEvent e) {
-    						// TODO Auto-generated method stub
     						validarCorreo();
     					}
     					
     					@Override
     					public void changedUpdate(DocumentEvent e) {
-    						// TODO Auto-generated method stub
     						validarCorreo();
     					}
     				});
@@ -300,18 +287,15 @@ public class RegistroController {
     				@Override
     				public void removeUpdate(DocumentEvent e) {
     					validarConstasena();
-    					
     				}
     				
     				@Override
     				public void insertUpdate(DocumentEvent e) {
-    					// TODO Auto-generated method stub
     					validarConstasena();
     				}
     				
     				@Override
     				public void changedUpdate(DocumentEvent e) {
-    					// TODO Auto-generated method stub
     					validarConstasena();
     				}
     			});
@@ -325,12 +309,14 @@ public class RegistroController {
          {
          	public void keyTyped(KeyEvent e)
          	{
-         		
-         		if(!Character.isSpaceChar(e.getKeyChar()))
-         		{
-         			if(Character.isDigit(e.getKeyChar()) || !Character.isAlphabetic(e.getKeyChar()))
+         		// Solo para nombres y apellidos, no para correo y contraseña
+         		if (JtextField.getName().equals("nombres") || JtextField.getName().equals("apellidos")) {
+         			if(!Character.isSpaceChar(e.getKeyChar()))
          			{
-         				e.consume();
+         				if(Character.isDigit(e.getKeyChar()) || !Character.isAlphabetic(e.getKeyChar()))
+         				{
+         					e.consume();
+         				}
          			}
          		}
          		

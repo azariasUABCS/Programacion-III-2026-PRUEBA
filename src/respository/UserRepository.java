@@ -49,8 +49,6 @@ public class UserRepository {
 		try(BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FILE), StandardCharsets.UTF_8)))
 		
 		{
-			
-			
 			for(User user : users) {
 				writer.write(user.toCsv());
 				writer.newLine();

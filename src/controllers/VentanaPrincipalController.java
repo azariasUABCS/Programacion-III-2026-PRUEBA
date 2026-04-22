@@ -5,52 +5,48 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.List;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import modelos.User;
 import respository.UserRepository;
 import tablemodels.UserTableModel;
-import views.Login;
 import views.Ventana;
 import views.VentanaPrincipal;
 
 public class VentanaPrincipalController {
+
+	private VentanaPrincipal ventanaPrincipal;
 	
-	private VentanaPrincipal view;
-	
-	public VentanaPrincipalController(VentanaPrincipal ventanaPrincipal)
-	{
-		this.view = ventanaPrincipal;
+	public VentanaPrincipalController(VentanaPrincipal ventanaPrincipal) {
+		
+		this.ventanaPrincipal = ventanaPrincipal;
 		registerListeners();
+		
 	}
 	
-	public void registerListeners( ) 
-	{
+	public void registerListeners( ) {
 		
-		view.mItemExit.addActionListener(e -> handleClose());
+		ventanaPrincipal.mItemExit.addActionListener(e -> handleClose());
 		
-		view.addWindowListener(new WindowAdapter() 
-		{
+		ventanaPrincipal.addWindowListener(new WindowAdapter() {
 			@Override
-			public void windowClosing(WindowEvent e) 
-			{
+			public void windowClosing(WindowEvent e) {
 				handleClose();
 			}
 		});
 		
-		view.btnUsers.addActionListener(e -> {
+		ventanaPrincipal.btnUsers.addActionListener(e -> {
 			showUsers();
 		});
 		
-		view.btnHome.addActionListener(e -> view.showView(VentanaPrincipal.HOME));
-		view.btnAdd.addActionListener(e -> {
-			new RegistroControllerTableAdd();
-		});
+		ventanaPrincipal.btnHome.addActionListener(e -> ventanaPrincipal.showView(ventanaPrincipal.HOME));
+		
 	}
 	
-	private void showUsers() 
-	{
+	public void showUsers() {
+		
+		UserController controller = new UserController(ventanaPrincipal.usersPanel, this);
+		
 		UserRepository repository = new UserRepository();
 		
 		try {
@@ -58,29 +54,24 @@ public class VentanaPrincipalController {
 			
 			UserTableModel model = new UserTableModel(users);
 			
-			view.usersPanel.setTableModel(model);
+			ventanaPrincipal.usersPanel.setTableModel(model);
 			
-			view.showView(VentanaPrincipal.USERS);
+			ventanaPrincipal.showView(ventanaPrincipal.USERS);
 			
-		}
-		catch (IOException ex) 
-		{
-			JOptionPane.showMessageDialog(view, ex.getMessage());
+		}catch (IOException ex) {
+			JOptionPane.showMessageDialog(ventanaPrincipal, ex.getMessage());
 		}
 		
 	}
 	
-	private void handleClose() 
-	{
-		int option = view.confirmExit();
+	private void handleClose() {
+		int option = ventanaPrincipal.confirmExit();
 		System.out.println(option);
 
-		if (option == JOptionPane.YES_OPTION) 
-		{
+		if (option == JOptionPane.YES_OPTION) {
 			new Ventana();
-			view.dispose();
+			ventanaPrincipal.dispose();
 		}
 	}
-	
 	
 }

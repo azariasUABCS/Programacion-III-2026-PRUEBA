@@ -34,8 +34,6 @@ public class LoginController {
 		
 		login.getButtonIniciar().addActionListener(e -> evaluarCredenciales());
 		login.getRegistrarse().addActionListener(e -> {	
-			Window window=login.getWindow();
-			window.dispose();
 			new RegistroController();			
 		});
 	}
@@ -145,7 +143,7 @@ public class LoginController {
 	}
 	private void evaluarCorreoRT() throws InvalidUserException {
 		resetearCredenciales();
-		if(login.getUsuario().getText().equals("")) {
+		if(login.getUsuario().getText().equals("") || login.getUsuario().getText().equals("Correo Electrónico")) {
 			throw new InvalidUserException("* Correo obligatorio *");
 		}
 		if(!login.getUsuario().getText().equals("")&&!login.getUsuario().getText().contains("@")) {
@@ -155,7 +153,7 @@ public class LoginController {
 	}
 	private void evaluarContrasena() throws InvalidUserException {
 		resetearCredenciales();
-		if(String.valueOf(login.getContraseña().getPassword()).equals("") ){
+		if(String.valueOf(login.getContraseña().getPassword()).equals("") || String.valueOf(login.getContraseña().getPassword()).equals("Contraseña")){
 			throw new InvalidUserException("* Contraseña obligatoria *");
 		}
 	}

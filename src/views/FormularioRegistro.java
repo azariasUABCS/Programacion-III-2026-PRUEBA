@@ -5,16 +5,11 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.TextField;
 import java.awt.Window;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
@@ -28,24 +23,21 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 import modelos.User;
 import respository.UserRepository;
 import utils.Colores;
+import utils.PanelPersonalizable;
 
 public class FormularioRegistro extends JFrame{
     
 	
 	// Puro Fonts, ya depues hare otra clase de Fonts
     public Font fuente;
-    private Font fontError = new Font("Times New Roman", Font.ITALIC, 11);
-    private Font fontTexto = new Font("Times New Roman", Font.BOLD, 15);
-    private Font fontTextoCampo = new Font("Times New Roman", Font.BOLD, 15);
-    private Font fontBoton = new Font("Times New Roman", Font.BOLD, 15);
+    private Font fontError = new Font("Times New Roman", Font.ITALIC, 15);
+    private Font fontTextoCampo = new Font("Times New Roman", Font.ITALIC, 15);
+    private Font fontBoton = new Font("Times New Roman", Font.BOLD, 20);
     private Font fontTitulo = new Font("Times New Roman", Font.BOLD, 35);
     
     
@@ -56,7 +48,7 @@ public class FormularioRegistro extends JFrame{
     public JTextField contraseña;
     
     // JBotones para Regsitro Controller
-    public JButton registrar = new JButton("Registrarse");
+    public JButton registrar = new JButton(" Registrarse");
    
     private UserRepository userRepository;
     
@@ -69,28 +61,29 @@ public class FormularioRegistro extends JFrame{
     
     public FormularioRegistro()
     {
-
     	userRepository = new UserRepository();
     	
-        setSize(350, 550);
+        setSize(850, 675);
         setLayout(null);
         setResizable(false);
         setTitle("Registro");
         setLocationRelativeTo(null);
-        getContentPane().setBackground(Colores.BLACKBERRY_CREAM);
+        getContentPane().setBackground(Colores.BACKGROUND);
+
         
         PanelPersonalizable fondo = new PanelPersonalizable();
-        fondo.setBounds(30, 50, 280, 420);
-        fondo.setBackground(Colores.MIDNIGHT_VIOLET);
+        fondo.setBounds(75, 50, 680, 550);
+        fondo.setBackground(Colores.LOGIN_PANEL);
         
+        // Shadow
         PanelPersonalizable fondo2 = new PanelPersonalizable();
-        fondo2.setBounds(35, 55, 280, 420);
-        fondo2.setBackground(new Color(44, 0, 47));
+        fondo2.setBounds(72, 46, 687, 557);
+        fondo2.setBackground(Colores.SHADOW_COLOR);
         
 
         JPanel panelComponentes = new JPanel();
         panelComponentes.setLayout(new BoxLayout(panelComponentes, BoxLayout.Y_AXIS));
-        panelComponentes.setBounds(0, 50, 340, 440);
+        panelComponentes.setBounds(70, 50, 680, 550);
         panelComponentes.setOpaque(false);
         panelComponentes.setBorder(new EmptyBorder(20, 40, 20, 40));
         
@@ -101,11 +94,11 @@ public class FormularioRegistro extends JFrame{
         JLabel saludo = new JLabel("Registrate");
         saludo.setOpaque(false);
         saludo.setFont(fontTitulo);
-        saludo.setForeground(Color.WHITE);
+        saludo.setForeground(Colores.TEXT_COLOR);
         saludo.setAlignmentX(Component.CENTER_ALIGNMENT);
         
         panelComponentes.add(saludo);
-        panelComponentes.add(Box.createRigidArea(new Dimension(0,20)));
+        panelComponentes.add(Box.createRigidArea(new Dimension(0,35)));
 
         lblErrorNombre = crearErrorLabel();
         lblErrorApellido = crearErrorLabel();
@@ -113,103 +106,16 @@ public class FormularioRegistro extends JFrame{
         lblErrorContrasena = crearErrorLabel();
         
         
-        // Panel para las indicaciones de nombres
-        JLabel indicaciones = new JLabel("Nombre          Apellidos");
-        indicaciones.setForeground(Colores.WHITE);
-        indicaciones.setFont(fontTexto);
-        indicaciones.setAlignmentX(Component.CENTER_ALIGNMENT); // Otra vez centrar
-        panelComponentes.add(indicaciones);
-
-        
-        // Panel para los campos de nombres y apellidos
-        JPanel panelNombres = new JPanel();
-        panelNombres.setLayout(new BoxLayout(panelNombres, BoxLayout.X_AXIS));
-        panelNombres.setOpaque(false);
-        panelNombres.setAlignmentX(Component.CENTER_ALIGNMENT); 
-        panelNombres.setMaximumSize(new Dimension(260, 60));
-        panelNombres.setPreferredSize(new Dimension(260, 60));
-        
-        nombres = crearTextField("nombres");
-        asignarFocusListener(nombres);
+        crearComponentesDeRegistro(panelComponentes);
         
         
-        apellidos = crearTextField("apellidos");
-        asignarFocusListener(apellidos);
-        
-        
-        panelNombres.add(nombres);
-        panelNombres.add(Box.createRigidArea(new Dimension(5, 0)));
-        panelNombres.add(apellidos);
-        panelComponentes.add(panelNombres);
-        
-        
-        // Panel de errores de nombres
-        JPanel panelErroresNombres = new JPanel();
-        panelErroresNombres.setLayout(new BoxLayout(panelErroresNombres, BoxLayout.X_AXIS));
-        panelErroresNombres.setOpaque(false);
-        panelErroresNombres.setAlignmentX(Component.CENTER_ALIGNMENT); 
-        panelErroresNombres.setMaximumSize(new Dimension(260, 20));
-        
-        configurarErrorLabel(lblErrorNombre, 125, 20);
-        configurarErrorLabel(lblErrorApellido, 125, 20);
-        
-        panelErroresNombres.add(lblErrorNombre);
-        panelErroresNombres.add(Box.createRigidArea(new Dimension(10, 0)));
-        panelErroresNombres.add(lblErrorApellido);
-        
-        panelComponentes.add(panelErroresNombres);
-        panelComponentes.add(Box.createRigidArea(new Dimension(0,10)));
-
-        
-        // Campo de Correo
-        JLabel indicacionCorreo = new JLabel("Correo");
-        indicacionCorreo.setFont(fontTexto);
-        indicacionCorreo.setForeground(Colores.WHITE);
-        indicacionCorreo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panelComponentes.add(indicacionCorreo);
-        
-        correo = crearTextField("correo");
-        asignarFocusListener(correo);
-
-        
-        panelComponentes.add(correo);
-        
-        configurarErrorLabel(lblErrorCorreo, 260, 20);
-        lblErrorCorreo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panelComponentes.add(lblErrorCorreo);
-        
-        panelComponentes.add(Box.createRigidArea(new Dimension(0,10)));
-
-        
-        // Campo de Contraseña
-        JLabel indicacionContraseña = new JLabel("Contraseña");
-        indicacionContraseña.setFont(fontTexto);
-        indicacionContraseña.setForeground(Colores.WHITE);
-        indicacionContraseña.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panelComponentes.add(indicacionContraseña);
-        
-        contraseña = crearTextField("contraseña");
-        asignarFocusListener(contraseña);
-        
-        panelComponentes.add(contraseña);
-        
-        configurarErrorLabel(lblErrorContrasena, 260, 20);
-        lblErrorContrasena.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panelComponentes.add(lblErrorContrasena);
-        
-        panelComponentes.add(Box.createRigidArea(new Dimension(0,15)));
-        
-        
-        // Button Registrar
+        // Button Registrar - Ahora se puede mover cambiando el rigid area antes de él
         JPanel panelBoton = new JPanel();
         panelBoton.setLayout(new BoxLayout(panelBoton, BoxLayout.Y_AXIS));
         panelBoton.setOpaque(false);
         panelBoton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        
         crearBoton(registrar, "..\\img\\icono.png");
-        
-        
         
         registrar.addMouseListener(new MouseAdapter() 
         {
@@ -224,8 +130,13 @@ public class FormularioRegistro extends JFrame{
 			}
 		});
         
+
+        panelComponentes.add(Box.createRigidArea(new Dimension(0,15)));
         panelBoton.add(registrar);
         panelComponentes.add(panelBoton);
+        
+        
+        panelComponentes.add(Box.createRigidArea(new Dimension(0, 20)));
         
         add(panelComponentes);
         add(fondo);
@@ -234,45 +145,73 @@ public class FormularioRegistro extends JFrame{
         setVisible(true);
     }
     
- 
-    // Configuracion de Labels
-    private void configurarErrorLabel(JLabel label, int ancho, int alto) 
-    {
-        label.setPreferredSize(new Dimension(ancho, alto));
-        label.setMaximumSize(new Dimension(ancho, alto));
-        label.setMinimumSize(new Dimension(ancho, alto));
-        label.setHorizontalAlignment(SwingConstants.LEFT);
-    }
     
-    private JTextField crearTextField(String JTextFieldName) 
+    private JTextField crearTextField(String placeholder, String JTextFieldName) 
     {
-        JTextField textField = new JTextField();
-        textField.setMaximumSize(new Dimension(260, 40));
-        textField.setPreferredSize(new Dimension(260, 40));
-        textField.setBackground(Colores.BLACKBERRY_CREAM);
-        textField.setForeground(Color.WHITE);
+        JTextField textField = new JTextField(placeholder);
+        
+        int fieldWidth = 400;
+        int fieldHeight = 45;
+        
+        textField.setMaximumSize(new Dimension(fieldWidth, fieldHeight));
+        textField.setPreferredSize(new Dimension(fieldWidth, fieldHeight));
+        textField.setMinimumSize(new Dimension(fieldWidth, fieldHeight));
+        
+        textField.setBackground(Colores.BACKGROUND);
+        textField.setForeground(Color.GRAY);
         textField.setFont(fontTextoCampo);
         textField.setAlignmentX(Component.CENTER_ALIGNMENT);
-        
         textField.setName(JTextFieldName);
         
         return textField;
     }
     
+    private void asignarFocusListenerConPlaceholder(JTextField textField, String placeholder) {
+    	
+    	textField.setBackground(Colores.TABBED_TEXT_COLOR);
+    	
+        textField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textField.getText().equals(placeholder)) {
+                    textField.setText("");
+                    textField.setForeground(Color.BLACK);
+                    textField.setBackground(Color.WHITE);
+                }
+            }
+            
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textField.getText().isEmpty()) {
+                    textField.setText(placeholder);
+                    textField.setForeground(Color.GRAY);
+                    textField.setBackground(Colores.TABBED_TEXT_COLOR);
+                } else {
+                    textField.setBackground(Colores.TABBED_TEXT_COLOR);
+                    textField.setForeground(Color.WHITE);
+                }
+            }
+        });
+    }
+    
     private void crearBoton(JButton button, String ruta)
     {
-        button.setBackground(Colores.WHITE);
+        int buttonWidth = 200;   
+        int buttonHeight = 50;   
+        
+        button.setBackground(Colores.BUTTON_COLOR1);
         button.setForeground(Color.black);
         button.setToolTipText("Registrarse");
         button.setFont(fontBoton);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        button.setMaximumSize(new Dimension(200, 40));
-        button.setPreferredSize(new Dimension(200, 40));
+        button.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
+        button.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
+        button.setMinimumSize(new Dimension(buttonWidth, buttonHeight));
         
         try 
         {
             Image icono = ImageIO.read(getClass().getResource(ruta));
-            icono = icono.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+            icono = icono.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
             button.setIcon(new ImageIcon(icono));
         }
         catch (Exception ex)
@@ -286,9 +225,13 @@ public class FormularioRegistro extends JFrame{
         JLabel label = new JLabel("");
         label.setFont(fontError);
         label.setForeground(Color.RED);
+        label.setMaximumSize(new Dimension(400, 20));
+        label.setPreferredSize(new Dimension(400, 20));
+        label.setMinimumSize(new Dimension(400, 20));
+        label.setAlignmentX(Component.LEFT_ALIGNMENT); // CAMBIADO: Alinear a la izquierda
+        label.setHorizontalAlignment(SwingConstants.LEFT); // CAMBIADO: Texto alineado a la izquierda
         return label;
     }
-    
     
     public void resetearErrorLabels() 
     {
@@ -296,37 +239,120 @@ public class FormularioRegistro extends JFrame{
 		lblErrorApellido.setText("");
 		lblErrorCorreo.setText("");
 		lblErrorContrasena.setText("");
-	}
+    }
+    
+    public void crearComponentesDeRegistro(JPanel panelComponentes)
+    {
+        nombres = crearTextField("Nombre", "nombres");
+        apellidos = crearTextField("Apellido", "apellidos");
+        correo = crearTextField("correo@ejemplo.com", "correo");
+        contraseña = crearTextField("Contraseña", "contraseña");
+        
+        asignarFocusListenerConPlaceholder(nombres, "Nombre");
+        asignarFocusListenerConPlaceholder(apellidos, "Apellido");
+        asignarFocusListenerConPlaceholder(correo, "correo@ejemplo.com");
+        asignarFocusListenerConPlaceholder(contraseña, "Contraseña");
+        
+        
+        JPanel panelNombreWrapper = new JPanel();
+        panelNombreWrapper.setLayout(new BoxLayout(panelNombreWrapper, BoxLayout.Y_AXIS));
+        panelNombreWrapper.setOpaque(false);
+        panelNombreWrapper.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelNombreWrapper.setMaximumSize(new Dimension(400, 70));
+        
+        nombres.setAlignmentX(Component.LEFT_ALIGNMENT); 
+        panelNombreWrapper.add(nombres);
+        panelNombreWrapper.add(Box.createRigidArea(new Dimension(0, 5)));
+        
+        lblErrorNombre.setAlignmentX(Component.LEFT_ALIGNMENT); 
+        panelNombreWrapper.add(lblErrorNombre);
+        
+        panelComponentes.add(panelNombreWrapper);
+        panelComponentes.add(Box.createRigidArea(new Dimension(0, 15)));
+        
+        // Panel para Apellido
+        JPanel panelApellidoWrapper = new JPanel();
+        panelApellidoWrapper.setLayout(new BoxLayout(panelApellidoWrapper, BoxLayout.Y_AXIS));
+        panelApellidoWrapper.setOpaque(false);
+        panelApellidoWrapper.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelApellidoWrapper.setMaximumSize(new Dimension(400, 70));
+        
+        apellidos.setAlignmentX(Component.LEFT_ALIGNMENT);
+        panelApellidoWrapper.add(apellidos);
+        panelApellidoWrapper.add(Box.createRigidArea(new Dimension(0, 5)));
+        
+        lblErrorApellido.setAlignmentX(Component.LEFT_ALIGNMENT);
+        panelApellidoWrapper.add(lblErrorApellido);
+        
+        panelComponentes.add(panelApellidoWrapper);
+        panelComponentes.add(Box.createRigidArea(new Dimension(0, 15)));
+        
+        // Panel para Correo
+        JPanel panelCorreoWrapper = new JPanel();
+        panelCorreoWrapper.setLayout(new BoxLayout(panelCorreoWrapper, BoxLayout.Y_AXIS));
+        panelCorreoWrapper.setOpaque(false);
+        panelCorreoWrapper.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelCorreoWrapper.setMaximumSize(new Dimension(400, 70));
+        
+        correo.setAlignmentX(Component.LEFT_ALIGNMENT);
+        panelCorreoWrapper.add(correo);
+        panelCorreoWrapper.add(Box.createRigidArea(new Dimension(0, 5)));
+        
+        lblErrorCorreo.setAlignmentX(Component.LEFT_ALIGNMENT);
+        panelCorreoWrapper.add(lblErrorCorreo);
+        
+        panelComponentes.add(panelCorreoWrapper);
+        panelComponentes.add(Box.createRigidArea(new Dimension(0, 15)));
+        
+        // Panel para Contraseña
+        JPanel panelContrasenaWrapper = new JPanel();
+        panelContrasenaWrapper.setLayout(new BoxLayout(panelContrasenaWrapper, BoxLayout.Y_AXIS));
+        panelContrasenaWrapper.setOpaque(false);
+        panelContrasenaWrapper.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelContrasenaWrapper.setMaximumSize(new Dimension(400, 70));
+        
+        contraseña.setAlignmentX(Component.LEFT_ALIGNMENT);
+        panelContrasenaWrapper.add(contraseña);
+        panelContrasenaWrapper.add(Box.createRigidArea(new Dimension(0, 5)));
+        
+        lblErrorContrasena.setAlignmentX(Component.LEFT_ALIGNMENT);
+        panelContrasenaWrapper.add(lblErrorContrasena);
+        
+        panelComponentes.add(panelContrasenaWrapper);
+        
+        panelComponentes.add(Box.createVerticalGlue());
+    }
     
     
-    private void asignarFocusListener(JTextField textField) {
-    	textField.addFocusListener(new FocusListener() {
-			
-			@Override
-			public void focusLost(FocusEvent e) {
-				// TODO Auto-generated method stub
-				textField.setBackground(Colores.BLACKBERRY_CREAM);
-		        textField.setForeground(Color.WHITE);
-			}
-			
-			@Override
-			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
-				textField.setBackground(Color.WHITE);
-		        textField.setForeground(Color.BLACK);
-			}
-		});
+   // Getters
+    public String getNombre() {
+        String text = nombres.getText();
+        return text.equals("Nombre") ? "" : text;
+    }
+    
+    public String getApellido() {
+        String text = apellidos.getText();
+        return text.equals("Apellido") ? "" : text;
+    }
+    
+    public String getCorreo() {
+        String text = correo.getText();
+        return text.equals("correo@ejemplo.com") ? "" : text;
+    }
+    
+    public String getContraseña() {
+        String text = contraseña.getText();
+        return text.equals("Contraseña") ? "" : text;
     }
     
     
     
-    Color defaultColor = null;
+    Color defaultColor = Color.GRAY;
 	Color clickedColor = Color.GRAY;
 	
 	private void changeBackground(JComponent c)
 	{
 		defaultColor = c.getBackground();
-		
 		c.setBackground(clickedColor);
 		c.setForeground(Color.WHITE);
 	}
@@ -336,9 +362,6 @@ public class FormularioRegistro extends JFrame{
 		c.setBackground(defaultColor);
 		c.setForeground(Color.BLACK);
 	}
-	
-	
-	// Controller Methods
 	
 	public Window getWindow()
 	{
@@ -350,7 +373,6 @@ public class FormularioRegistro extends JFrame{
 		try
 		{
 			userRepository.save(user);
-
 			System.out.println("Se Registro Usuario!");
 			JOptionPane.showMessageDialog(this, "Usuario registrado");
 		}
@@ -359,5 +381,4 @@ public class FormularioRegistro extends JFrame{
 			JOptionPane.showMessageDialog(this, e.getMessage());
 		}
 	}
-	
 }
