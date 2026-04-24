@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -34,10 +35,11 @@ public class UserFormDialog extends JDialog{
 	public JTextField txtNombre;
 	public JTextField txtApellido;
 	public JTextField txtCorreo;
-	
+	public JPasswordField txtContraseña;
 	public JLabel txtErrNombre = new JLabel(" ");
 	public JLabel txtErrApellido = new JLabel(" ");
 	public JLabel txtErrCorreo = new JLabel(" ");
+	public JLabel txtErrContraseña = new JLabel(" ");
 
     public JButton btnGuardar;
     public JButton btnCancelar;
@@ -52,7 +54,7 @@ public class UserFormDialog extends JDialog{
     {
     	super(parent, true);
     	
-    	this.user = user;
+    	
     	
     	setSize(400, 300);
         setLocationRelativeTo(parent);
@@ -101,11 +103,12 @@ public class UserFormDialog extends JDialog{
 		txtNombre = new JTextField();
 		txtApellido = new JTextField();
 		txtCorreo = new JTextField();
+		txtContraseña=new JPasswordField();
 
 		panel.add(createField("Nombre:", txtNombre, txtErrNombre));
 		panel.add(createField("Apellido:", txtApellido, txtErrApellido));
 		panel.add(createField("Correo:", txtCorreo, txtErrCorreo));
-
+		panel.add(createField("Contraseña:", txtContraseña, txtErrContraseña));
 
 		return scroll;
     }
@@ -140,9 +143,9 @@ public class UserFormDialog extends JDialog{
     	return this;
     }
     		
-    public void agregarUser(String txtNombre, String txtApellido, String txtCorreo) throws IOException
+    public void agregarUser(String txtNombre, String txtApellido, String txtCorreo, String txtContraseña) throws IOException
 	{
-		User newUser = new User(txtNombre, txtApellido, txtCorreo);
+		User newUser = new User(txtNombre, txtApellido, txtCorreo, txtContraseña);
 		
 		try
 		{
@@ -160,5 +163,112 @@ public class UserFormDialog extends JDialog{
     {
     	
     }
-    		
+
+	public JTextField getTxtNombre() {
+		return txtNombre;
+	}
+
+	public void setTxtNombre(JTextField txtNombre) {
+		this.txtNombre = txtNombre;
+	}
+
+	public JTextField getTxtApellido() {
+		return txtApellido;
+	}
+
+	public void setTxtApellido(JTextField txtApellido) {
+		this.txtApellido = txtApellido;
+	}
+
+	public JTextField getTxtCorreo() {
+		return txtCorreo;
+	}
+
+	public void setTxtCorreo(JTextField txtCorreo) {
+		this.txtCorreo = txtCorreo;
+	}
+
+	
+
+	public JPasswordField getTxtContraseña() {
+		return txtContraseña;
+	}
+
+	public void setTxtContraseña(JPasswordField txtContraseña) {
+		this.txtContraseña = txtContraseña;
+	}
+
+	public JLabel getTxtErrNombre() {
+		return txtErrNombre;
+	}
+
+	public void setTxtErrNombre(JLabel txtErrNombre) {
+		this.txtErrNombre = txtErrNombre;
+	}
+
+	public JLabel getTxtErrApellido() {
+		return txtErrApellido;
+	}
+
+	public void setTxtErrApellido(JLabel txtErrApellido) {
+		this.txtErrApellido = txtErrApellido;
+	}
+
+	public JLabel getTxtErrCorreo() {
+		return txtErrCorreo;
+	}
+
+	public void setTxtErrCorreo(JLabel txtErrCorreo) {
+		this.txtErrCorreo = txtErrCorreo;
+	}
+
+	public JLabel getTxtErrContraseña() {
+		return txtErrContraseña;
+	}
+
+	public void setTxtErrContraseña(JLabel txtErrContraseña) {
+		this.txtErrContraseña = txtErrContraseña;
+	}
+
+	public JButton getBtnGuardar() {
+		return btnGuardar;
+	}
+
+	public void setBtnGuardar(JButton btnGuardar) {
+		this.btnGuardar = btnGuardar;
+	}
+
+	public JButton getBtnCancelar() {
+		return btnCancelar;
+	}
+
+	public void setBtnCancelar(JButton btnCancelar) {
+		this.btnCancelar = btnCancelar;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public boolean isGuardado() {
+		return guardado;
+	}
+
+	public void setGuardado(boolean guardado) {
+		this.guardado = guardado;
+	}
+
+	public UserRepository getUserRepository() {
+		return userRepository;
+	}
+
+	public void setUserRepository(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+    	
+	 
 }

@@ -32,13 +32,20 @@ public class LoginController {
 	
 	private void addActionListeners() {
 		
-		login.getButtonIniciar().addActionListener(e -> evaluarCredenciales());
+		login.getButtonIniciar().addActionListener(e -> {
+			try {
+				evaluarCredenciales();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 		login.getRegistrarse().addActionListener(e -> {	
 			new RegistroController();			
 		});
 	}
 	
-	private void evaluarCredenciales() {
+	private void evaluarCredenciales() throws IOException {
 		resetearCredenciales();
 		boolean error=false;
 		Window window=login.getWindow();

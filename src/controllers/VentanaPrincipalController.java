@@ -14,11 +14,13 @@ import views.Ventana;
 import views.VentanaPrincipal;
 
 public class VentanaPrincipalController {
-
+	UserRepository repository;
+	UserController controller;
 	private VentanaPrincipal ventanaPrincipal;
 	
-	public VentanaPrincipalController(VentanaPrincipal ventanaPrincipal) {
-		
+	public VentanaPrincipalController(VentanaPrincipal ventanaPrincipal) throws IOException {
+		repository = new UserRepository();
+		controller = new UserController(ventanaPrincipal.usersPanel, this,repository.getUsers());
 		this.ventanaPrincipal = ventanaPrincipal;
 		registerListeners();
 		
@@ -36,18 +38,22 @@ public class VentanaPrincipalController {
 		});
 		
 		ventanaPrincipal.btnUsers.addActionListener(e -> {
-			showUsers();
+			try {
+				showUsers();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		});
 		
 		ventanaPrincipal.btnHome.addActionListener(e -> ventanaPrincipal.showView(ventanaPrincipal.HOME));
 		
 	}
 	
-	public void showUsers() {
+	public void showUsers() throws IOException {
 		
-		UserController controller = new UserController(ventanaPrincipal.usersPanel, this);
 		
-		UserRepository repository = new UserRepository();
+		
 		
 		try {
 			List<User> users = repository.getUsers();

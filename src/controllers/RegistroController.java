@@ -12,13 +12,14 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import modelos.User;
+import respository.UserRepository;
 import utils.Colores;
 import views.FormularioRegistro;
 import views.Ventana;
 
 
 public class RegistroController {
-
+	private UserRepository repo;
 	private FormularioRegistro formularioRegsitro;
 	
 	public RegistroController()
@@ -86,7 +87,6 @@ public class RegistroController {
 				
 			});
 	}
-			
 	
 // Validaciones de Formulario Registro
     

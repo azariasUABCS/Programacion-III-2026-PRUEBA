@@ -47,7 +47,38 @@ public class UserDialogController {
 		asignarValidacion(userFromDialog.txtNombre); 
         asignarValidacion(userFromDialog.txtApellido);
         asignarValidacion(userFromDialog.txtCorreo);
+        
 	}
+	
+	public UserDialogController(UserFormDialog userFromDialog, VentanaPrincipalController ventanaPController, User user)
+	{
+		this.userFromDialog = userFromDialog;
+		this.ventanaPController = ventanaPController;
+		this.userFromDialog.setUser(user);
+		userFromDialog.btnGuardar.addActionListener(e -> {
+			try {
+				validacionDeActualizacion();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		
+		addWindowListener();
+		
+        asignarKeyListener(userFromDialog.txtNombre);
+        asignarKeyListener(userFromDialog.txtApellido); 
+        
+		asignarValidacion(userFromDialog.txtNombre); 
+        asignarValidacion(userFromDialog.txtApellido);
+        asignarValidacion(userFromDialog.txtCorreo);
+        this.userFromDialog.txtApellido.setText(this.userFromDialog.getUser().getApellido());
+        this.userFromDialog.txtNombre.setText(user.getNombre());
+        this.userFromDialog.txtCorreo.setText(user.getCorreo());
+        this.userFromDialog.txtContraseña.setText(user.getContrasena());
+        this.userFromDialog.btnGuardar.setText("Editar");
+	}
+	
 	
 	private void addWindowListener()
 	{
@@ -98,7 +129,30 @@ public class UserDialogController {
 				
 			});
 	}
-	
+	private void validacionDeActualizacion() throws IOException
+    {
+		boolean valid = true;
+
+		if (!validarNombre()) { valid = false; }
+		if (!validarApellido()) { valid = false; }
+		if (!validarCorreo()) { valid = false; }
+		if (!validarContraseña()) { valid = false; }
+
+		
+		if (valid) 
+		{
+			userFromDialog.getUser().setNombre(userFromDialog.txtNombre.getText());
+			userFromDialog.getUser().setApellido(userFromDialog.txtApellido.getText());
+			userFromDialog.getUser().setCorreo(userFromDialog.txtCorreo.getText());
+			userFromDialog.setGuardado(true);
+			
+			
+			userFromDialog.getWindow().dispose();
+			
+			ventanaPController.showUsers();
+		}
+		
+    }
 	private void validacionDeRegistro() throws IOException
     {
 		boolean valid = true;
@@ -106,6 +160,7 @@ public class UserDialogController {
 		if (!validarNombre()) { valid = false; }
 		if (!validarApellido()) { valid = false; }
 		if (!validarCorreo()) { valid = false; }
+		if (!validarContraseña()) { valid = false; }
 
 		
 		if (valid) 
@@ -113,8 +168,10 @@ public class UserDialogController {
 			String nombre = userFromDialog.txtNombre.getText();
 			String apellido = userFromDialog.txtApellido.getText();
 			String correo = userFromDialog.txtCorreo.getText();
+			String contraseña = new String(userFromDialog.getTxtContraseña().getPassword());
+			userFromDialog.setGuardado(true);
 			
-			userFromDialog.agregarUser(nombre, apellido, correo);
+			userFromDialog.agregarUser(nombre, apellido, correo, contraseña);
 			userFromDialog.getWindow().dispose();
 			
 			ventanaPController.showUsers();
@@ -130,6 +187,28 @@ public class UserDialogController {
 			return false;
 		}else {
 			userFromDialog.txtErrNombre.setText(" ");
+		}
+
+		return true;
+    }
+	
+	public boolean validarContraseña() 
+    {
+		String contraseña = new String(userFromDialog.getTxtContraseña().getPassword());
+    	if (contraseña.isEmpty()) 
+    	{
+    		userFromDialog.getTxtErrContraseña().setText("ELa contraseña es obligatorio");
+			return false;
+		}else if (!contraseña.matches(".*[!$?_*].*")) 
+    	{
+    		userFromDialog.getTxtErrContraseña().setText("Necesita un caracter especial (! $ ? _ *)");
+			return false;
+		}else if (contraseña.matches(".*\\s.*")) 
+    	{
+    		userFromDialog.getTxtErrContraseña().setText("No debe tener espacios");
+			return false;
+		}else{
+			userFromDialog.getTxtErrContraseña().setText(" ");
 		}
 
 		return true;
