@@ -25,7 +25,7 @@ public class UserDialogController {
 	private UserFormDialog userFromDialog;
 	private VentanaPrincipalController ventanaPController;
 	
-	public UserDialogController(UserFormDialog userFromDialog, VentanaPrincipalController ventanaPController)
+	public UserDialogController(UserFormDialog userFromDialog, VentanaPrincipalController ventanaPController) // Agregar nuevo user?
 	{
 		this.userFromDialog = userFromDialog;
 		this.ventanaPController = ventanaPController;
@@ -34,7 +34,7 @@ public class UserDialogController {
 			try {
 				validacionDeRegistro();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
+				
 				e1.printStackTrace();
 			}
 		});
@@ -50,7 +50,7 @@ public class UserDialogController {
         
 	}
 	
-	public UserDialogController(UserFormDialog userFromDialog, VentanaPrincipalController ventanaPController, User user)
+	public UserDialogController(UserFormDialog userFromDialog, VentanaPrincipalController ventanaPController, User user) // Para actulizar user?
 	{
 		this.userFromDialog = userFromDialog;
 		this.ventanaPController = ventanaPController;
@@ -144,6 +144,10 @@ public class UserDialogController {
 			userFromDialog.getUser().setNombre(userFromDialog.txtNombre.getText());
 			userFromDialog.getUser().setApellido(userFromDialog.txtApellido.getText());
 			userFromDialog.getUser().setCorreo(userFromDialog.txtCorreo.getText());
+			
+			String nuevaContesena = new String(userFromDialog.getTxtContraseña().getPassword());
+			userFromDialog.getUser().setContrasena(nuevaContesena);
+			
 			userFromDialog.setGuardado(true);
 			
 			
@@ -197,7 +201,7 @@ public class UserDialogController {
 		String contraseña = new String(userFromDialog.getTxtContraseña().getPassword());
     	if (contraseña.isEmpty()) 
     	{
-    		userFromDialog.getTxtErrContraseña().setText("ELa contraseña es obligatorio");
+    		userFromDialog.getTxtErrContraseña().setText("La contraseña es obligatorio");
 			return false;
 		}else if (!contraseña.matches(".*[!$?_*].*")) 
     	{

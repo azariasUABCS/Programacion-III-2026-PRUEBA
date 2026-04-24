@@ -159,10 +159,7 @@ public class UserFormDialog extends JDialog{
 		}
 	} 		
     		
-    public void eliminarUsuario()
-    {
-    	
-    }
+   
 
 	public JTextField getTxtNombre() {
 		return txtNombre;

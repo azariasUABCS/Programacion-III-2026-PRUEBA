@@ -52,9 +52,6 @@ public class VentanaPrincipalController {
 	
 	public void showUsers() throws IOException {
 		
-		
-		
-		
 		try {
 			List<User> users = repository.getUsers();
 			
@@ -79,5 +76,6 @@ public class VentanaPrincipalController {
 			ventanaPrincipal.dispose();
 		}
 	}
+
 	
 }

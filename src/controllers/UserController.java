@@ -17,11 +17,14 @@ public class UserController {
 	private UsersView view;
 	private UserRepository repo;
 	private UserTableModel model;
+	private VentanaPrincipalController ventanaPrincipalController;
 	
 	public UserController(UsersView view, VentanaPrincipalController ventanaController, List<User> users) 
 	{
 		this.model=new UserTableModel(users);
 		this.view = view;
+		this.ventanaPrincipalController = ventanaController;
+		
 		repo = new UserRepository();
 		
 		view.getBtnAdd().addActionListener(e -> {
@@ -30,16 +33,32 @@ public class UserController {
 			new UserDialogController(form, ventanaController); 
 			form.setVisible(true);
 		});
+		
+		
 		this.view.getBtnEdit().addActionListener(e -> {
+			
+			cargarUsers();
 			int row = view.getSelectedRow();
+			System.out.println("Row Selected: " + row);
+			
 			if(row == -1) {
 				JOptionPane.showMessageDialog(view, "Selecciona un usuario");
 				return;
 			}
 			
 			openForm(model.getUserAt(row),ventanaController);
+
+			try {
+				ventanaPrincipalController.showUsers();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		});
+		
+		
 		view.getBtnDelete().addActionListener(e -> {
+			
+			cargarUsers();
 			int row = view.getSelectedRow();
 			System.out.println(row);
 			if(row == -1) {
@@ -48,15 +67,19 @@ public class UserController {
 			}
 			try {
 				repo.delete(row);
-			} catch (IOException e1) {
+				ventanaPrincipalController.showUsers();
+			} 
+			catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		});
 	}
 	private void openForm(User user, VentanaPrincipalController ventanaController) {
+		
 		int row = view.getSelectedRow();
 		System.out.println(row);
+		
 		UserFormDialog dialog = new UserFormDialog(null, user);
 		new UserDialogController(dialog, ventanaController,user); 
 		dialog.setVisible(true);
@@ -80,10 +103,11 @@ public class UserController {
 			}
 			
 		}
-		loadUsers();
+		cargarUsers();
 		
 	}
-	public void loadUsers() {	
+	public void cargarUsers() {	
+		
 		System.out.println("Carga usuarios");
 		try {
 			List<User> users = repo.getUsers();
