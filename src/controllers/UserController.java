@@ -28,10 +28,9 @@ public class UserController {
 		repo = new UserRepository();
 		
 		view.getBtnAdd().addActionListener(e -> {
-			
-			UserFormDialog form = new UserFormDialog(null, null);
-			new UserDialogController(form, ventanaController); 
-			form.setVisible(true);
+			cargarUsers();
+			openForm(null,ventanaController);
+			cargarUsers();
 		});
 		
 		
@@ -79,9 +78,15 @@ public class UserController {
 		
 		int row = view.getSelectedRow();
 		System.out.println(row);
-		
-		UserFormDialog dialog = new UserFormDialog(null, user);
-		new UserDialogController(dialog, ventanaController,user); 
+		UserFormDialog dialog;
+		if(user==null) {
+			dialog = new UserFormDialog(null, user);
+			new UserDialogController(dialog, ventanaController);
+		}else {
+			dialog = new UserFormDialog(null, user);
+			new UserDialogController(dialog, ventanaController,user);
+		}
+		 
 		dialog.setVisible(true);
 		
 		if(dialog.isGuardado()) {

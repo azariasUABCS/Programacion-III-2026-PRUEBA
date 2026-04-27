@@ -169,13 +169,16 @@ public class UserDialogController {
 		
 		if (valid) 
 		{
-			String nombre = userFromDialog.txtNombre.getText();
-			String apellido = userFromDialog.txtApellido.getText();
-			String correo = userFromDialog.txtCorreo.getText();
-			String contraseña = new String(userFromDialog.getTxtContraseña().getPassword());
+			userFromDialog.setUser(new User("a", "a", "a", "a"));
+			userFromDialog.getUser().setNombre(userFromDialog.txtNombre.getText());
+			userFromDialog.getUser().setApellido(userFromDialog.txtApellido.getText());
+			userFromDialog.getUser().setCorreo(userFromDialog.txtCorreo.getText());
+			
+			String nuevaContesena = new String(userFromDialog.getTxtContraseña().getPassword());
+			userFromDialog.getUser().setContrasena(nuevaContesena);
 			userFromDialog.setGuardado(true);
 			
-			userFromDialog.agregarUser(nombre, apellido, correo, contraseña);
+			//userFromDialog.agregarUser(nombre, apellido, correo, contraseña);
 			userFromDialog.getWindow().dispose();
 			
 			ventanaPController.showUsers();
