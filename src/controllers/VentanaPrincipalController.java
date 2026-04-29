@@ -59,6 +59,7 @@ public class VentanaPrincipalController {
 			
 			ventanaPrincipal.usersPanel.setTableModel(model);
 			
+			//System.out.println("Refresh Table");
 			ventanaPrincipal.showView(ventanaPrincipal.USERS);
 			
 		}catch (IOException ex) {

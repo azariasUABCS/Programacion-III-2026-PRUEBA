@@ -1,0 +1,16 @@
+[ {
+  "nombre" : "Azarias",
+  "apellido" : "Vilanueva Collins",
+  "correo" : "azariasv@gmail.com",
+  "contrasena" : "123456!"
+}, {
+  "nombre" : "Jose Carlos",
+  "apellido" : "Arce Lopez",
+  "correo" : "papita@gmail.com",
+  "contrasena" : "654321!"
+}, {
+  "nombre" : "test",
+  "apellido" : "user",
+  "correo" : "test@.com",
+  "contrasena" : "test!"
+} ]

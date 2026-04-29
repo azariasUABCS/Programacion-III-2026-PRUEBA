@@ -27,18 +27,26 @@ public class UserController {
 		
 		repo = new UserRepository();
 		
+		
+		// Boton Agregar ActionListener
 		view.getBtnAdd().addActionListener(e -> {
-			cargarUsers();
+			
 			openForm(null,ventanaController);
-			cargarUsers();
+			
+			try {
+				ventanaController.showUsers(); // Solo sirve si uso esto porque cargar users ya esta en openForm().
+			} 
+			catch (IOException e1) 
+			{
+				e1.printStackTrace();
+			}
 		});
 		
 		
+		// Boton Editar ActionListener
 		this.view.getBtnEdit().addActionListener(e -> {
 			
-			cargarUsers();
 			int row = view.getSelectedRow();
-			System.out.println("Row Selected: " + row);
 			
 			if(row == -1) {
 				JOptionPane.showMessageDialog(view, "Selecciona un usuario");
@@ -55,11 +63,10 @@ public class UserController {
 		});
 		
 		
+		// Boton Delete ActionListener
 		view.getBtnDelete().addActionListener(e -> {
 			
-			cargarUsers();
 			int row = view.getSelectedRow();
-			System.out.println(row);
 			if(row == -1) {
 				JOptionPane.showMessageDialog(view, "Selecciona un usuario");
 				return;
@@ -74,6 +81,8 @@ public class UserController {
 			}
 		});
 	}
+	
+	
 	private void openForm(User user, VentanaPrincipalController ventanaController) {
 		
 		int row = view.getSelectedRow();
@@ -81,10 +90,10 @@ public class UserController {
 		UserFormDialog dialog;
 		if(user==null) {
 			dialog = new UserFormDialog(null, user);
-			new UserDialogController(dialog, ventanaController);
+			new UserDialogController(dialog);
 		}else {
 			dialog = new UserFormDialog(null, user);
-			new UserDialogController(dialog, ventanaController,user);
+			new UserDialogController(dialog, user);
 		}
 		 
 		dialog.setVisible(true);
@@ -108,12 +117,14 @@ public class UserController {
 			}
 			
 		}
-		cargarUsers();
 		
+		cargarUsers();
 	}
+	
+	
 	public void cargarUsers() {	
 		
-		System.out.println("Carga usuarios");
+		//System.out.println("Carga usuarios");
 		try {
 			List<User> users = repo.getUsers();
 			

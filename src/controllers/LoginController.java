@@ -167,7 +167,7 @@ public class LoginController {
 	
 	
 	// Regresa true si el correo y contrasena que ingreso el usuario se encuentra el usuario en el archivo scr/files/users.csv
-	private boolean existeCuenta(String correo, String contrasena)
+	private boolean existeCuenta(String correo, String contrasena) throws InvalidUserException
 	{
 		UserRepository repository = new UserRepository();
 		try 
@@ -178,15 +178,13 @@ public class LoginController {
 			{
 				if(user.getCorreo().equals(correo) && user.getContrasena().equals(contrasena))
 				{
-					System.out.println("Ingresado por Usuario: " + correo + " / " + contrasena);
-					System.out.println("Usuario Registrado en Sistem: " + user.getCorreo() + " / " + user.getContrasena() + "\n");
 					return true; 
 				}
 			}
 		} 
 		catch (IOException ex) 
 		{
-			
+			throw new InvalidUserException(" Error en existeCuenta metodo ");
 		}
 		
 		return false;

@@ -24,12 +24,7 @@ public class Usuarios extends JPanel {
 		{
 			List<User> users = repository.getUsers(); 
 			
-			System.out.println("\n\n----------- Usuarios Registrados -----------\n");
-			for(User user : users) 
-			{
-				System.out.println(user);
-				System.out.println("\n----------------------------------\n");
-			}
+		
 			UserTableModel usersTable=new UserTableModel(users);
 			int alto=0;
 			//Añade usuarios simullados"

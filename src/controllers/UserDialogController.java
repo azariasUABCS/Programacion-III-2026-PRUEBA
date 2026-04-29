@@ -23,12 +23,10 @@ import views.Ventana;
 public class UserDialogController {
 
 	private UserFormDialog userFromDialog;
-	private VentanaPrincipalController ventanaPController;
 	
-	public UserDialogController(UserFormDialog userFromDialog, VentanaPrincipalController ventanaPController) // Agregar nuevo user?
+	public UserDialogController(UserFormDialog userFromDialog) // Agregar nuevo user?
 	{
 		this.userFromDialog = userFromDialog;
-		this.ventanaPController = ventanaPController;
 		
 		userFromDialog.btnGuardar.addActionListener(e -> {
 			try {
@@ -50,10 +48,9 @@ public class UserDialogController {
         
 	}
 	
-	public UserDialogController(UserFormDialog userFromDialog, VentanaPrincipalController ventanaPController, User user) // Para actulizar user?
+	public UserDialogController(UserFormDialog userFromDialog, User user) // Para actulizar user?
 	{
 		this.userFromDialog = userFromDialog;
-		this.ventanaPController = ventanaPController;
 		this.userFromDialog.setUser(user);
 		userFromDialog.btnGuardar.addActionListener(e -> {
 			try {
@@ -152,8 +149,6 @@ public class UserDialogController {
 			
 			
 			userFromDialog.getWindow().dispose();
-			
-			ventanaPController.showUsers();
 		}
 		
     }
@@ -180,8 +175,6 @@ public class UserDialogController {
 			
 			//userFromDialog.agregarUser(nombre, apellido, correo, contraseña);
 			userFromDialog.getWindow().dispose();
-			
-			ventanaPController.showUsers();
 		}
 		
     }

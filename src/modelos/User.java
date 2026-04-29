@@ -12,6 +12,9 @@ public class User {
 	private String contrasena;
 	
 	
+	public User() {
+	}
+	
 	public User(String email, String contrasena) {
 		this.correo = email;
 		this.contrasena = contrasena;
