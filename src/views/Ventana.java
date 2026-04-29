@@ -39,7 +39,7 @@ public class Ventana extends JFrame{
 		setLayout(null);
 		setBounds(25, 25, 1300, 700); // Hace lo mismo de setSize y setLocation.
 		setResizable(false);  // No se puede cambiar de tamaño con el mouse.
-		setTitle("Mi Aplicación (Progamación III) por Azarias");  // Nombre de la Ventana
+		setTitle("Login Pestaña");  // Nombre de la Ventana
 		setLocationRelativeTo(null);  // Pone la ventana en el centro
 		
 		Image icono = tk.getImage("src\\img\\icono.png");

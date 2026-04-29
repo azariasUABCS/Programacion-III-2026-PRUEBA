@@ -13,4 +13,9 @@
   "apellido" : "user",
   "correo" : "test@.com",
   "contrasena" : "test!"
+}, {
+  "nombre" : "Jose Isaac ",
+  "apellido" : "Camacho Vazquez",
+  "correo" : "isaac@gmail.com",
+  "contrasena" : "isaacIsABitch!"
 } ]

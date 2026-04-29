@@ -2,10 +2,13 @@ package views;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.io.IOException;
 
 import java.awt.FlowLayout;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
@@ -36,6 +39,11 @@ public class VentanaPrincipal extends JFrame
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
+		Toolkit tk = Toolkit.getDefaultToolkit();
+		ImageIcon cursorImage = new ImageIcon("src\\img\\pointer_b.png");
+		Cursor myCursor = tk.createCustomCursor(cursorImage.getImage(), new Point(0,0), "Cursor");
+		this.setCursor(myCursor);
+		
 		setMenu();
 		
 		createNavbar();

@@ -13,7 +13,7 @@ public class UsuarioPanel extends JPanel {
 	public UsuarioPanel(String nombre, String apellido) 
 	{
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		setBackground(Colores.BACKGROUND);
+		setBackground(Colores.PROFILE_PANEL);
 		setVisible(true);
 		setBorder(new LineBorder(Colores.LOGIN_PANEL, 10));
 		JLabel usrNombre= new JLabel(nombre);

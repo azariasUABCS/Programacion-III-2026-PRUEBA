@@ -1,5 +1,7 @@
 package controllers;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -7,6 +9,7 @@ import javax.swing.JOptionPane;
 
 import modelos.User;
 import respository.UserRepository;
+import services.PDFExporter;
 import tablemodels.UserTableModel;
 import views.UserFormDialog;
 import views.UsersView;
@@ -18,6 +21,8 @@ public class UserController {
 	private UserRepository repo;
 	private UserTableModel model;
 	private VentanaPrincipalController ventanaPrincipalController;
+	private PDFExporter pdfExporter;
+
 	
 	public UserController(UsersView view, VentanaPrincipalController ventanaController, List<User> users) 
 	{
@@ -26,6 +31,7 @@ public class UserController {
 		this.ventanaPrincipalController = ventanaController;
 		
 		repo = new UserRepository();
+		pdfExporter = new PDFExporter();
 		
 		
 		// Boton Agregar ActionListener
@@ -79,6 +85,11 @@ public class UserController {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+		});
+		
+		this.view.getBtnPdf().addActionListener(e -> {
+			
+			generarPdf();
 		});
 	}
 	
@@ -137,6 +148,28 @@ public class UserController {
 			
 		}catch (IOException ex) {
 			JOptionPane.showMessageDialog(view, ex.getMessage());
+		}
+	}
+	
+	public void generarPdf()
+	{
+		File file = view.selectPdfFile();
+		
+		if(file == null) { return; }
+		
+		try
+		{
+			pdfExporter.exportUsers(repo.getUsers(), file);
+			
+			if(Desktop.isDesktopSupported())
+			{
+				Desktop.getDesktop().open(file);
+			}
+		}
+		catch (Exception ex) 
+		{
+			ex.printStackTrace();
+			JOptionPane.showMessageDialog(view, "Error al exportar");
 		}
 	}
 }

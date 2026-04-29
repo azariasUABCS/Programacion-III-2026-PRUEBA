@@ -33,7 +33,8 @@ public class VentanaPrincipalController {
 		ventanaPrincipal.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				handleClose();
+				new Ventana();
+				ventanaPrincipal.dispose();
 			}
 		});
 		

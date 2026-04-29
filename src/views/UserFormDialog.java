@@ -5,6 +5,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Window;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 import javax.swing.BorderFactory;
@@ -109,6 +111,8 @@ public class UserFormDialog extends JDialog{
 		panel.add(createField("Apellido:", txtApellido, txtErrApellido));
 		panel.add(createField("Correo:", txtCorreo, txtErrCorreo));
 		panel.add(createField("Contraseña:", txtContraseña, txtErrContraseña));
+		
+		
 
 		return scroll;
     }
@@ -136,7 +140,15 @@ public class UserFormDialog extends JDialog{
 		return panel;
 	}
     
-
+    public int confirmExit() 
+	{
+	    return JOptionPane.showConfirmDialog(
+	        this,
+	        "¿Seguro que deseas regresar? Se perderán todos los datos",
+	        "¿Seguro?",
+	        JOptionPane.YES_NO_OPTION
+	    );
+	}
     
     public Window getWindow()
     {
@@ -160,6 +172,9 @@ public class UserFormDialog extends JDialog{
 	} 		
     		
    
+    
+    
+    // Getter y Setters
 
 	public JTextField getTxtNombre() {
 		return txtNombre;

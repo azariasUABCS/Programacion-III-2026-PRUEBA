@@ -5,13 +5,16 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.io.File;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 
@@ -23,6 +26,9 @@ public class UsersView extends JPanel{
 	private JButton btnEditar;
 	private JButton btnAgregar;
 	private JButton btnEliminar;
+	
+	private JButton btnPdf;
+
 
 	public UsersView() 
 	{
@@ -37,15 +43,17 @@ public class UsersView extends JPanel{
         btnAgregar = new JButton("Agregar");
         btnEditar = new JButton("Editar");
         btnEliminar = new JButton("Eliminar");
+        btnPdf = new JButton("Exportar a PDF");
 
         panelButtons.add(btnAgregar);
         panelButtons.add(btnEditar);
         panelButtons.add(btnEliminar);
+
+        panelButtons.add(btnPdf);
         
         add(panelButtons, BorderLayout.NORTH);
 
 	}
-	
 
 	public void styleTable()
 	{
@@ -115,6 +123,36 @@ public class UsersView extends JPanel{
 		
 	}
 	
+	public File selectPdfFile()
+	{
+		String path = System.getProperty("user.home");
+		JFileChooser chooser = new JFileChooser(path);
+		
+		chooser.setSelectedFile(new File("reporte-usuarios.pdf"));
+		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		
+		chooser.setAcceptAllFileFilterUsed(false);
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Documentos PDF", "pdf");
+		chooser.addChoosableFileFilter(filter);
+		chooser.setFileFilter(filter);
+		
+		
+		int opcion = chooser.showDialog(this, "Exportar PDF de usuarios");
+		if(opcion != JFileChooser.APPROVE_OPTION)
+		{
+			return null;
+		}
+		
+		
+		File file = chooser.getSelectedFile();
+		if(!file.getName().toLowerCase().endsWith(".pdf"))
+		{
+			file = new File(file.getAbsolutePath() + ".pdf");
+		}
+		
+		return file;
+	}
+	
 	public void setTableModel(UserTableModel model) {
 		tabla.setModel(model);
 		
@@ -157,4 +195,12 @@ public class UsersView extends JPanel{
     public int getSelectedRow() {
     	return tabla.getSelectedRow();
     }
+    
+    public JButton getBtnPdf() {
+		return btnPdf;
+	}
+
+	public void setBtnPdf(JButton btnPdf) {
+		this.btnPdf = btnPdf;
+	}
 }

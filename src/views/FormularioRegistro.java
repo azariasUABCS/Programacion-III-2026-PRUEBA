@@ -2,9 +2,12 @@ package views;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -35,7 +38,7 @@ public class FormularioRegistro extends JFrame{
 	
 	// Puro Fonts, ya depues hare otra clase de Fonts
     public Font fuente;
-    private Font fontError = new Font("Times New Roman", Font.ITALIC, 15);
+    private Font fontError = new Font("Times New Roman", Font.ITALIC, 12);
     private Font fontTextoCampo = new Font("Times New Roman", Font.ITALIC, 15);
     private Font fontBoton = new Font("Times New Roman", Font.BOLD, 20);
     private Font fontTitulo = new Font("Times New Roman", Font.BOLD, 35);
@@ -69,7 +72,11 @@ public class FormularioRegistro extends JFrame{
         setTitle("Registro");
         setLocationRelativeTo(null);
         getContentPane().setBackground(Colores.BACKGROUND);
-
+        
+        Toolkit tk = Toolkit.getDefaultToolkit();
+		ImageIcon cursorImage = new ImageIcon("src\\img\\pointer_b.png");
+		Cursor myCursor = tk.createCustomCursor(cursorImage.getImage(), new Point(0,0), "Cursor");
+		this.setCursor(myCursor);
         
         PanelPersonalizable fondo = new PanelPersonalizable();
         fondo.setBounds(75, 50, 680, 550);
@@ -109,7 +116,6 @@ public class FormularioRegistro extends JFrame{
         crearComponentesDeRegistro(panelComponentes);
         
         
-        // Button Registrar - Ahora se puede mover cambiando el rigid area antes de él
         JPanel panelBoton = new JPanel();
         panelBoton.setLayout(new BoxLayout(panelBoton, BoxLayout.Y_AXIS));
         panelBoton.setOpaque(false);
@@ -158,7 +164,7 @@ public class FormularioRegistro extends JFrame{
         textField.setMinimumSize(new Dimension(fieldWidth, fieldHeight));
         
         textField.setBackground(Colores.BACKGROUND);
-        textField.setForeground(Color.GRAY);
+        textField.setForeground(Color.BLACK);
         textField.setFont(fontTextoCampo);
         textField.setAlignmentX(Component.CENTER_ALIGNMENT);
         textField.setName(JTextFieldName);
@@ -184,11 +190,11 @@ public class FormularioRegistro extends JFrame{
             public void focusLost(FocusEvent e) {
                 if (textField.getText().isEmpty()) {
                     textField.setText(placeholder);
-                    textField.setForeground(Color.GRAY);
+                    textField.setForeground(Color.BLACK);
                     textField.setBackground(Colores.TABBED_TEXT_COLOR);
                 } else {
+                	textField.setForeground(Color.BLACK);
                     textField.setBackground(Colores.TABBED_TEXT_COLOR);
-                    textField.setForeground(Color.WHITE);
                 }
             }
         });

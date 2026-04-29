@@ -3,6 +3,7 @@ package controllers;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
@@ -125,7 +126,29 @@ public class UserDialogController {
 				}
 				
 			});
+				
+				userFromDialog.btnCancelar.addActionListener(e -> handleClose());
+				
+				userFromDialog.addWindowListener(new WindowAdapter() 
+				{
+					@Override
+					public void windowClosing(WindowEvent e) 
+					{
+						handleClose();
+					}
+				});
+		
 	}
+	
+	private void handleClose() {
+		int option = userFromDialog.confirmExit();
+		System.out.println(option);
+
+		if (option == JOptionPane.YES_OPTION) {
+			userFromDialog.getWindow().dispose();
+		}
+	}
+
 	private void validacionDeActualizacion() throws IOException
     {
 		boolean valid = true;

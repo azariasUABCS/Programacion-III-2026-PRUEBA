@@ -182,13 +182,13 @@ public class Login extends JPanel{
 				String password = new String(contraseña.getPassword());
 				if (password.equals("Contraseña")) {
 					contraseña.setText("");
-					contraseña.setForeground(Color.BLACK);
+					contraseña.setForeground(Color.GRAY);
 					contraseña.setBackground(Color.WHITE);
 					contraseña.setEchoChar('•'); 
 				}
 				else
 				{
-					contraseña.setForeground(Color.BLACK);
+					contraseña.setForeground(Color.GRAY);
 					contraseña.setBackground(Color.WHITE);
 				}
 			}
@@ -198,11 +198,11 @@ public class Login extends JPanel{
 				String password = new String(contraseña.getPassword());
 				if (password.isEmpty()) {
 					contraseña.setText("Contraseña");
-					contraseña.setForeground(Color.BLACK);
+					contraseña.setForeground(Color.GRAY);
 					contraseña.setBackground(Color.WHITE);
 					contraseña.setEchoChar((char) 0); 
 				} else {
-					contraseña.setBackground(Color.LIGHT_GRAY);
+					contraseña.setBackground(Color.GRAY);
 					contraseña.setForeground(Color.WHITE);
 					contraseña.setEchoChar('•'); 
 				}
