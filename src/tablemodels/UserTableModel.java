@@ -6,6 +6,7 @@ import javax.swing.table.AbstractTableModel;
 
 import modelos.User;
 
+
 public class UserTableModel extends AbstractTableModel{
 
 	private List<User> users;
@@ -14,6 +15,7 @@ public class UserTableModel extends AbstractTableModel{
 		"Nombre",
 		"Apellido",
 		"Email",
+		
 	};
 	
 	public UserTableModel(List<User> users) 
@@ -54,7 +56,12 @@ public class UserTableModel extends AbstractTableModel{
 			
 		case 2:
 			return user.getCorreo();
+		case 3:
+			return user.getFoto();
 		}
+		
+			
+			
 		
 		return null;
 		

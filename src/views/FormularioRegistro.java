@@ -13,6 +13,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
@@ -20,6 +21,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -27,6 +29,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import com.formdev.flatlaf.ui.FlatListCellBorder.Selected;
 
 import modelos.User;
 import respository.UserRepository;
@@ -51,6 +56,7 @@ public class FormularioRegistro extends JFrame{
     public JTextField contraseña;
     
     // JBotones para Regsitro Controller
+    public JButton seleccionar = new JButton(" Seleccionar");
     public JButton registrar = new JButton(" Registrarse");
    
     private UserRepository userRepository;
@@ -60,13 +66,17 @@ public class FormularioRegistro extends JFrame{
     public JLabel lblErrorApellido;
     public JLabel lblErrorCorreo;
     public JLabel lblErrorContrasena;
+    public JLabel lblErrorFoto;
     
+    JLabel iconoUsuario = new JLabel();
     
     public FormularioRegistro()
     {
     	userRepository = new UserRepository();
     	
-        setSize(850, 675);
+        ImageIcon iconoUsuarioFinal = escalarImagenLocal("..\\img\\icono.png",200,200);
+        iconoUsuarioFinal.setDescription("..\\img\\icono.png");
+        setSize(850, 975);
         setLayout(null);
         setResizable(false);
         setTitle("Registro");
@@ -79,18 +89,18 @@ public class FormularioRegistro extends JFrame{
 		this.setCursor(myCursor);
         
         PanelPersonalizable fondo = new PanelPersonalizable();
-        fondo.setBounds(75, 50, 680, 550);
+        fondo.setBounds(75, 50, 680, 850);
         fondo.setBackground(Colores.LOGIN_PANEL);
         
         // Shadow
         PanelPersonalizable fondo2 = new PanelPersonalizable();
-        fondo2.setBounds(72, 46, 687, 557);
+        fondo2.setBounds(72, 46, 687, 857);
         fondo2.setBackground(Colores.SHADOW_COLOR);
         
 
         JPanel panelComponentes = new JPanel();
         panelComponentes.setLayout(new BoxLayout(panelComponentes, BoxLayout.Y_AXIS));
-        panelComponentes.setBounds(70, 50, 680, 550);
+        panelComponentes.setBounds(70, 50, 680, 850);
         panelComponentes.setOpaque(false);
         panelComponentes.setBorder(new EmptyBorder(20, 40, 20, 40));
         
@@ -111,18 +121,45 @@ public class FormularioRegistro extends JFrame{
         lblErrorApellido = crearErrorLabel();
         lblErrorCorreo = crearErrorLabel();
         lblErrorContrasena = crearErrorLabel();
-        
+        lblErrorFoto = crearErrorLabel();
+        lblErrorFoto.setAlignmentX(Component.CENTER_ALIGNMENT);
         
         crearComponentesDeRegistro(panelComponentes);
         
+        JLabel perfil = new JLabel("Foto perfil");
+        perfil.setOpaque(false);
+        perfil.setFont(fontTitulo);
+        perfil.setForeground(Colores.TEXT_COLOR);
+        perfil.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelComponentes.add(perfil);
         
+        
+        iconoUsuario.setIcon(iconoUsuarioFinal);
+        iconoUsuario.setAlignmentX(Component.CENTER_ALIGNMENT);
+        iconoUsuario.setPreferredSize(new Dimension(200,200));
+        iconoUsuario.setVisible(true);
+        panelComponentes.add(iconoUsuario);
+       
         JPanel panelBoton = new JPanel();
         panelBoton.setLayout(new BoxLayout(panelBoton, BoxLayout.Y_AXIS));
         panelBoton.setOpaque(false);
         panelBoton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        crearBoton(registrar, "..\\img\\icono.png");
+        crearBoton(registrar, "..\\img\\icono.png","Registrarse");
+        crearBoton(seleccionar,"..\\img\\icono.png" , "Seleccionar");
         
+        seleccionar.addMouseListener(new MouseAdapter() 
+        {
+			public void mouseEntered(MouseEvent e) 
+			{
+				changeBackground(seleccionar);
+			}
+			
+			public void mouseExited(MouseEvent e) 
+			{
+				resetBackground(seleccionar);
+			}
+		});
         registrar.addMouseListener(new MouseAdapter() 
         {
 			public void mouseEntered(MouseEvent e) 
@@ -135,8 +172,8 @@ public class FormularioRegistro extends JFrame{
 				resetBackground(registrar);
 			}
 		});
-        
-
+        panelComponentes.add(lblErrorFoto);
+        panelComponentes.add(seleccionar);
         panelComponentes.add(Box.createRigidArea(new Dimension(0,15)));
         panelBoton.add(registrar);
         panelComponentes.add(panelBoton);
@@ -150,7 +187,17 @@ public class FormularioRegistro extends JFrame{
 
         setVisible(true);
     }
-    
+    public void chooseImage() {
+    	JFileChooser chooser=new  JFileChooser();
+    	chooser.setDialogTitle("Selecciona tu foto de perfil");
+    	FileNameExtensionFilter filter = new FileNameExtensionFilter("Imagenes", "jpg","jpeg","png");
+    	chooser.setFileFilter(filter);
+    	int option= chooser.showOpenDialog(this);
+    	if(option==JFileChooser.APPROVE_OPTION) {
+    		File file=chooser.getSelectedFile();
+    		iconoUsuario.setIcon(escalarImagen(file.getAbsolutePath(), 200, 200));
+    	}
+    }
     
     private JTextField crearTextField(String placeholder, String JTextFieldName) 
     {
@@ -171,7 +218,32 @@ public class FormularioRegistro extends JFrame{
         
         return textField;
     }
-    
+    private ImageIcon escalarImagen(String direccion,int x,int y) {
+    	
+        ImageIcon iconoOriginal = new ImageIcon(direccion);
+
+       
+        Image imagenEscalada = iconoOriginal.getImage()
+                .getScaledInstance(x, y, Image.SCALE_SMOOTH);
+
+        
+        ImageIcon iconoFinal = new ImageIcon(imagenEscalada);
+        iconoFinal.setDescription(direccion);
+        return iconoFinal;
+    }
+    private ImageIcon escalarImagenLocal(String direccion,int x,int y) {
+    	
+        ImageIcon iconoOriginal = new ImageIcon(getClass().getResource(direccion));
+
+       
+        Image imagenEscalada = iconoOriginal.getImage()
+                .getScaledInstance(x, y, Image.SCALE_SMOOTH);
+
+        
+        ImageIcon iconoFinal = new ImageIcon(imagenEscalada);
+        iconoFinal.setDescription(direccion);
+        return iconoFinal;
+    }
     private void asignarFocusListenerConPlaceholder(JTextField textField, String placeholder) {
     	
     	textField.setBackground(Colores.TABBED_TEXT_COLOR);
@@ -200,14 +272,14 @@ public class FormularioRegistro extends JFrame{
         });
     }
     
-    private void crearBoton(JButton button, String ruta)
+    private void crearBoton(JButton button, String ruta,String titulo)
     {
         int buttonWidth = 200;   
         int buttonHeight = 50;   
         
         button.setBackground(Colores.BUTTON_COLOR1);
         button.setForeground(Color.black);
-        button.setToolTipText("Registrarse");
+        button.setToolTipText(titulo);
         button.setFont(fontBoton);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
@@ -245,6 +317,7 @@ public class FormularioRegistro extends JFrame{
 		lblErrorApellido.setText("");
 		lblErrorCorreo.setText("");
 		lblErrorContrasena.setText("");
+		lblErrorFoto.setText("");
     }
     
     public void crearComponentesDeRegistro(JPanel panelComponentes)
@@ -387,4 +460,11 @@ public class FormularioRegistro extends JFrame{
 			JOptionPane.showMessageDialog(this, e.getMessage());
 		}
 	}
+	public JLabel getIconoUsuario() {
+		return iconoUsuario;
+	}
+	public void setIconoUsuario(JLabel iconoUsuario) {
+		this.iconoUsuario = iconoUsuario;
+	}
+	
 }

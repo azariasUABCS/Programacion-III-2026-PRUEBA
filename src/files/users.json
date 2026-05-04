@@ -1,21 +1,7 @@
 [ {
-  "nombre" : "Azarias",
-  "apellido" : "Vilanueva Collins",
-  "correo" : "azariasv@gmail.com",
-  "contrasena" : "123456!"
-}, {
-  "nombre" : "Jose Carlos",
-  "apellido" : "Arce Lopez",
-  "correo" : "papita@gmail.com",
-  "contrasena" : "654321!"
-}, {
   "nombre" : "test",
-  "apellido" : "user",
+  "apellido" : "test",
   "correo" : "test@.com",
-  "contrasena" : "test!"
-}, {
-  "nombre" : "Jose Isaac ",
-  "apellido" : "Camacho Vazquez",
-  "correo" : "isaac@gmail.com",
-  "contrasena" : "isaacIsABitch!"
-} ]
+  "contrasena" : "test!",
+  "foto" : ".\\images\\049f918d-7a93-4a8b-b2d9-9e9074e4fdb7.png"
+}]

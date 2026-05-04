@@ -11,6 +11,7 @@ import utils.PanelPersonalizable;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +28,7 @@ public class Usuarios extends JPanel {
 		
 			UserTableModel usersTable=new UserTableModel(users);
 			int alto=0;
-			//Añade usuarios simullados"
-			for(int i=0;i<usersTable.getRowCount();i++) {
-				usuarios.add(new UsuarioPanel(usersTable.getValueAt(i, 0).toString(),usersTable.getValueAt(i, 1).toString()));
-			}
+			
 			
 			//define alto
 			if(usersTable.getRowCount()%2==0) {
@@ -38,7 +36,10 @@ public class Usuarios extends JPanel {
 			}else {
 				alto=((usuarios.size()/2)+1)*300;
 			}
-			
+			//Añade usuarios simullados"
+			for(int i=0;i<usersTable.getRowCount();i++) {
+				usuarios.add(new UsuarioPanel(usersTable.getValueAt(i, 0).toString(),usersTable.getValueAt(i, 1).toString(),escalarImagen(usersTable.getValueAt(i, 3).toString(), 200, 150)));
+			}
 			setPreferredSize(new Dimension(600,alto));
 			setOpaque(false);
 			setLayout(new GridLayout(0,2));
@@ -62,5 +63,18 @@ public class Usuarios extends JPanel {
 		}
 		
 		
+	}
+	private ImageIcon escalarImagen(String direccion,int x,int y) {
+	    	
+	        ImageIcon iconoOriginal = new ImageIcon(direccion);
+	
+	       
+	        Image imagenEscalada = iconoOriginal.getImage()
+	                .getScaledInstance(x, y, Image.SCALE_SMOOTH);
+	
+	        
+	        ImageIcon iconoFinal = new ImageIcon(imagenEscalada);
+	        iconoFinal.setDescription(direccion);
+	        return iconoFinal;
 	}
 }

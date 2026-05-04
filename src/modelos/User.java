@@ -10,7 +10,7 @@ public class User {
 	private String apellido;
 	private String correo;
 	private String contrasena;
-	
+	private String foto;
 	
 	public User() {
 	}
@@ -32,6 +32,22 @@ public class User {
 		this.apellido = apellido;
 		this.correo = email;
 		this.contrasena = contrasena;
+	}
+	public User(String nombre, String apellido, String email, String contrasena,String foto) {
+		super();
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.correo = email;
+		this.contrasena = contrasena;
+		this.foto=foto;
+	}
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
 	}
 
 	public String getNombre() {

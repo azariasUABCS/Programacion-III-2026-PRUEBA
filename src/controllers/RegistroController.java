@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
@@ -17,6 +18,13 @@ import utils.Colores;
 import views.FormularioRegistro;
 import views.Ventana;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.UUID;
+
 
 public class RegistroController {
 	private UserRepository repo;
@@ -26,7 +34,7 @@ public class RegistroController {
 	{
 		formularioRegsitro = new FormularioRegistro();
 		formularioRegsitro.registrar.addActionListener(e -> validacionDeRegistro());
-		
+		formularioRegsitro.seleccionar.addActionListener(e -> formularioRegsitro.chooseImage());
 		addWindowListener();
 		
         asignarKeyListener(formularioRegsitro.nombres);
@@ -87,7 +95,40 @@ public class RegistroController {
 				
 			});
 	}
-	
+	 private String saveImage() {
+	    	try {
+	    		ImageIcon icon =(ImageIcon) formularioRegsitro.getIconoUsuario().getIcon();
+				String ruta = icon.getDescription();
+	    		String original = ruta;
+	    		
+	    		if(original == null)
+	    			return null;
+	    		
+	    		File source = new File(original);
+	    		
+	    		String extension = original.substring(original.lastIndexOf("."));
+	    		
+	    		String newName = UUID.randomUUID() + extension;
+	    		
+	    		String folder = "." + File.separator + "images";
+	    		
+	    		File directory = new File(folder);
+	    		
+	    		if(!directory.exists()) {
+	    			directory.mkdir();
+	    		}
+	    		
+	    		Path destination = Paths.get(folder, newName);
+	    		
+	    		Files.copy(source.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
+	    		
+	    		return destination.toString();
+	    		
+	    	}catch(Exception ex) {
+	    		ex.printStackTrace();
+	    		return null;
+	    	}
+	    }
 // Validaciones de Formulario Registro
     
 	private void validacionDeRegistro()
@@ -100,6 +141,7 @@ public class RegistroController {
 		if (!validarApellido()) { valid = false; }
 		if (!validarCorreo()) { valid = false; }
 		if (!validarConstasena()) { valid = false; }
+		if (!validarFoto()) { valid = false; }
 		
 		if (valid) 
 		{
@@ -108,7 +150,9 @@ public class RegistroController {
 			String correo = formularioRegsitro.getCorreo();
 			String contrasena = formularioRegsitro.getContraseña();
 			
-			formularioRegsitro.registerUser(new User(nombre, apellido, correo, contrasena));
+			String foto=saveImage();
+			
+			formularioRegsitro.registerUser(new User(nombre, apellido, correo, contrasena,foto));
 			new Ventana();
 			formularioRegsitro.getWindow().dispose();
 		}
@@ -213,6 +257,21 @@ public class RegistroController {
     	}
 
     	formularioRegsitro.lblErrorContrasena.setText("");
+		return true;
+    }
+    public boolean validarFoto()
+    {
+    	ImageIcon icon =(ImageIcon) formularioRegsitro.getIconoUsuario().getIcon();
+		String ruta = icon.getDescription();
+		
+    	
+    	if (ruta=="..\\img\\icono.png") 
+    	{
+    		formularioRegsitro.lblErrorFoto.setText("La foto es obligatoria");
+			return false;
+		}
+    	
+    	
 		return true;
     }
     
