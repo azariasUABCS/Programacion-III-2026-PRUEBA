@@ -189,6 +189,7 @@ public class FormularioRegistro extends JFrame{
 		scrollPanel.setBounds(0,50,850, 450);
 		scrollPanel.getViewport().setOpaque(false);
 		scrollPanel.setOpaque(false);
+		scrollPanel.getVerticalScrollBar().setUnitIncrement(20); // Hacer que el scroll se baje mas rapido
 		
 		add(scrollPanel);
         add(fondo);
@@ -411,30 +412,6 @@ public class FormularioRegistro extends JFrame{
         panelComponentes.add(Box.createVerticalGlue());
     }
     
-    
-   // Getters
-    public String getNombre() {
-        String text = nombres.getText();
-        return text.equals("Nombre") ? "" : text;
-    }
-    
-    public String getApellido() {
-        String text = apellidos.getText();
-        return text.equals("Apellido") ? "" : text;
-    }
-    
-    public String getCorreo() {
-        String text = correo.getText();
-        return text.equals("correo@ejemplo.com") ? "" : text;
-    }
-    
-    public String getContraseña() {
-        String text = contraseña.getText();
-        return text.equals("Contraseña") ? "" : text;
-    }
-    
-    
-    
     Color defaultColor = Color.GRAY;
 	Color clickedColor = Color.GRAY;
 	
@@ -449,11 +426,6 @@ public class FormularioRegistro extends JFrame{
 	{
 		c.setBackground(defaultColor);
 		c.setForeground(Color.BLACK);
-	}
-	
-	public Window getWindow()
-	{
-		return this;
 	}
 	
 	public void registerUser(User user)
@@ -476,4 +448,31 @@ public class FormularioRegistro extends JFrame{
 		this.iconoUsuario = iconoUsuario;
 	}
 	
+	
+    
+   // Getters
+    public String getNombre() {
+        String text = nombres.getText();
+        return text.equals("Nombre") ? "" : text;
+    }
+    
+    public String getApellido() {
+        String text = apellidos.getText();
+        return text.equals("Apellido") ? "" : text;
+    }
+    
+    public String getCorreo() {
+        String text = correo.getText();
+        return text.equals("correo@ejemplo.com") ? "" : text;
+    }
+    
+    public String getContraseña() {
+        String text = contraseña.getText();
+        return text.equals("Contraseña") ? "" : text;
+    }
+    
+    public Window getWindow()
+    {
+    	return this;
+    }
 }

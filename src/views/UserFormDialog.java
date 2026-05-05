@@ -31,6 +31,7 @@ import controllers.UserDialogController;
 import controllers.VentanaPrincipalController;
 import modelos.User;
 import respository.UserRepository;
+import utils.ThemeManager;
 
 public class UserFormDialog extends JDialog{
 
@@ -56,8 +57,8 @@ public class UserFormDialog extends JDialog{
     {
     	super(parent, true);
     	
-    	
-    	
+    	setTitle(user == null ? "Agregar usuario" : "Editar usuario");
+
     	setSize(400, 300);
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout());

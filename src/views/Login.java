@@ -22,6 +22,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
+
+import com.formdev.flatlaf.FlatLightLaf;
+
 import utils.Colores;
 import utils.PanelPersonalizable;
 
@@ -66,7 +69,7 @@ public class Login extends JPanel{
 		add(Box.createRigidArea(new Dimension(0,40)));
 		
 		configurarBotones();
-		
+		FlatLightLaf.setup();
 	}
 	
 	

@@ -17,6 +17,7 @@ import javax.swing.*;
 import controllers.VentanaPrincipalController;
 import modelos.User;
 import respository.UserRepository;
+import utils.ThemeManager;
 
 public class VentanaPrincipal extends JFrame 
 {
@@ -38,6 +39,11 @@ public class VentanaPrincipal extends JFrame
 		setTitle("Mi aplicación");
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		
+		
+		// Esto solo deberia ir en el Main pero el modo oscuro hace que el login se vea raro entonces solo se aplicara ya al entrar al perfil.
+    	ThemeManager.applySavedTheme();
+    	
 
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		ImageIcon cursorImage = new ImageIcon("src\\img\\pointer_b.png");
@@ -109,6 +115,14 @@ public class VentanaPrincipal extends JFrame
 	    mItemExit = new JMenuItem("Exit");
 	    mItemExit.setMnemonic(KeyEvent.VK_E);
 	    menuFile.add(mItemExit);
+	    
+	    
+	    JMenuItem theme = new JMenuItem("Cambiar modo");
+	    theme.addActionListener(e -> {
+	    	ThemeManager.toggle();
+	    });
+	    mb.add(theme);
+	    
 
 	    JMenu menuOtherOption = new JMenu("Other Option");
 	    menuOtherOption.setMnemonic(KeyEvent.VK_O);
@@ -134,6 +148,13 @@ public class VentanaPrincipal extends JFrame
 	        JOptionPane.YES_NO_OPTION
 	    );
 	}
-
+	
+	public void setWindowSize(int width, int height) {
+		setSize(width, height);
+	}
+	
+	public void setWindowLocation(int x, int y) {
+		setLocation(x, y);
+	}
 }
 	

@@ -1,5 +1,7 @@
 package controllers;
 
+import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -10,6 +12,7 @@ import javax.swing.JOptionPane;
 import modelos.User;
 import respository.UserRepository;
 import tablemodels.UserTableModel;
+import utils.Config;
 import views.Ventana;
 import views.VentanaPrincipal;
 
@@ -19,9 +22,12 @@ public class VentanaPrincipalController {
 	private VentanaPrincipal ventanaPrincipal;
 	
 	public VentanaPrincipalController(VentanaPrincipal ventanaPrincipal) throws IOException {
+		
 		repository = new UserRepository();
 		controller = new UserController(ventanaPrincipal.usersPanel, this,repository.getUsers());
 		this.ventanaPrincipal = ventanaPrincipal;
+		
+		cargarWindowPreferences();
 		registerListeners();
 		
 	}
@@ -34,6 +40,7 @@ public class VentanaPrincipalController {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				new Ventana();
+				guardarWindowPreferences();
 				ventanaPrincipal.dispose();
 			}
 		});
@@ -68,6 +75,51 @@ public class VentanaPrincipalController {
 		}
 		
 	}
+	
+	
+	private void guardarWindowPreferences() {
+		Dimension size = ventanaPrincipal.getSize();
+		Point point = ventanaPrincipal.getLocation();
+		
+		Config.set("registration.window.width", 
+				String.valueOf(size.width));
+		
+		Config.set("registration.window.height", 
+				String.valueOf(size.height));
+		
+		Config.set("registration.window.x", 
+				String.valueOf(point.x));
+		
+		Config.set("registration.window.y", 
+				String.valueOf(point.y));
+		
+	}
+	
+	private void cargarWindowPreferences()
+	{
+		int width = Integer.parseInt(
+				Config.get("registration.window.width"
+						, "500"));
+		
+		int height = Integer.parseInt(
+				Config.get("registration.window.height"
+						, "500"));
+		
+		String xValue = Config.get("registration.window.x"
+						, "");
+		
+		String yValue = Config.get("registration.window.y"
+				, "");
+		
+		if(!xValue.isBlank() && !yValue.isBlank()) {
+			ventanaPrincipal.setWindowLocation(Integer.parseInt(xValue), Integer.parseInt(yValue));
+		}else {
+			ventanaPrincipal.setLocationRelativeTo(null);
+		}
+		
+		ventanaPrincipal.setWindowSize(width, height);
+	}
+	
 	
 	private void handleClose() {
 		int option = ventanaPrincipal.confirmExit();

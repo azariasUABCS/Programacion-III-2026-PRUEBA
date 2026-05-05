@@ -7,6 +7,7 @@ import javax.swing.ImageIcon;
 
 import com.formdev.flatlaf.FlatLightLaf;
 
+import utils.ThemeManager;
 import views.Ventana;
 
 
@@ -14,7 +15,7 @@ public class Main {
 	
 	public static void main(String[] args)
 	{
-		FlatLightLaf.setup(); 
+		ThemeManager.applySavedTheme();
 		
 		Ventana ventanita = new Ventana();
 	}
