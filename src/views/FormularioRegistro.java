@@ -26,10 +26,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 
 import com.formdev.flatlaf.ui.FlatListCellBorder.Selected;
 
@@ -66,7 +68,7 @@ public class FormularioRegistro extends JFrame{
     public JLabel lblErrorApellido;
     public JLabel lblErrorCorreo;
     public JLabel lblErrorContrasena;
-    public JLabel lblErrorFoto;
+   // public JLabel lblErrorFoto;
     
     JLabel iconoUsuario = new JLabel();
     
@@ -76,7 +78,7 @@ public class FormularioRegistro extends JFrame{
     	
         ImageIcon iconoUsuarioFinal = escalarImagenLocal("..\\img\\icono.png",200,200);
         iconoUsuarioFinal.setDescription("..\\img\\icono.png");
-        setSize(850, 975);
+        setSize(850,550);
         setLayout(null);
         setResizable(false);
         setTitle("Registro");
@@ -89,12 +91,12 @@ public class FormularioRegistro extends JFrame{
 		this.setCursor(myCursor);
         
         PanelPersonalizable fondo = new PanelPersonalizable();
-        fondo.setBounds(75, 50, 680, 850);
+        fondo.setBounds(75, 50, 680, 450);
         fondo.setBackground(Colores.LOGIN_PANEL);
         
         // Shadow
         PanelPersonalizable fondo2 = new PanelPersonalizable();
-        fondo2.setBounds(72, 46, 687, 857);
+        fondo2.setBounds(72, 46, 687, 457);
         fondo2.setBackground(Colores.SHADOW_COLOR);
         
 
@@ -121,8 +123,8 @@ public class FormularioRegistro extends JFrame{
         lblErrorApellido = crearErrorLabel();
         lblErrorCorreo = crearErrorLabel();
         lblErrorContrasena = crearErrorLabel();
-        lblErrorFoto = crearErrorLabel();
-        lblErrorFoto.setAlignmentX(Component.CENTER_ALIGNMENT);
+        //lblErrorFoto = crearErrorLabel();
+        //lblErrorFoto.setAlignmentX(Component.CENTER_ALIGNMENT);
         
         crearComponentesDeRegistro(panelComponentes);
         
@@ -172,7 +174,7 @@ public class FormularioRegistro extends JFrame{
 				resetBackground(registrar);
 			}
 		});
-        panelComponentes.add(lblErrorFoto);
+        //panelComponentes.add(lblErrorFoto);
         panelComponentes.add(seleccionar);
         panelComponentes.add(Box.createRigidArea(new Dimension(0,15)));
         panelBoton.add(registrar);
@@ -181,7 +183,14 @@ public class FormularioRegistro extends JFrame{
         
         panelComponentes.add(Box.createRigidArea(new Dimension(0, 20)));
         
-        add(panelComponentes);
+        JScrollPane scrollPanel= new JScrollPane(panelComponentes);
+		scrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPanel.setBounds(0,50,850, 450);
+		scrollPanel.getViewport().setOpaque(false);
+		scrollPanel.setOpaque(false);
+		
+		add(scrollPanel);
         add(fondo);
         add(fondo2);
 
@@ -317,7 +326,7 @@ public class FormularioRegistro extends JFrame{
 		lblErrorApellido.setText("");
 		lblErrorCorreo.setText("");
 		lblErrorContrasena.setText("");
-		lblErrorFoto.setText("");
+		//lblErrorFoto.setText("");
     }
     
     public void crearComponentesDeRegistro(JPanel panelComponentes)

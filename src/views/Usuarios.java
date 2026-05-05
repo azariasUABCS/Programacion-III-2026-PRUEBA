@@ -5,6 +5,7 @@ import javax.swing.border.EmptyBorder;
 
 import modelos.User;
 import respository.UserRepository;
+
 import tablemodels.UserTableModel;
 import utils.Colores;
 import utils.PanelPersonalizable;
@@ -32,14 +33,23 @@ public class Usuarios extends JPanel {
 			
 			//define alto
 			if(usersTable.getRowCount()%2==0) {
-				alto=(usuarios.size()/2)*300;
+				
+				alto=(usersTable.getRowCount()/2)*300;
 			}else {
-				alto=((usuarios.size()/2)+1)*300;
+				System.out.println(4456);
+				alto=((usersTable.getRowCount()/2)+1)*300;
 			}
 			//Añade usuarios simullados"
 			for(int i=0;i<usersTable.getRowCount();i++) {
-				usuarios.add(new UsuarioPanel(usersTable.getValueAt(i, 0).toString(),usersTable.getValueAt(i, 1).toString(),escalarImagen(usersTable.getValueAt(i, 3).toString(), 200, 150)));
+				try {
+					usuarios.add(new UsuarioPanel(usersTable.getValueAt(i, 0).toString(),usersTable.getValueAt(i, 1).toString(),escalarImagen(usersTable.getValueAt(i, 3).toString(), 200, 200)));
+				} catch (Exception e) {
+					// TODO: handle exception
+					usuarios.add(new UsuarioPanel(usersTable.getValueAt(i, 0).toString(),usersTable.getValueAt(i, 1).toString(),escalarImagenLocal("..\\img\\icono.png" , 200, 200)));
+				}
+				
 			}
+			System.out.println(alto);
 			setPreferredSize(new Dimension(600,alto));
 			setOpaque(false);
 			setLayout(new GridLayout(0,2));
@@ -65,7 +75,7 @@ public class Usuarios extends JPanel {
 		
 	}
 	private ImageIcon escalarImagen(String direccion,int x,int y) {
-	    	
+	    	System.out.println(direccion);
 	        ImageIcon iconoOriginal = new ImageIcon(direccion);
 	
 	       
@@ -77,4 +87,17 @@ public class Usuarios extends JPanel {
 	        iconoFinal.setDescription(direccion);
 	        return iconoFinal;
 	}
+	private ImageIcon escalarImagenLocal(String direccion,int x,int y) {
+    	System.out.println(direccion);
+        ImageIcon iconoOriginal = new ImageIcon(getClass().getResource(direccion));
+
+       
+        Image imagenEscalada = iconoOriginal.getImage()
+                .getScaledInstance(x, y, Image.SCALE_SMOOTH);
+
+        
+        ImageIcon iconoFinal = new ImageIcon(imagenEscalada);
+        iconoFinal.setDescription(direccion);
+        return iconoFinal;
+}
 }

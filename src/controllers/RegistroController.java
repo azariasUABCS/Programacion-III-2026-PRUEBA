@@ -141,7 +141,7 @@ public class RegistroController {
 		if (!validarApellido()) { valid = false; }
 		if (!validarCorreo()) { valid = false; }
 		if (!validarConstasena()) { valid = false; }
-		if (!validarFoto()) { valid = false; }
+		//if (!validarFoto()) { valid = false; }
 		
 		if (valid) 
 		{
@@ -259,7 +259,7 @@ public class RegistroController {
     	formularioRegsitro.lblErrorContrasena.setText("");
 		return true;
     }
-    public boolean validarFoto()
+   /*public boolean validarFoto()
     {
     	ImageIcon icon =(ImageIcon) formularioRegsitro.getIconoUsuario().getIcon();
 		String ruta = icon.getDescription();
@@ -273,7 +273,7 @@ public class RegistroController {
     	
     	
 		return true;
-    }
+    }*/
     
     private void asignarValidacion(JTextField JtextField)
     {

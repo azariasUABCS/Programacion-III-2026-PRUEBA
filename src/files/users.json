@@ -4,4 +4,28 @@
   "correo" : "test@.com",
   "contrasena" : "test!",
   "foto" : ".\\images\\049f918d-7a93-4a8b-b2d9-9e9074e4fdb7.png"
-}]
+}, {
+  "nombre" : "hola",
+  "apellido" : "hola",
+  "correo" : "h@.com",
+  "contrasena" : "hola!",
+  "foto" : null
+}, {
+  "nombre" : "nigga",
+  "apellido" : "niggaman",
+  "correo" : "nigga@man.com",
+  "contrasena" : "niggaman!",
+  "foto" : null
+}, {
+  "nombre" : "porno",
+  "apellido" : "pornito",
+  "correo" : "porno@pornoso.com",
+  "contrasena" : "pornitorico!",
+  "foto" : ".\\images\\6463112b-8ad4-4d57-b252-e55077f7c304.jpg"
+}, {
+  "nombre" : "dsfsfd",
+  "apellido" : "sdfsdf",
+  "correo" : "sdfds@.com",
+  "contrasena" : "wfkmf!",
+  "foto" : null
+} ]
