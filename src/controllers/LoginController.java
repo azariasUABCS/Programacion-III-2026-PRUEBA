@@ -41,7 +41,7 @@ public class LoginController {
 			}
 		});
 		login.getRegistrarse().addActionListener(e -> {	
-			new RegistroController();			
+			new RegistroController(login.getWindow());			
 		});
 	}
 	

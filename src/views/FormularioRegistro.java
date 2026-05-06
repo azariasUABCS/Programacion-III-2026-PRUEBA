@@ -210,6 +210,7 @@ public class FormularioRegistro extends JFrame{
     	if(option==JFileChooser.APPROVE_OPTION) {
     		File file=chooser.getSelectedFile();
     		iconoUsuario.setIcon(escalarImagen(file.getAbsolutePath(), 200, 200));
+    		iconoUsuarioFinal.setDescription(file.getAbsolutePath());
     	}
     }
     

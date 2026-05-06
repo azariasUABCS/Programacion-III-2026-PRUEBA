@@ -1,6 +1,7 @@
 package controllers;
 
 import java.awt.Color;
+import java.awt.Window;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
@@ -30,9 +31,11 @@ import java.util.UUID;
 public class RegistroController {
 	private UserRepository repo;
 	private FormularioRegistro formularioRegsitro;
+	private Window loginWindow;
 	
-	public RegistroController()
+	public RegistroController(Window loginWindow)
 	{
+		this.loginWindow = loginWindow;
 		formularioRegsitro = new FormularioRegistro();
 		formularioRegsitro.registrar.addActionListener(e -> validacionDeRegistro());
 		formularioRegsitro.seleccionar.addActionListener(e -> formularioRegsitro.chooseImage());
@@ -101,9 +104,10 @@ public class RegistroController {
 	    		
 				String ruta = formularioRegsitro.getIconDescription();
 	    		String original = ruta;
+	    		System.out.println(ruta);
 	    		if(!original.equals("..\\img\\icono.png")) {
-	    			if(original == null)
-		    			return null;
+	    			
+		    			
 		    		
 		    		File source = new File(original);
 		    		
@@ -157,8 +161,11 @@ public class RegistroController {
 			String foto=saveImage();
 			boolean guardar=formularioRegsitro.getGuardar().isSelected();
 			formularioRegsitro.registerUser(new User(nombre, apellido, correo, contrasena,foto, guardar));
-			//new Ventana();
+			
+			
+			new Ventana();
 			formularioRegsitro.getWindow().dispose();
+			loginWindow.dispose();
 		}
 		
     }
