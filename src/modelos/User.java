@@ -11,6 +11,7 @@ public class User {
 	private String correo;
 	private String contrasena;
 	private String foto;
+	private boolean guardar;
 	
 	public User() {
 	}
@@ -32,14 +33,16 @@ public class User {
 		this.apellido = apellido;
 		this.correo = email;
 		this.contrasena = contrasena;
+		this.guardar=true;
 	}
-	public User(String nombre, String apellido, String email, String contrasena,String foto) {
+	public User(String nombre, String apellido, String email, String contrasena,String foto, boolean guardar) {
 		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.correo = email;
 		this.contrasena = contrasena;
 		this.foto=foto;
+		this.guardar=guardar;
 	}
 
 	public String getFoto() {
@@ -84,6 +87,14 @@ public class User {
 	}
 	
 	
+	public boolean isGuardar() {
+		return guardar;
+	}
+
+	public void setGuardar(boolean guardar) {
+		this.guardar = guardar;
+	}
+
 	public String toString() {
 		return "Nombre: " + nombre +
 					"\nApelldo: " + apellido +

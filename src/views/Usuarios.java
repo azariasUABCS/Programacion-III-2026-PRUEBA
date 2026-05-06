@@ -32,21 +32,24 @@ public class Usuarios extends JPanel {
 			
 			
 			//define alto
-			if(usersTable.getRowCount()%2==0) {
+			if(usersTable.getNumGuardar()%2==0) {
 				
-				alto=(usersTable.getRowCount()/2)*300;
+				alto=(usersTable.getNumGuardar()/2)*300;
 			}else {
 				System.out.println(4456);
-				alto=((usersTable.getRowCount()/2)+1)*300;
+				alto=((usersTable.getNumGuardar()/2)+1)*300;
 			}
 			//Añade usuarios simullados"
 			for(int i=0;i<usersTable.getRowCount();i++) {
-				try {
-					usuarios.add(new UsuarioPanel(usersTable.getValueAt(i, 0).toString(),usersTable.getValueAt(i, 1).toString(),escalarImagen(usersTable.getValueAt(i, 3).toString(), 200, 200)));
-				} catch (Exception e) {
-					// TODO: handle exception
-					usuarios.add(new UsuarioPanel(usersTable.getValueAt(i, 0).toString(),usersTable.getValueAt(i, 1).toString(),escalarImagenLocal("..\\img\\icono.png" , 200, 200)));
+				if(usersTable.getValueAt(i, 4).toString().equals("true")) {
+					try {
+						usuarios.add(new UsuarioPanel(usersTable.getValueAt(i, 0).toString(),usersTable.getValueAt(i, 1).toString(),escalarImagen(usersTable.getValueAt(i, 3).toString(), 200, 200)));
+					} catch (Exception e) {
+						// TODO: handle exception
+						usuarios.add(new UsuarioPanel(usersTable.getValueAt(i, 0).toString(),usersTable.getValueAt(i, 1).toString(),escalarImagenLocal("..\\img\\icono.png" , 200, 200)));
+					}
 				}
+				
 				
 			}
 			System.out.println(alto);

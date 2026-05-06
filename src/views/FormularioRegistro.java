@@ -20,6 +20,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -69,14 +70,16 @@ public class FormularioRegistro extends JFrame{
     public JLabel lblErrorCorreo;
     public JLabel lblErrorContrasena;
    // public JLabel lblErrorFoto;
-    
+    ImageIcon iconoUsuarioFinal;
     JLabel iconoUsuario = new JLabel();
     
+    //Chckboxes
+    private JCheckBox guardar= new JCheckBox("Guardar como usuario rapido");
     public FormularioRegistro()
     {
     	userRepository = new UserRepository();
     	
-        ImageIcon iconoUsuarioFinal = escalarImagenLocal("..\\img\\icono.png",200,200);
+        iconoUsuarioFinal = escalarImagenLocal("..\\img\\icono.png",200,200);
         iconoUsuarioFinal.setDescription("..\\img\\icono.png");
         setSize(850,550);
         setLayout(null);
@@ -177,6 +180,7 @@ public class FormularioRegistro extends JFrame{
         //panelComponentes.add(lblErrorFoto);
         panelComponentes.add(seleccionar);
         panelComponentes.add(Box.createRigidArea(new Dimension(0,15)));
+        panelComponentes.add(guardar);
         panelBoton.add(registrar);
         panelComponentes.add(panelBoton);
         
@@ -475,4 +479,14 @@ public class FormularioRegistro extends JFrame{
     {
     	return this;
     }
+	public JCheckBox getGuardar() {
+		return guardar;
+	}
+	public void setGuardar(JCheckBox guardar) {
+		this.guardar = guardar;
+	}
+	public String getIconDescription() {
+		return iconoUsuarioFinal.getDescription();
+	}
+    
 }

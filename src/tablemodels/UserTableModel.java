@@ -58,6 +58,8 @@ public class UserTableModel extends AbstractTableModel{
 			return user.getCorreo();
 		case 3:
 			return user.getFoto();
+		case 4:
+			return user.isGuardar();
 		}
 		
 			
@@ -73,5 +75,13 @@ public class UserTableModel extends AbstractTableModel{
 		this.users=users;
 		fireTableDataChanged();
 	}
-	
+	public int getNumGuardar() {
+		int guardados=0;
+		for(int i=0;i<users.size();i++) {
+			if(users.get(i).isGuardar()) {
+				guardados++;
+			}
+		}
+		return guardados;
+	}
 }

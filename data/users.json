@@ -3,11 +3,41 @@
   "apellido" : "test",
   "correo" : "test@.com",
   "contrasena" : "test!",
-  "foto" : ".\\images\\049f918d-7a93-4a8b-b2d9-9e9074e4fdb7.png"
+  "foto" : ".\\images\\049f918d-7a93-4a8b-b2d9-9e9074e4fdb7.png",
+  "guardar" : false
 }, {
   "nombre" : "Azarias",
   "apellido" : "Collins",
   "correo" : "azarias@.com",
   "contrasena" : "12345!",
-  "foto" : ".\\images\\cfc712b3-2295-429f-941f-3f3b45bbcedb.jpg"
+  "foto" : ".\\images\\cfc712b3-2295-429f-941f-3f3b45bbcedb.jpg",
+  "guardar" : false
+}, {
+  "nombre" : "ibib",
+  "apellido" : "ijnij",
+  "correo" : "jibhi@.com",
+  "contrasena" : "hbhh!",
+  "foto" : ".\\images\\9642a89d-b10d-47ba-9db0-9958f9b8a220.jpg",
+  "guardar" : false
+}, {
+  "nombre" : "nigga",
+  "apellido" : "niggaman",
+  "correo" : "nigga@.com",
+  "contrasena" : "nigga!",
+  "foto" : null,
+  "guardar" : true
+}, {
+  "nombre" : "niggaskoj",
+  "apellido" : "wffv",
+  "correo" : "epiofj@.com",
+  "contrasena" : "simon!",
+  "foto" : null,
+  "guardar" : true
+}, {
+  "nombre" : "ijwbfijwe",
+  "apellido" : "ijwgij",
+  "correo" : "owjno@.com",
+  "contrasena" : "ijdbwf!",
+  "foto" : null,
+  "guardar" : true
 } ]

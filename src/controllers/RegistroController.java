@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
@@ -97,32 +98,35 @@ public class RegistroController {
 	}
 	 private String saveImage() {
 	    	try {
-	    		ImageIcon icon =(ImageIcon) formularioRegsitro.getIconoUsuario().getIcon();
-				String ruta = icon.getDescription();
+	    		
+				String ruta = formularioRegsitro.getIconDescription();
 	    		String original = ruta;
-	    		
-	    		if(original == null)
-	    			return null;
-	    		
-	    		File source = new File(original);
-	    		
-	    		String extension = original.substring(original.lastIndexOf("."));
-	    		
-	    		String newName = UUID.randomUUID() + extension;
-	    		
-	    		String folder = "." + File.separator + "images";
-	    		
-	    		File directory = new File(folder);
-	    		
-	    		if(!directory.exists()) {
-	    			directory.mkdir();
+	    		if(!original.equals("..\\img\\icono.png")) {
+	    			if(original == null)
+		    			return null;
+		    		
+		    		File source = new File(original);
+		    		
+		    		String extension = original.substring(original.lastIndexOf("."));
+		    		
+		    		String newName = UUID.randomUUID() + extension;
+		    		
+		    		String folder = "." + File.separator + "images";
+		    		
+		    		File directory = new File(folder);
+		    		
+		    		if(!directory.exists()) {
+		    			directory.mkdir();
+		    		}
+		    		
+		    		Path destination = Paths.get(folder, newName);
+		    		
+		    		Files.copy(source.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
+		    		
+		    		return destination.toString();
 	    		}
+	    		return null;
 	    		
-	    		Path destination = Paths.get(folder, newName);
-	    		
-	    		Files.copy(source.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
-	    		
-	    		return destination.toString();
 	    		
 	    	}catch(Exception ex) {
 	    		ex.printStackTrace();
@@ -151,9 +155,9 @@ public class RegistroController {
 			String contrasena = formularioRegsitro.getContraseña();
 			
 			String foto=saveImage();
-			
-			formularioRegsitro.registerUser(new User(nombre, apellido, correo, contrasena,foto));
-			new Ventana();
+			boolean guardar=formularioRegsitro.getGuardar().isSelected();
+			formularioRegsitro.registerUser(new User(nombre, apellido, correo, contrasena,foto, guardar));
+			//new Ventana();
 			formularioRegsitro.getWindow().dispose();
 		}
 		
