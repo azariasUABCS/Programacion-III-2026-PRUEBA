@@ -61,6 +61,17 @@ public class LoginController {
 			login.getMensajeCorreo().setText("* Credenciales erroneas *");
 			error=true;
 		}
+		try {
+			if(!existeCuenta(login.getUsuario().getText(),String.valueOf(login.getContraseña().getPassword()))) {
+				login.getMensajeCorreo().setText("* Credenciales erroneas *");
+				error=true;
+			}
+		} catch (InvalidUserException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
+		
 		if(error==false) {
 			new VentanaPrincipalController(new VentanaPrincipal());
 			window.dispose();
@@ -153,9 +164,10 @@ public class LoginController {
 		if(login.getUsuario().getText().equals("") || login.getUsuario().getText().equals("Correo Electrónico")) {
 			throw new InvalidUserException("* Correo obligatorio *");
 		}
-		if(!login.getUsuario().getText().equals("")&&!login.getUsuario().getText().contains("@")) {
+		if(!login.getUsuario().getText().equals("")&&!login.getUsuario().getText().contains("@") || !login.getUsuario().getText().equals("")&&!login.getUsuario().getText().contains(".com")) {
 			throw new InvalidUserException("\"Debe tener domimio\"");
 		}
+		
 		
 	}
 	private void evaluarContrasena() throws InvalidUserException {
@@ -181,6 +193,7 @@ public class LoginController {
 					return true; 
 				}
 			}
+			
 		} 
 		catch (IOException ex) 
 		{

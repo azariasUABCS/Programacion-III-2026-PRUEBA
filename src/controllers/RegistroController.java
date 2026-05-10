@@ -37,17 +37,17 @@ public class RegistroController {
 	{
 		this.loginWindow = loginWindow;
 		formularioRegsitro = new FormularioRegistro();
-		formularioRegsitro.registrar.addActionListener(e -> validacionDeRegistro());
-		formularioRegsitro.seleccionar.addActionListener(e -> formularioRegsitro.chooseImage());
+		formularioRegsitro.getRegistrar().addActionListener(e -> validacionDeRegistro());
+		formularioRegsitro.getSeleccionar().addActionListener(e -> formularioRegsitro.chooseImage());
 		addWindowListener();
 		
-        asignarKeyListener(formularioRegsitro.nombres);
-        asignarKeyListener(formularioRegsitro.apellidos); 
+        asignarKeyListener(formularioRegsitro.getNombres());
+        asignarKeyListener(formularioRegsitro.getApellidos()); 
         
-		asignarValidacion(formularioRegsitro.nombres); 
-        asignarValidacion(formularioRegsitro.apellidos);
-        asignarValidacion(formularioRegsitro.correo);
-        asignarValidacion(formularioRegsitro.contraseña);
+		asignarValidacion(formularioRegsitro.getNombres()); 
+        asignarValidacion(formularioRegsitro.getApellidos());
+        asignarValidacion(formularioRegsitro.getCorreoFieldd());
+        asignarValidacion(formularioRegsitro.getContraseField());
 	}
 	
 	private void addWindowListener()
@@ -172,14 +172,14 @@ public class RegistroController {
 	
 	public boolean validarNombre() 
     {
-    	String nombre = formularioRegsitro.nombres.getText().trim();
+    	String nombre = formularioRegsitro.getNombres().getText().trim();
     	
     	if (nombre.isEmpty() || nombre.equals("Nombre")) 
     	{
-    		formularioRegsitro.lblErrorNombre.setText("El nombre es obligatorio");
+    		formularioRegsitro.getLblErrorNombre().setText("El nombre es obligatorio");
 			return false;
 		} else {
-			formularioRegsitro.lblErrorNombre.setText("");
+			formularioRegsitro.getLblErrorNombre().setText("");
 		}
 
 		return true;
@@ -187,14 +187,14 @@ public class RegistroController {
 	
     public boolean validarApellido()
     {
-    	String apellido = formularioRegsitro.apellidos.getText().trim();
+    	String apellido = formularioRegsitro.getApellidos().getText().trim();
     	
     	if (apellido.isEmpty() || apellido.equals("Apellido")) 
     	{
-    		formularioRegsitro.lblErrorApellido.setText("El apellido es obligatorio");
+    		formularioRegsitro.getLblErrorApellido().setText("El apellido es obligatorio");
 			return false;
 		} else {
-			formularioRegsitro.lblErrorApellido.setText("");
+			formularioRegsitro.getLblErrorApellido().setText("");
 		}
 
 		return true;
@@ -202,72 +202,72 @@ public class RegistroController {
     
     public boolean validarCorreo()
     {
-    	String correo = formularioRegsitro.correo.getText().trim();
+    	String correo = formularioRegsitro.getCorreoFieldd().getText().trim();
     	
     	if (correo.isEmpty() || correo.equals("correo@ejemplo.com")) 
     	{
-    		formularioRegsitro.lblErrorCorreo.setText("El email es obligatorio");
+    		formularioRegsitro.getLblErrorCorreo().setText("El email es obligatorio");
 			return false;
 		}
     	
     	if (correo.length() < 5) 
     	{
-    		formularioRegsitro.lblErrorCorreo.setText("Email inválido! Es muy corto.");
+    		formularioRegsitro.getLblErrorCorreo().setText("Email inválido! Es muy corto.");
     	    return false;
     	}
 
 		if (!correo.contains("@")) 
 		{
-			formularioRegsitro.lblErrorCorreo.setText("Email inválido! Le falta @");
+			formularioRegsitro.getLblErrorCorreo().setText("Email inválido! Le falta @");
 			return false;
 		}
 		
 		if (!correo.contains(".com")) 
 		{
-			formularioRegsitro.lblErrorCorreo.setText("Email inválido! Le falta un '.com'");
+			formularioRegsitro.getLblErrorCorreo().setText("Email inválido! Le falta un '.com'");
 			return false;
 		}
 		
 		// Validación adicional para dominio
 		String[] parts = correo.split("@");
 		if (parts.length != 2 || !parts[1].contains(".")) {
-			formularioRegsitro.lblErrorCorreo.setText("Email inválido! Formato incorrecto");
+			formularioRegsitro.getLblErrorCorreo().setText("Email inválido! Formato incorrecto");
 			return false;
 		}
 		
-		formularioRegsitro.lblErrorCorreo.setText("");
+		formularioRegsitro.getLblErrorCorreo().setText("");
 		return true;
     }
     
     public boolean validarConstasena()
     {
-    	String contrasena = formularioRegsitro.contraseña.getText();
+    	String contrasena = formularioRegsitro.getContraseField().getText();
     	
     	if (contrasena.isEmpty() || contrasena.equals("Contraseña")) 
     	{
-    		formularioRegsitro.lblErrorContrasena.setText("La contraseña es obligatoria");
+    		formularioRegsitro.getLblErrorContrasena().setText("La contraseña es obligatoria");
 			return false;
 		}
     	
     	if (contrasena.length() < 5) 
     	{
-    		formularioRegsitro.lblErrorContrasena.setText("La contraseña es muy corta, mínimo 5 caracteres");
+    		formularioRegsitro.getLblErrorContrasena().setText("La contraseña es muy corta, mínimo 5 caracteres");
     	    return false;
     	}
     	
     	if (!contrasena.matches(".*[!$?_*].*")) // Regex que checa que por lo menos hay uno de estos char
     	{
-    		formularioRegsitro.lblErrorContrasena.setText("Necesita un caracter especial (! $ ? _ *)");
+    		formularioRegsitro.getLblErrorContrasena().setText("Necesita un caracter especial (! $ ? _ *)");
     	    return false;
     	}
     	
     	if (contrasena.matches(".*\\s.*")) // Regex que checa si hay espacios entre texto
     	{
-    		formularioRegsitro.lblErrorContrasena.setText("La contraseña no puede tener espacios");
+    		formularioRegsitro.getLblErrorContrasena().setText("La contraseña no puede tener espacios");
     	    return false;
     	}
 
-    	formularioRegsitro.lblErrorContrasena.setText("");
+    	formularioRegsitro.getLblErrorContrasena().setText("");
 		return true;
     }
    /*public boolean validarFoto()
@@ -352,7 +352,7 @@ public class RegistroController {
     			break;
     			
     		case "contraseña":
-    			formularioRegsitro.contraseña.getDocument().addDocumentListener(new DocumentListener() {
+    			formularioRegsitro.getContraseField().getDocument().addDocumentListener(new DocumentListener() {
     				
     				@Override
     				public void removeUpdate(DocumentEvent e) {

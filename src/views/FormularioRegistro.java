@@ -53,22 +53,22 @@ public class FormularioRegistro extends JFrame{
     
     
     // Fields de Texto para Usuario
-    public JTextField nombres;
-    public JTextField apellidos;
-    public JTextField correo;
-    public JTextField contraseña;
+    private JTextField nombres;
+    private JTextField apellidos;
+    private JTextField correo;
+    private JTextField contraseña;
     
     // JBotones para Regsitro Controller
-    public JButton seleccionar = new JButton(" Seleccionar");
-    public JButton registrar = new JButton(" Registrarse");
+    private JButton seleccionar = new JButton(" Seleccionar");
+    private JButton registrar = new JButton(" Registrarse");
    
     private UserRepository userRepository;
     
     // Labels de Error
-    public JLabel lblErrorNombre;
-    public JLabel lblErrorApellido;
-    public JLabel lblErrorCorreo;
-    public JLabel lblErrorContrasena;
+    private JLabel lblErrorNombre;
+    private JLabel lblErrorApellido;
+    private JLabel lblErrorCorreo;
+    private JLabel lblErrorContrasena;
    // public JLabel lblErrorFoto;
     ImageIcon iconoUsuarioFinal;
     JLabel iconoUsuario = new JLabel();
@@ -489,5 +489,121 @@ public class FormularioRegistro extends JFrame{
 	public String getIconDescription() {
 		return iconoUsuarioFinal.getDescription();
 	}
+	public Font getFuente() {
+		return fuente;
+	}
+	public void setFuente(Font fuente) {
+		this.fuente = fuente;
+	}
+	public Font getFontError() {
+		return fontError;
+	}
+	public void setFontError(Font fontError) {
+		this.fontError = fontError;
+	}
+	public Font getFontTextoCampo() {
+		return fontTextoCampo;
+	}
+	public void setFontTextoCampo(Font fontTextoCampo) {
+		this.fontTextoCampo = fontTextoCampo;
+	}
+	public Font getFontBoton() {
+		return fontBoton;
+	}
+	public void setFontBoton(Font fontBoton) {
+		this.fontBoton = fontBoton;
+	}
+	public Font getFontTitulo() {
+		return fontTitulo;
+	}
+	public void setFontTitulo(Font fontTitulo) {
+		this.fontTitulo = fontTitulo;
+	}
+	public JTextField getNombres() {
+		return nombres;
+	}
+	public void setNombres(JTextField nombres) {
+		this.nombres = nombres;
+	}
+	public JTextField getApellidos() {
+		return apellidos;
+	}
+	public void setApellidos(JTextField apellidos) {
+		this.apellidos = apellidos;
+	}
+	public JButton getSeleccionar() {
+		return seleccionar;
+	}
+	public void setSeleccionar(JButton seleccionar) {
+		this.seleccionar = seleccionar;
+	}
+	public JButton getRegistrar() {
+		return registrar;
+	}
+	public void setRegistrar(JButton registrar) {
+		this.registrar = registrar;
+	}
+	public UserRepository getUserRepository() {
+		return userRepository;
+	}
+	public void setUserRepository(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+	public JLabel getLblErrorNombre() {
+		return lblErrorNombre;
+	}
+	public void setLblErrorNombre(JLabel lblErrorNombre) {
+		this.lblErrorNombre = lblErrorNombre;
+	}
+	public JLabel getLblErrorApellido() {
+		return lblErrorApellido;
+	}
+	public void setLblErrorApellido(JLabel lblErrorApellido) {
+		this.lblErrorApellido = lblErrorApellido;
+	}
+	public JLabel getLblErrorCorreo() {
+		return lblErrorCorreo;
+	}
+	public void setLblErrorCorreo(JLabel lblErrorCorreo) {
+		this.lblErrorCorreo = lblErrorCorreo;
+	}
+	public JLabel getLblErrorContrasena() {
+		return lblErrorContrasena;
+	}
+	public void setLblErrorContrasena(JLabel lblErrorContrasena) {
+		this.lblErrorContrasena = lblErrorContrasena;
+	}
+	public ImageIcon getIconoUsuarioFinal() {
+		return iconoUsuarioFinal;
+	}
+	public void setIconoUsuarioFinal(ImageIcon iconoUsuarioFinal) {
+		this.iconoUsuarioFinal = iconoUsuarioFinal;
+	}
+	public Color getDefaultColor() {
+		return defaultColor;
+	}
+	public void setDefaultColor(Color defaultColor) {
+		this.defaultColor = defaultColor;
+	}
+	public Color getClickedColor() {
+		return clickedColor;
+	}
+	public void setClickedColor(Color clickedColor) {
+		this.clickedColor = clickedColor;
+	}
+	
+	public void setCorreo(JTextField correo) {
+		this.correo = correo;
+	}
+	public JTextField getCorreoFieldd() {
+		return correo;
+	}
+	public void setContraseña(JTextField contraseña) {
+		this.contraseña = contraseña;
+	}
+	public JTextField getContraseField() {
+		return contraseña;
+	}
+	
     
 }

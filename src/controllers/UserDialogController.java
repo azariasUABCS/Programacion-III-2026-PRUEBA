@@ -1,19 +1,29 @@
 package controllers;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.UUID;
 
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import modelos.User;
 import respository.UserRepository;
@@ -28,8 +38,8 @@ public class UserDialogController {
 	public UserDialogController(UserFormDialog userFromDialog) // Agregar nuevo user?
 	{
 		this.userFromDialog = userFromDialog;
-		
-		userFromDialog.btnGuardar.addActionListener(e -> {
+		userFromDialog.getSeleccionar().addActionListener(e -> userFromDialog.chooseImage());
+		userFromDialog.getBtnGuardar().addActionListener(e -> {
 			try {
 				validacionDeRegistro();
 			} catch (IOException e1) {
@@ -37,15 +47,15 @@ public class UserDialogController {
 				e1.printStackTrace();
 			}
 		});
-		
+		this.userFromDialog.getIconoUsuario().setIcon(escalarImagenLocal("..\\img\\icono.png", 200, 200));
 		addWindowListener();
 		
-        asignarKeyListener(userFromDialog.txtNombre);
-        asignarKeyListener(userFromDialog.txtApellido); 
+        asignarKeyListener(userFromDialog.getTxtNombre());
+        asignarKeyListener(userFromDialog.getTxtApellido()); 
         
-		asignarValidacion(userFromDialog.txtNombre); 
-        asignarValidacion(userFromDialog.txtApellido);
-        asignarValidacion(userFromDialog.txtCorreo);
+		asignarValidacion(userFromDialog.getTxtNombre()); 
+        asignarValidacion(userFromDialog.getTxtApellido());
+        asignarValidacion(userFromDialog.getTxtCorreo());
         
 	}
 	
@@ -53,7 +63,8 @@ public class UserDialogController {
 	{
 		this.userFromDialog = userFromDialog;
 		this.userFromDialog.setUser(user);
-		userFromDialog.btnGuardar.addActionListener(e -> {
+		userFromDialog.getSeleccionar().addActionListener(e -> userFromDialog.chooseImage());
+		userFromDialog.getBtnGuardar().addActionListener(e -> {
 			try {
 				validacionDeActualizacion();
 			} catch (IOException e1) {
@@ -64,20 +75,56 @@ public class UserDialogController {
 		
 		addWindowListener();
 		
-        asignarKeyListener(userFromDialog.txtNombre);
-        asignarKeyListener(userFromDialog.txtApellido); 
+        asignarKeyListener(userFromDialog.getTxtNombre());
+        asignarKeyListener(userFromDialog.getTxtApellido()); 
         
-		asignarValidacion(userFromDialog.txtNombre); 
-        asignarValidacion(userFromDialog.txtApellido);
-        asignarValidacion(userFromDialog.txtCorreo);
-        this.userFromDialog.txtApellido.setText(this.userFromDialog.getUser().getApellido());
-        this.userFromDialog.txtNombre.setText(user.getNombre());
-        this.userFromDialog.txtCorreo.setText(user.getCorreo());
-        this.userFromDialog.txtContraseña.setText(user.getContrasena());
-        this.userFromDialog.btnGuardar.setText("Editar");
+		asignarValidacion(userFromDialog.getTxtNombre()); 
+        asignarValidacion(userFromDialog.getTxtApellido());
+        asignarValidacion(userFromDialog.getTxtCorreo());
+        this.userFromDialog.getTxtApellido().setText(this.userFromDialog.getUser().getApellido());
+        this.userFromDialog.getTxtNombre().setText(user.getNombre());
+        this.userFromDialog.getTxtCorreo().setText(user.getCorreo());
+        this.userFromDialog.getTxtContraseña().setText(user.getContrasena());
+        this.userFromDialog.getBtnGuardar().setText("Editar");
+        try {
+        	if(!user.getFoto().equals(null)) {
+        		this.userFromDialog.getIconoUsuario().setIcon(escalarImagen(user.getFoto(), 200, 200));
+        	}
+        	
+		} catch (Exception e) {
+			// TODO: handle exception
+			this.userFromDialog.getIconoUsuario().setIcon(escalarImagenLocal("..\\img\\icono.png", 200, 200));
+		}
+        
+        this.userFromDialog.getGuardar().setSelected(user.isGuardar());
 	}
 	
+	private ImageIcon escalarImagen(String direccion,int x,int y) {
+    	
+        ImageIcon iconoOriginal = new ImageIcon(direccion);
+
+       
+        Image imagenEscalada = iconoOriginal.getImage()
+                .getScaledInstance(x, y, Image.SCALE_SMOOTH);
+
+        
+        ImageIcon iconoFinal = new ImageIcon(imagenEscalada);
+        iconoFinal.setDescription(direccion);
+        return iconoFinal;
+	}
+	private ImageIcon escalarImagenLocal(String direccion,int x,int y) {
+	    	
+	        ImageIcon iconoOriginal = new ImageIcon(getClass().getResource(direccion));
 	
+	       
+	        Image imagenEscalada = iconoOriginal.getImage()
+	                .getScaledInstance(x, y, Image.SCALE_SMOOTH);
+	
+	        
+	        ImageIcon iconoFinal = new ImageIcon(imagenEscalada);
+	        iconoFinal.setDescription(direccion);
+	        return iconoFinal;
+	 }
 	private void addWindowListener()
 	{
 				userFromDialog.getWindow().addWindowListener(new WindowListener() {
@@ -127,7 +174,7 @@ public class UserDialogController {
 				
 			});
 				
-				userFromDialog.btnCancelar.addActionListener(e -> handleClose());
+				userFromDialog.getBtnCancelar().addActionListener(e -> handleClose());
 				
 				userFromDialog.addWindowListener(new WindowAdapter() 
 				{
@@ -139,6 +186,44 @@ public class UserDialogController {
 				});
 		
 	}
+	private String saveImage() {
+    	try {
+    		
+			String ruta = userFromDialog.getIconDescription();
+    		String original = ruta;
+    		System.out.println(ruta);
+    		if(!original.equals("..\\img\\icono.png")) {
+    			
+	    			
+	    		
+	    		File source = new File(original);
+	    		
+	    		String extension = original.substring(original.lastIndexOf("."));
+	    		
+	    		String newName = UUID.randomUUID() + extension;
+	    		
+	    		String folder = "." + File.separator + "images";
+	    		
+	    		File directory = new File(folder);
+	    		
+	    		if(!directory.exists()) {
+	    			directory.mkdir();
+	    		}
+	    		
+	    		Path destination = Paths.get(folder, newName);
+	    		
+	    		Files.copy(source.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
+	    		
+	    		return destination.toString();
+    		}
+    		return null;
+    		
+    		
+    	}catch(Exception ex) {
+    		ex.printStackTrace();
+    		return null;
+    	}
+    }
 	
 	private void handleClose() {
 		int option = userFromDialog.confirmExit();
@@ -161,10 +246,12 @@ public class UserDialogController {
 		
 		if (valid) 
 		{
-			userFromDialog.getUser().setNombre(userFromDialog.txtNombre.getText());
-			userFromDialog.getUser().setApellido(userFromDialog.txtApellido.getText());
-			userFromDialog.getUser().setCorreo(userFromDialog.txtCorreo.getText());
-			
+			String foto=saveImage();
+			userFromDialog.getUser().setFoto(foto);
+			userFromDialog.getUser().setNombre(userFromDialog.getTxtNombre().getText());
+			userFromDialog.getUser().setApellido(userFromDialog.getTxtApellido().getText());
+			userFromDialog.getUser().setCorreo(userFromDialog.getTxtCorreo().getText());
+			userFromDialog.getUser().setGuardar(userFromDialog.getGuardar().isSelected());
 			String nuevaContesena = new String(userFromDialog.getTxtContraseña().getPassword());
 			userFromDialog.getUser().setContrasena(nuevaContesena);
 			
@@ -187,16 +274,19 @@ public class UserDialogController {
 		
 		if (valid) 
 		{
+			String foto=saveImage();
 			userFromDialog.setUser(new User("a", "a", "a", "a"));
-			userFromDialog.getUser().setNombre(userFromDialog.txtNombre.getText());
-			userFromDialog.getUser().setApellido(userFromDialog.txtApellido.getText());
-			userFromDialog.getUser().setCorreo(userFromDialog.txtCorreo.getText());
+			userFromDialog.getUser().setNombre(userFromDialog.getTxtNombre().getText());
+			userFromDialog.getUser().setApellido(userFromDialog.getTxtApellido().getText());
+			userFromDialog.getUser().setCorreo(userFromDialog.getTxtCorreo().getText());
+			userFromDialog.getUser().setFoto(foto);
+			userFromDialog.getUser().setGuardar(userFromDialog.getGuardar().isSelected());
 			
 			String nuevaContesena = new String(userFromDialog.getTxtContraseña().getPassword());
 			userFromDialog.getUser().setContrasena(nuevaContesena);
 			userFromDialog.setGuardado(true);
 			
-			//userFromDialog.agregarUser(nombre, apellido, correo, contraseña);
+			
 			userFromDialog.getWindow().dispose();
 		}
 		
@@ -204,12 +294,12 @@ public class UserDialogController {
 	
 	public boolean validarNombre() 
     {
-    	if (userFromDialog.txtNombre.getText().trim().isEmpty()) 
+    	if (userFromDialog.getTxtNombre().getText().trim().isEmpty()) 
     	{
-    		userFromDialog.txtErrNombre.setText("El nombre es obligatorio");
+    		userFromDialog.getTxtErrNombre().setText("El nombre es obligatorio");
 			return false;
 		}else {
-			userFromDialog.txtErrNombre.setText(" ");
+			userFromDialog.getTxtErrNombre().setText(" ");
 		}
 
 		return true;
@@ -239,12 +329,12 @@ public class UserDialogController {
 	
     public boolean validarApellido()
     {
-    	if (userFromDialog.txtApellido.getText().trim().isEmpty()) 
+    	if (userFromDialog.getTxtApellido().getText().trim().isEmpty()) 
     	{
-    		userFromDialog.txtErrApellido.setText("El apellido es obligatorio");
+    		userFromDialog.getTxtErrApellido().setText("El apellido es obligatorio");
 			return false;
 		}else {
-			userFromDialog.txtErrApellido.setText(" ");
+			userFromDialog.getTxtErrApellido().setText(" ");
 		}
 
 		return true;
@@ -252,38 +342,38 @@ public class UserDialogController {
     
     public boolean validarCorreo()
     {
-    	if (userFromDialog.txtCorreo.getText().trim().isEmpty()) 
+    	if (userFromDialog.getTxtCorreo().getText().trim().isEmpty()) 
     	{
-    		userFromDialog.txtErrCorreo.setText("El email es obligatorio");
+    		userFromDialog.getTxtErrCorreo().setText("El email es obligatorio");
 			return false;
 		}else {
-			userFromDialog.txtErrCorreo.setText(" ");
+			userFromDialog.getTxtErrCorreo().setText(" ");
 		}
     	
-    	if (userFromDialog.txtCorreo.getText().trim().length() < 3) 
+    	if (userFromDialog.getTxtCorreo().getText().trim().length() < 3) 
     	{
-    		userFromDialog.txtErrCorreo.setText("Email inválido! Es muy corta.");
+    		userFromDialog.getTxtErrCorreo().setText("Email inválido! Es muy corta.");
     	    return false;
     	}else {
-    		userFromDialog.txtErrCorreo.setText(" ");
+    		userFromDialog.getTxtErrCorreo().setText(" ");
 		}
 
-		if (!userFromDialog.txtCorreo.getText().contains("@")) 
+		if (!userFromDialog.getTxtCorreo().getText().contains("@")) 
 		{
-			userFromDialog.txtErrCorreo.setText("Email inválido! Le falta @");
+			userFromDialog.getTxtErrCorreo().setText("Email inválido! Le falta @");
 			return false;
 		}else 
 		{
-			userFromDialog.txtErrCorreo.setText(" ");
+			userFromDialog.getTxtErrCorreo().setText(" ");
 		}
 		
-		if (!userFromDialog.txtCorreo.getText().contains(".com")) 
+		if (!userFromDialog.getTxtCorreo().getText().contains(".com")) 
 		{
-			userFromDialog.txtErrCorreo.setText("Email inválido! Le falta .com");
+			userFromDialog.getTxtErrCorreo().setText("Email inválido! Le falta .com");
 			return false;
 		}else 
 		{
-			userFromDialog.txtErrCorreo.setText(" ");
+			userFromDialog.getTxtErrCorreo().setText(" ");
 		}
 
 		return true;

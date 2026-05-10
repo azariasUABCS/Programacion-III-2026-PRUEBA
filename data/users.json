@@ -10,14 +10,14 @@
   "apellido" : "Collins",
   "correo" : "azarias@.com",
   "contrasena" : "12345!",
-  "foto" : ".\\images\\cfc712b3-2295-429f-941f-3f3b45bbcedb.jpg",
-  "guardar" : true
+  "foto" : null,
+  "guardar" : false
 }, {
   "nombre" : "tester",
   "apellido" : "user",
   "correo" : "test@.com",
   "contrasena" : "test!",
-  "foto" : null,
+  "foto" : ".\\images\\4bd5bf8f-8c72-44b9-a952-cd10c6ecf64a.png",
   "guardar" : true
 }, {
   "nombre" : "rwgfeg",
@@ -26,4 +26,25 @@
   "contrasena" : "wfgdg!",
   "foto" : ".\\images\\0e756b85-20e9-45a9-8f40-cfb281f3f0bd.png",
   "guardar" : true
+}, {
+  "nombre" : "hola",
+  "apellido" : "asd",
+  "correo" : "hola@.com",
+  "contrasena" : "Jose!",
+  "foto" : ".\\images\\5b38ab3c-1e60-4a35-8076-53dd3ea47772.png",
+  "guardar" : true
+}, {
+  "nombre" : "hola",
+  "apellido" : "okasjofd",
+  "correo" : "sdfsddf@.com",
+  "contrasena" : "sdfsdf!",
+  "foto" : null,
+  "guardar" : true
+}, {
+  "nombre" : "dsfsdf",
+  "apellido" : "sdfsdf",
+  "correo" : "testksaalfd@.com",
+  "contrasena" : "sdfsdf!",
+  "foto" : null,
+  "guardar" : false
 } ]
