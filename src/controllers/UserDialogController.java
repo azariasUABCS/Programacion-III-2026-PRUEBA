@@ -26,7 +26,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import modelos.User;
-import respository.UserRepository;
+import repository.UserRepository;
 import utils.Colores;
 import views.UserFormDialog;
 import views.Ventana;

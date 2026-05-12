@@ -15,7 +15,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import modelos.User;
-import respository.UserRepository;
+import repository.UserRepository;
 import utils.Colores;
 import views.FormularioRegistro;
 import views.Ventana;

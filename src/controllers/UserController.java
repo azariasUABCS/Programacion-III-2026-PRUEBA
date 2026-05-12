@@ -8,7 +8,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import modelos.User;
-import respository.UserRepository;
+import repository.UserRepository;
 import services.PDFExporter;
 import tablemodels.UserTableModel;
 import views.UserFormDialog;

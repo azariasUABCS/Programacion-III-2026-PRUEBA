@@ -37,7 +37,7 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 import com.formdev.flatlaf.ui.FlatListCellBorder.Selected;
 
 import modelos.User;
-import respository.UserRepository;
+import repository.UserRepository;
 import utils.Colores;
 import utils.PanelPersonalizable;
 

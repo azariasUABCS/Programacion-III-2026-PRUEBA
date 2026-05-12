@@ -41,7 +41,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import controllers.UserDialogController;
 import controllers.VentanaPrincipalController;
 import modelos.User;
-import respository.UserRepository;
+import repository.UserRepository;
 import utils.Colores;
 import utils.ThemeManager;
 

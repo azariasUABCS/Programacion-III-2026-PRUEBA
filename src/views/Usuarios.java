@@ -4,8 +4,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import modelos.User;
-import respository.UserRepository;
-
+import repository.UserRepository;
 import tablemodels.UserTableModel;
 import utils.Colores;
 import utils.PanelPersonalizable;

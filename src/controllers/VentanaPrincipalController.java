@@ -9,10 +9,10 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import config.Config;
 import modelos.User;
-import respository.UserRepository;
+import repository.UserRepository;
 import tablemodels.UserTableModel;
-import utils.Config;
 import views.Ventana;
 import views.VentanaPrincipal;
 

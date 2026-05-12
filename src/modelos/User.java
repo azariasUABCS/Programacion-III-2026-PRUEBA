@@ -6,6 +6,7 @@ import java.util.List;
 
 public class User {
 	
+	private int id;
 	private String nombre;
 	private String apellido;
 	private String correo;
@@ -14,6 +15,12 @@ public class User {
 	private boolean guardar;
 	
 	public User() {
+	}
+	
+	public User(int id, String correo, String contrasena) {
+		this.id = id;
+		this.correo = correo;
+		this.contrasena = contrasena;
 	}
 	
 	public User(String email, String contrasena) {
@@ -28,7 +35,6 @@ public class User {
 	}
 	
 	public User(String nombre, String apellido, String email, String contrasena) {
-		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.correo = email;
@@ -44,6 +50,25 @@ public class User {
 		this.foto=foto;
 		this.guardar=guardar;
 	}
+	
+	
+	public User(int id, String nombre, String correo, String foto, boolean guardar) {
+		this.id = id;
+		this.nombre = nombre;
+		this.correo = correo;
+		this.foto = foto;
+		this.guardar = guardar;
+	}
+	
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 
 	public String getFoto() {
 		return foto;

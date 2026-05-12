@@ -16,7 +16,7 @@ import javax.swing.*;
 
 import controllers.VentanaPrincipalController;
 import modelos.User;
-import respository.UserRepository;
+import repository.UserRepository;
 import utils.ThemeManager;
 
 public class VentanaPrincipal extends JFrame 

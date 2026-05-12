@@ -1,206 +1,198 @@
 package controllers;
 
-import java.awt.Window;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.util.List;
 
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import exceptions.InvalidUserException;
 import modelos.User;
-import respository.UserRepository;
-import views.FormularioRegistro;
+import repository.LoginRepository;
 import views.Login;
 import views.VentanaPrincipal;
 
+
 public class LoginController {
-	
-	private Login login = new Login();
-	public LoginController(Login login) {
-		this.login=login;
-		
-		addActionListeners();
-		addDocumentListeners();
+
+	private Login login;
+	private LoginRepository loginRepository;
+
+	public LoginController(Login login) 
+	{
+		this.login = login;
+		this.loginRepository = new LoginRepository();
+		addListeners();
 	}
-	private void resetearCredenciales() {
+
+	private void resetearCredenciales() 
+	{
 		login.getMensajeCorreo().setText(" ");
 		login.getMensajeContraseña().setText(" ");
 	}
-	
-	private void addActionListeners() {
-		
-		login.getButtonIniciar().addActionListener(e -> {
-			try {
-				evaluarCredenciales();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		});
-		login.getRegistrarse().addActionListener(e -> {	
-			new RegistroController(login.getWindow());			
-		});
-	}
-	
-	private void evaluarCredenciales() throws IOException {
+
+	private boolean evaluarCredenciales() 
+	{
 		resetearCredenciales();
-		boolean error=false;
-		Window window=login.getWindow();
-		try {
-			evaluarCorreo();
-		}catch(InvalidUserException ex){
-			login.getMensajeCorreo().setText("* Credenciales erroneas *");
-			error=true;
-		}
-		try {
-			evaluarContrasena();
-		}catch(InvalidUserException ex){
-			login.getMensajeCorreo().setText("* Credenciales erroneas *");
-			error=true;
-		}
-		try {
-			if(!existeCuenta(login.getUsuario().getText(),String.valueOf(login.getContraseña().getPassword()))) {
-				login.getMensajeCorreo().setText("* Credenciales erroneas *");
-				error=true;
-			}
-		} catch (InvalidUserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-			
 		
-		if(error==false) {
-			new VentanaPrincipalController(new VentanaPrincipal());
-			window.dispose();
+		String email = login.getUsuario().getText().trim();
+		String password = String.valueOf(login.getContraseña().getPassword()).trim();
+		
+		boolean valid = true;
+		
+		if (email.isEmpty() || email.trim().equals("Correo Electrónico")) {
+			login.getMensajeCorreo().setText("* Correo obligatorio *");
+			valid = false;
 		}
 		
+		if (password.isEmpty() || password.equals("Contraseña"))  {
+			login.getMensajeContraseña().setText("* Contraseña obligatoria *");
+			valid = false;
+		}
+		
+		return valid;
 	}
-	public void addDocumentListeners() {
+	
+	private boolean validarCorreo() 
+	{
+	    String correo = login.getUsuario().getText().trim(); 
+	    
+	    if (correo.isEmpty() || correo.equals("Correo Electrónico")) 
+	    {
+	        login.getMensajeCorreo().setText("* Correo obligatorio *");
+	        return false;
+	    }
+	    
+	    if (!correo.contains("@")) 
+	    {
+	        login.getMensajeCorreo().setText("* Debe contener ' @ ' *");
+	        return false;
+	    }
+	    
+	    if (!correo.contains(".com")) 
+	    {
+	        login.getMensajeCorreo().setText("* Debe contener ' .com ' *");
+	        return false;
+	    }
+	    
+	    login.getMensajeCorreo().setText(" ");
+	    return true;
+	}
+	
+	private boolean validarContrasena() 
+	{
+		String password = String.valueOf(login.getContraseña().getPassword());
+		
+		if (password.isEmpty() || password.equals("Contraseña")) 
+		{
+			login.getMensajeContraseña().setText("* Contraseña obligatoria *");
+			return false;
+		}
+		
+		login.getMensajeContraseña().setText(" ");
+		return true;
+	}
+
+	private void handleRegistration() {
+		new RegistroController(login.getWindow());
+		login.getWindow().dispose();
+	}
+
+	private void handleLogin() throws IOException {
+		
+		if (!evaluarCredenciales()) {
+			return;
+		}
+		
+		User user = loginRepository.login(
+			login.getUsuario().getText().trim(), 
+			String.valueOf(login.getContraseña().getPassword())
+		);
+		
+		
+		if (user == null){
+			login.getMensajeCorreo().setText("* Credenciales erroneas *");
+			return;
+		}
+		
+		JOptionPane.showMessageDialog(login.getWindow(), "Se inició la sesión", "Sesión iniciada", JOptionPane.INFORMATION_MESSAGE);
+		new VentanaPrincipalController(new VentanaPrincipal());
+		login.getWindow().dispose();
+	}
+	
+	private void addListeners() {
+		// Enter key listener for both fields
+		KeyAdapter enterListener = new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) 
+				{
+					try 
+					{
+						handleLogin();
+					} 
+					catch (IOException e1) 
+					{
+						e1.printStackTrace();
+					}
+				}
+			}
+		};
+		
+		login.getUsuario().addKeyListener(enterListener);
+		login.getContraseña().addKeyListener(enterListener);
+		
 		login.getUsuario().getDocument().addDocumentListener(new DocumentListener() {
-			
 			@Override
 			public void removeUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				try {
-					evaluarCorreoRT();
-				}catch(InvalidUserException ex){
-					login.getMensajeCorreo().setText(ex.getMessage());
-					
-				}
+				validarCorreo();
 			}
 			
 			@Override
 			public void insertUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				try {
-					evaluarCorreoRT();
-				}catch(InvalidUserException ex){
-					login.getMensajeCorreo().setText(ex.getMessage());
-					
-				}
+				validarCorreo();
 			}
 			
 			@Override
 			public void changedUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				try {
-					evaluarCorreoRT();
-				}catch(InvalidUserException ex){
-					login.getMensajeCorreo().setText(ex.getMessage());
-					
-				}
 			}
 		});
 		
 		login.getContraseña().getDocument().addDocumentListener(new DocumentListener() {
-			
 			@Override
 			public void removeUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				try {
-					evaluarContrasena();
-				}catch(InvalidUserException ex){
-					login.getMensajeContraseña().setText(ex.getMessage());
-				}
+				validarContrasena();
 			}
 			
 			@Override
 			public void insertUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				try {
-					evaluarContrasena();
-				}catch(InvalidUserException ex){
-					login.getMensajeContraseña().setText(ex.getMessage());
-				}
+				validarContrasena();
 			}
 			
 			@Override
 			public void changedUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				try {
-					evaluarContrasena();
-				}catch(InvalidUserException ex){
-					login.getMensajeContraseña().setText(ex.getMessage());
-				}
+				validarContrasena();
 			}
 		});
 		
-	}
-	private void evaluarCorreo() throws InvalidUserException {
-		if(login.getUsuario().getText().trim().equals("")) {
-			throw new InvalidUserException("* Correo obligatorio *");
-		}
-		else if(!existeCuenta(login.getUsuario().getText().trim(), login.getContraseña().getText().trim())) // PAPITA CAMBIE ESTO PARA VERIFICAR. Codigo original: !login.getUsuario().getText().trim().equals("")&&!login.getUsuario().getText().equals("papita@gmail.com")
-		{
-			throw new InvalidUserException("* Correo erroneo *");
-		}
-		
-	}
-	private void evaluarCorreoRT() throws InvalidUserException {
-		resetearCredenciales();
-		if(login.getUsuario().getText().equals("") || login.getUsuario().getText().equals("Correo Electrónico")) {
-			throw new InvalidUserException("* Correo obligatorio *");
-		}
-		if(!login.getUsuario().getText().equals("")&&!login.getUsuario().getText().contains("@") || !login.getUsuario().getText().equals("")&&!login.getUsuario().getText().contains(".com")) {
-			throw new InvalidUserException("\"Debe tener domimio\"");
-		}
 		
 		
-	}
-	private void evaluarContrasena() throws InvalidUserException {
-		resetearCredenciales();
-		if(String.valueOf(login.getContraseña().getPassword()).equals("") || String.valueOf(login.getContraseña().getPassword()).equals("Contraseña")){
-			throw new InvalidUserException("* Contraseña obligatoria *");
-		}
-	}
-	
-	
-	// Regresa true si el correo y contrasena que ingreso el usuario se encuentra el usuario en el archivo scr/files/users.csv
-	private boolean existeCuenta(String correo, String contrasena) throws InvalidUserException
-	{
-		UserRepository repository = new UserRepository();
-		try 
-		{
-			List<User> users = repository.getUsers(); 
-			
-			for(User user : users) 
-			{
-				if(user.getCorreo().equals(correo) && user.getContrasena().equals(contrasena))
-				{
-					return true; 
-				}
+		login.getButtonIniciar().addActionListener(e -> {
+			try {
+				handleLogin();
+			} catch (IOException e1) {
+				e1.printStackTrace();
 			}
-			
-		} 
-		catch (IOException ex) 
-		{
-			throw new InvalidUserException(" Error en existeCuenta metodo ");
-		}
+		});
 		
-		return false;
+		login.getRegistrarse().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				handleRegistration();
+			}
+		});
 	}
 }
-
