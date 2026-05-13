@@ -1,6 +1,6 @@
 package controllers;
 
-import java.awt.Color;
+import java.awt.Color; 
 import java.awt.Window;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -15,6 +15,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import modelos.User;
+import repository.RegisterRepository;
 import repository.UserRepository;
 import utils.Colores;
 import views.FormularioRegistro;
@@ -26,15 +27,17 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.UUID;
-
+import repository.RegisterRepository;
 
 public class RegistroController {
+	private RegisterRepository registerRepository;
 	private UserRepository repo;
 	private FormularioRegistro formularioRegsitro;
 	private Window loginWindow;
 	
 	public RegistroController(Window loginWindow)
 	{
+		registerRepository=new RegisterRepository();
 		this.loginWindow = loginWindow;
 		formularioRegsitro = new FormularioRegistro();
 		formularioRegsitro.getRegistrar().addActionListener(e -> validacionDeRegistro());
@@ -160,7 +163,8 @@ public class RegistroController {
 			
 			String foto=saveImage();
 			boolean guardar=formularioRegsitro.getGuardar().isSelected();
-			formularioRegsitro.registerUser(new User(nombre, apellido, correo, contrasena,foto, guardar));
+			registerRepository.register(correo, contrasena, nombre, apellido, foto, guardar);
+			//formularioRegsitro.registerUser(new User(nombre, apellido, correo, contrasena,foto, guardar));
 			
 			
 			new Ventana();
