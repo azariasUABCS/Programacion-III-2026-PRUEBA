@@ -84,7 +84,6 @@ public class UserDialogController {
         this.userFromDialog.getTxtApellido().setText(this.userFromDialog.getUser().getApellido());
         this.userFromDialog.getTxtNombre().setText(user.getNombre());
         this.userFromDialog.getTxtCorreo().setText(user.getCorreo());
-        this.userFromDialog.getTxtContraseña().setText(user.getContrasena());
         this.userFromDialog.getBtnGuardar().setText("Editar");
         try {
         	if(!user.getFoto().equals(null)) {

@@ -24,7 +24,7 @@ public class VentanaPrincipalController {
 	public VentanaPrincipalController(VentanaPrincipal ventanaPrincipal) throws IOException {
 		
 		repository = new UserRepository();
-		controller = new UserController(ventanaPrincipal.usersPanel, this,repository.getUsers());
+		controller = new UserController(ventanaPrincipal.getUsersPanel(), this,repository.getUsers());
 		this.ventanaPrincipal = ventanaPrincipal;
 		
 		cargarWindowPreferences();
@@ -34,7 +34,7 @@ public class VentanaPrincipalController {
 	
 	public void registerListeners( ) {
 		
-		ventanaPrincipal.mItemExit.addActionListener(e -> handleClose());
+		ventanaPrincipal.getmItemExit().addActionListener(e -> handleClose());
 		
 		ventanaPrincipal.addWindowListener(new WindowAdapter() {
 			@Override
@@ -45,7 +45,7 @@ public class VentanaPrincipalController {
 			}
 		});
 		
-		ventanaPrincipal.btnUsers.addActionListener(e -> {
+		ventanaPrincipal.getBtnUsers().addActionListener(e -> {
 			try {
 				showUsers();
 			} catch (IOException e1) {
@@ -54,7 +54,7 @@ public class VentanaPrincipalController {
 			}
 		});
 		
-		ventanaPrincipal.btnHome.addActionListener(e -> ventanaPrincipal.showView(ventanaPrincipal.HOME));
+		ventanaPrincipal.getBtnHome().addActionListener(e -> ventanaPrincipal.showView(ventanaPrincipal.HOME));
 		
 	}
 	
@@ -65,7 +65,7 @@ public class VentanaPrincipalController {
 			
 			UserTableModel model = new UserTableModel(users);
 			
-			ventanaPrincipal.usersPanel.setTableModel(model);
+			ventanaPrincipal.getUsersPanel().setTableModel(model);
 			
 			//System.out.println("Refresh Table");
 			ventanaPrincipal.showView(ventanaPrincipal.USERS);

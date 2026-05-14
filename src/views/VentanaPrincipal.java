@@ -24,10 +24,10 @@ public class VentanaPrincipal extends JFrame
 	public static final String HOME = "HOME";
 	public static final String USERS = "USERS";
 	
-	public JMenuItem mItemExit;
-	public JButton btnUsers;
-	public JButton btnHome;
-	public UsersView usersPanel;
+	private JMenuItem mItemExit;
+	private JButton btnUsers;
+	private JButton btnHome;
+	private UsersView usersPanel;
 	
 	private CardLayout cardLayout;
 	private JPanel container;
@@ -156,5 +156,54 @@ public class VentanaPrincipal extends JFrame
 	public void setWindowLocation(int x, int y) {
 		setLocation(x, y);
 	}
+
+	public JMenuItem getmItemExit() {
+		return mItemExit;
+	}
+
+	public void setmItemExit(JMenuItem mItemExit) {
+		this.mItemExit = mItemExit;
+	}
+
+	public JButton getBtnUsers() {
+		return btnUsers;
+	}
+
+	public void setBtnUsers(JButton btnUsers) {
+		this.btnUsers = btnUsers;
+	}
+
+	public JButton getBtnHome() {
+		return btnHome;
+	}
+
+	public void setBtnHome(JButton btnHome) {
+		this.btnHome = btnHome;
+	}
+
+	public UsersView getUsersPanel() {
+		return usersPanel;
+	}
+
+	public void setUsersPanel(UsersView usersPanel) {
+		this.usersPanel = usersPanel;
+	}
+
+	public CardLayout getCardLayout() {
+		return cardLayout;
+	}
+
+	public void setCardLayout(CardLayout cardLayout) {
+		this.cardLayout = cardLayout;
+	}
+
+	public JPanel getContainer() {
+		return container;
+	}
+
+	public void setContainer(JPanel container) {
+		this.container = container;
+	}
+	
 }
 	

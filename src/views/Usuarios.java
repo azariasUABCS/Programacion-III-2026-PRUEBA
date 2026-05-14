@@ -3,6 +3,7 @@ package views;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import controllers.UserPanelController;
 import modelos.User;
 import repository.UserRepository;
 import tablemodels.UserTableModel;
@@ -19,7 +20,7 @@ import java.util.List;
 
 public class Usuarios extends JPanel {
 	public Usuarios() {
-		ArrayList<UsuarioPanel> usuarios = new ArrayList<UsuarioPanel>();
+		ArrayList<UserPanel> usuarios = new ArrayList<UserPanel>();
 		UserRepository repository = new UserRepository();
 		try 
 		{
@@ -40,12 +41,10 @@ public class Usuarios extends JPanel {
 			//Añade usuarios simullados"
 			for(int i=0;i<usersTable.getRowCount();i++) {
 				if(usersTable.getValueAt(i, 4).toString().equals("true")) {
-					try {
-						usuarios.add(new UsuarioPanel(usersTable.getValueAt(i, 0).toString(),usersTable.getValueAt(i, 1).toString(),escalarImagen(usersTable.getValueAt(i, 3).toString(), 200, 200)));
-					} catch (Exception e) {
-						// TODO: handle exception
-						usuarios.add(new UsuarioPanel(usersTable.getValueAt(i, 0).toString(),usersTable.getValueAt(i, 1).toString(),escalarImagenLocal("..\\img\\icono.png" , 200, 200)));
-					}
+					UserPanel usuarioPanel=new UserPanel(usersTable.getUserAt(i));
+					new UserPanelController(usuarioPanel);
+					usuarios.add(usuarioPanel);
+					
 				}
 				
 				
@@ -57,7 +56,7 @@ public class Usuarios extends JPanel {
 			setLayout(new GridLayout(0,2));
 			
 			
-			for(UsuarioPanel usuario : usuarios) {
+			for(UserPanel usuario : usuarios) {
 				
 				add(usuario);
 			}
@@ -101,5 +100,5 @@ public class Usuarios extends JPanel {
         ImageIcon iconoFinal = new ImageIcon(imagenEscalada);
         iconoFinal.setDescription(direccion);
         return iconoFinal;
-}
+	}
 }
