@@ -74,19 +74,27 @@ public class UserController {
 		view.getBtnDelete().addActionListener(e -> {
 			
 			int row = view.getSelectedRow();
+			
 			if(row == -1) {
 				JOptionPane.showMessageDialog(view, "Selecciona un usuario");
 				return;
 			}
 			
-			try 
+			boolean deleted = repo.delete(model.getUserAt(view.getSelectedRow()).getId());
+			
+			if(deleted) 
 			{
-				handleBorrarPerfil(row);
-			} 
-			catch (IOException e1) 
-			{
-				e1.printStackTrace();
+				model.removeRow(view.getSelectedRow());
+				
+				try {
+					ventanaPrincipalController.showUsers();
+				} 
+				catch (IOException e1) 
+				{
+					e1.printStackTrace();
+				}
 			}
+			
 		});
 		
 		this.userView.getBtnPdf().addActionListener(e -> {
@@ -100,11 +108,18 @@ public class UserController {
 		
 		int row = userView.getSelectedRow();
 		System.out.println(row);
+		//System.out.println("Opening Form");
 		UserFormDialog dialog;
-		if(user==null) {
+		
+		if(user==null) 
+		{
+			//System.out.println("user null");
 			dialog = new UserFormDialog(null, user);
 			new UserDialogController(dialog);
-		}else {
+		}
+		else 
+		{
+			//System.out.println("user not null");
 			dialog = new UserFormDialog(null, user);
 			new UserDialogController(dialog, user);
 		}
@@ -117,10 +132,23 @@ public class UserController {
 			try {
 				if(user == null) {
 					repo.save(savedUser);
+					model.addRow(savedUser);
+					
+					JOptionPane.showMessageDialog(userView.getWindow(), "Se guardo nuevo usuario.", "Confirmado", JOptionPane.INFORMATION_MESSAGE);
+					
+					//System.out.println("saved");
 				}else {
 					
-					repo.update(row, savedUser);
+					int row1 = userView.getSelectedRow();
 					
+					boolean updated = repo.update(row1, savedUser);
+					if(updated) {
+						model.updateRow(row1, savedUser); //Actualiza el registro de la tabla
+					}
+					
+					JOptionPane.showMessageDialog(userView.getWindow(), "Se pudo modificar informacion.", "Confirmado", JOptionPane.INFORMATION_MESSAGE);
+					
+					//System.out.println("updated");
 				}
 				
 				
@@ -136,8 +164,6 @@ public class UserController {
 	
 	
 	public void cargarUsers() {	
-		
-		//System.out.println("Carga usuarios");
 		try {
 			List<User> users = repo.getUsers();
 			
@@ -161,7 +187,7 @@ public class UserController {
 		
 		try
 		{
-			pdfExporter.exportUsers(repo.getUsers(), file);
+			 pdfExporter.exportUsers(repo.getUsers(), file); 
 			
 			if(Desktop.isDesktopSupported())
 			{

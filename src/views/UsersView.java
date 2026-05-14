@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Window;
 import java.io.File;
 
 import javax.swing.JButton;
@@ -15,6 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
@@ -217,5 +219,9 @@ public class UsersView extends JPanel{
 	        "¿Seguro?",
 	        JOptionPane.YES_NO_OPTION
 	    );
+	}
+	
+	public Window getWindow() {
+		return SwingUtilities.getWindowAncestor(this);
 	}
 }

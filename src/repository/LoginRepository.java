@@ -8,15 +8,14 @@ import java.sql.Statement;
 
 import config.DatabaseConnection;
 import modelos.User;
+import utils.PasswordUtils;
 
 public class LoginRepository {
 
 	public User login(String correo, String contrasena) {
 		
-		/*String sql = "SELECT id, email, password FROM users WHERE email = '" 
-				+ email + "' AND password = '" + password + "'";*/
 		
-		String sql = "SELECT id_usuario, correo_electronico, contraseña FROM usuario WHERE correo_electronico = ? AND contraseña = ?";
+		String sql = "SELECT id_usuario, correo_electronico, contraseña, rol, nombre FROM usuario WHERE correo_electronico = ?";
 		
 		try (
 			Connection conn = DatabaseConnection.getConnection();
@@ -24,19 +23,29 @@ public class LoginRepository {
 		){
 			
 			stmt.setString(1, correo);
-			stmt.setString(2, contrasena);
 			ResultSet rs = stmt.executeQuery();
 			
-			if(rs.next()) {
+			if(rs.next()) 
+			{
+				String hashedPassword = rs.getString("contraseña");
+				//System.out.println(hashedPassword);
+				
+				boolean correctPassword = PasswordUtils.checkPassword(contrasena, hashedPassword);
+				
+				if(!correctPassword) 
+					return null;
+				
 				User user = new User();
 				user.setId(rs.getInt("id_usuario"));
 				user.setCorreo(rs.getString("correo_electronico"));
-				
+				user.setNombre(rs.getString("nombre"));
+				user.setRol(rs.getString("rol"));
+
 				return user;
 			}
-			
-			
-		}catch(SQLException ex) {
+		}
+		catch(SQLException ex) 
+		{
 			ex.printStackTrace();
 		}
 

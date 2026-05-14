@@ -12,6 +12,7 @@ public class User {
 	private String correo;
 	private String contrasena;
 	private String foto;
+	private String rol;
 	private boolean guardar;
 	
 	public User() {
@@ -51,6 +52,18 @@ public class User {
 		this.guardar=guardar;
 	}
 	
+	public User(int id, String nombre, String apellido, String email, String contrasena,String foto, boolean guardar, String rol) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.correo = email;
+		this.contrasena = contrasena;
+		this.foto=foto;
+		this.guardar=guardar;
+		this.rol = rol;
+	}
+	
 	
 	public User(int id, String nombre, String correo, String foto, boolean guardar) {
 		this.id = id;
@@ -60,6 +73,16 @@ public class User {
 		this.guardar = guardar;
 	}
 	
+	
+	public String getRol()
+	{
+		return rol;
+	}
+	
+	public void setRol(String rol)
+	{
+		this.rol = rol;
+	}
 	
 	public int getId() {
 		return id;

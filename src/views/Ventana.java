@@ -109,6 +109,7 @@ public class Ventana extends JFrame{
 		
 		//Agregar a los usuarios
 		Usuarios usuarios= new Usuarios();
+		
 		JScrollPane scrollUsuarios= new JScrollPane(usuarios);
 		scrollUsuarios.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollUsuarios.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -140,7 +141,7 @@ public class Ventana extends JFrame{
 
 		    
 		});
-		scrollUsuarios.getVerticalScrollBar().setUnitIncrement(100);
+		scrollUsuarios.getVerticalScrollBar().setUnitIncrement(20);
 		scrollUsuarios.getVerticalScrollBar().setOpaque(false);
 		scrollUsuarios.setBorder(null);
 		add(scrollUsuarios);

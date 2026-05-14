@@ -113,8 +113,9 @@ public class FormularioRegistro extends JFrame{
         // Para centrar todos los componentes
         panelComponentes.setAlignmentX(Component.CENTER_ALIGNMENT);
         
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
-        JLabel saludo = new JLabel("Registrate");
+        JLabel saludo = new JLabel("Registrate"); 
         saludo.setOpaque(false);
         saludo.setFont(fontTitulo);
         saludo.setForeground(Colores.TEXT_COLOR);
@@ -199,13 +200,18 @@ public class FormularioRegistro extends JFrame{
         
         panelComponentes.add(Box.createRigidArea(new Dimension(0, 20)));
         
+        // Scroll Pane
         JScrollPane scrollPanel= new JScrollPane(panelComponentes);
 		scrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPanel.setBounds(0,50,850, 450);
+		scrollPanel.setBounds(70, 50, 710, 450);
 		scrollPanel.getViewport().setOpaque(false);
 		scrollPanel.setOpaque(false);
 		scrollPanel.getVerticalScrollBar().setUnitIncrement(20); // Hacer que el scroll se baje mas rapido
+		scrollPanel.setBorder(null);
+		scrollPanel.getVerticalScrollBar().setBackground(Colores.BACKGROUND);
+		scrollPanel.getVerticalScrollBar().setOpaque(false);
+		scrollPanel.getViewport().setBackground(Colores.BACKGROUND);
 		
 		add(scrollPanel);
         add(fondo);
@@ -472,6 +478,16 @@ public class FormularioRegistro extends JFrame{
 		this.iconoUsuario = iconoUsuario;
 	}
 	
+	public int confirmExit() 
+	{
+	    return JOptionPane.showConfirmDialog(
+	        this,
+	        "¿Seguro que deseas regresar? Se perderán todos los datos",
+	        "¿Seguro?",
+	        JOptionPane.YES_NO_OPTION
+	    );
+	}
+    
 	
     
    // Getters

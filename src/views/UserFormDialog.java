@@ -198,21 +198,7 @@ public class UserFormDialog extends JDialog{
     	return this;
     }
     		
-    public void agregarUser(String txtNombre, String txtApellido, String txtCorreo, String txtContraseña) throws IOException
-	{
-		User newUser = new User(txtNombre, txtApellido, txtCorreo, txtContraseña);
-		
-		try
-		{
-			userRepository.save(newUser);
-			System.out.println("Se Registro Usuario!");
-			JOptionPane.showMessageDialog(this, "Usuario registrado");
-		}
-		catch (Exception e) 
-		{
-			JOptionPane.showMessageDialog(this, e.getMessage());
-		}
-	} 		
+    
 	private ImageIcon escalarImagen(String direccion,int x,int y) {
 	    	
 	        ImageIcon iconoOriginal = new ImageIcon(direccion);

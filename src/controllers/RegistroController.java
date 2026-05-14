@@ -4,12 +4,14 @@ import java.awt.Color;
 import java.awt.Window;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -19,6 +21,7 @@ import repository.RegisterRepository;
 import repository.UserRepository;
 import utils.Colores;
 import views.FormularioRegistro;
+import views.Login;
 import views.Ventana;
 
 import java.io.File;
@@ -31,7 +34,6 @@ import repository.RegisterRepository;
 
 public class RegistroController {
 	private RegisterRepository registerRepository;
-	private UserRepository repo;
 	private FormularioRegistro formularioRegsitro;
 	private Window loginWindow;
 	
@@ -90,19 +92,21 @@ public class RegistroController {
 				
 				@Override
 				public void windowClosing(WindowEvent e) {
-					// TODO Auto-generated method stub
 					
+					handleClose();
 				}
 				
 				@Override
 				public void windowClosed(WindowEvent e) {
-					// TODO Auto-generated method stub
-					
 				}
 				
+				
 			});
+
+			
 	}
-	 private String saveImage() {
+	 
+	private String saveImage() {
 	    	try {
 	    		
 				String ruta = formularioRegsitro.getIconDescription();
@@ -140,6 +144,20 @@ public class RegistroController {
 	    		return null;
 	    	}
 	    }
+	 
+	private void handleClose() {
+		
+		int option = formularioRegsitro.confirmExit();
+		System.out.println(option);
+
+		if (option == JOptionPane.YES_OPTION) {
+			new Ventana();
+			formularioRegsitro.getWindow().dispose();
+		}
+	}
+
+	 
+	 
 // Validaciones de Formulario Registro
     
 	private void validacionDeRegistro()
@@ -163,7 +181,10 @@ public class RegistroController {
 			
 			String foto=saveImage();
 			boolean guardar=formularioRegsitro.getGuardar().isSelected();
+			
 			registerRepository.register(correo, contrasena, nombre, apellido, foto, guardar);
+			
+			
 			//formularioRegsitro.registerUser(new User(nombre, apellido, correo, contrasena,foto, guardar));
 			
 			

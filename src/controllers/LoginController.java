@@ -12,6 +12,7 @@ import javax.swing.event.DocumentListener;
 
 import modelos.User;
 import repository.LoginRepository;
+import utils.Session;
 import views.Login;
 import views.VentanaPrincipal;
 
@@ -118,9 +119,21 @@ public class LoginController {
 			return;
 		}
 		
-		JOptionPane.showMessageDialog(login.getWindow(), "Se inició la sesión", "Sesión iniciada", JOptionPane.INFORMATION_MESSAGE);
-		new VentanaPrincipalController(new VentanaPrincipal());
-		login.getWindow().dispose();
+
+		Session.login(user);
+		
+		if(Session.getRol().toLowerCase().equals("admin")) 
+		{
+			JOptionPane.showMessageDialog(login.getWindow(), "Se inició la sesión con cuenta 'ADMIN'", " Sesión iniciada", JOptionPane.INFORMATION_MESSAGE);
+			new VentanaPrincipalController(new VentanaPrincipal());			
+			login.getWindow().dispose();
+		}
+		else if(Session.getRol().toLowerCase().equals("comun")) 
+		{
+			JOptionPane.showMessageDialog(login.getWindow(), "Se inició la sesión con cuenta 'COMUN'", " Sesión iniciada", JOptionPane.INFORMATION_MESSAGE);
+			new VentanaPrincipalController(new VentanaPrincipal());			
+			login.getWindow().dispose();
+		}
 	}
 	
 	private void addListeners() {

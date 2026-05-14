@@ -130,6 +130,14 @@ public class VentanaPrincipalController {
 			ventanaPrincipal.dispose();
 		}
 	}
+
+	public VentanaPrincipal getVentanaPrincipal() {
+		return ventanaPrincipal;
+	}
+
+	public void setVentanaPrincipal(VentanaPrincipal ventanaPrincipal) {
+		this.ventanaPrincipal = ventanaPrincipal;
+	}
 	
 	
 }

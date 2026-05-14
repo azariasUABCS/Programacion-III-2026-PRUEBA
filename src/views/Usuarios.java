@@ -35,7 +35,6 @@ public class Usuarios extends JPanel {
 				
 				alto=(usersTable.getNumGuardar()/2)*300;
 			}else {
-				System.out.println(4456);
 				alto=((usersTable.getNumGuardar()/2)+1)*300;
 			}
 			//Añade usuarios simullados"
@@ -51,7 +50,8 @@ public class Usuarios extends JPanel {
 				
 				
 			}
-			System.out.println(alto);
+			
+			//System.out.println(alto);
 			setPreferredSize(new Dimension(600,alto));
 			setOpaque(false);
 			setLayout(new GridLayout(0,2));
@@ -77,7 +77,7 @@ public class Usuarios extends JPanel {
 		
 	}
 	private ImageIcon escalarImagen(String direccion,int x,int y) {
-	    	System.out.println(direccion);
+	    	//System.out.println(direccion);
 	        ImageIcon iconoOriginal = new ImageIcon(direccion);
 	
 	       
