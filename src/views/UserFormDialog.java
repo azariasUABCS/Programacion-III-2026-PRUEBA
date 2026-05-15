@@ -243,6 +243,9 @@ public class UserFormDialog extends JDialog{
 	public JTextField getTxtNombre() {
 		return txtNombre;
 	}
+	public void setIconDescription(String descripcion) {
+		iconoUsuarioFinal.setDescription(descripcion);
+	}
 	public String getIconDescription() {
 		return iconoUsuarioFinal.getDescription();
 	}

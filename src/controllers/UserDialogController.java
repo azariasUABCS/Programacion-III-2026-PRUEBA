@@ -88,6 +88,8 @@ public class UserDialogController {
         try {
         	if(!user.getFoto().equals(null)) {
         		this.userFromDialog.getIconoUsuario().setIcon(escalarImagen(user.getFoto(), 200, 200));
+        		this.userFromDialog.setIconDescription(user.getFoto());
+        		
         	}
         	
 		} catch (Exception e) {
